@@ -6,9 +6,12 @@
     <title>Archer Giveaways - DonutSMP Rains</title>
     <link rel="icon" type="image/png" href="favicon.png">
     
-    <!-- Google Fonts & Font Awesome Icons -->
+    <!-- Google Fonts & Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 
     <style>
         :root {
@@ -23,14 +26,12 @@
             --text-muted: #a4b0be;
             --border-color: #232732;
         }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
         }
-
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
@@ -41,14 +42,11 @@
             padding: 40px 20px;
             background-image: radial-gradient(circle at top, rgba(255, 71, 87, 0.08) 0%, transparent 60%);
         }
-
-        /* Hero Container */
         .hero {
             text-align: center;
             margin-bottom: 40px;
             max-width: 800px;
         }
-
         .hero h1 {
             font-size: 3.2rem;
             font-weight: 800;
@@ -57,14 +55,11 @@
             letter-spacing: 2px;
             text-shadow: 0 0 25px rgba(255, 71, 87, 0.4);
         }
-
         .hero p {
             color: var(--text-muted);
             font-size: 1.15rem;
             margin-top: 10px;
         }
-
-        /* Server Status Badge */
         .status-badge {
             display: inline-flex;
             align-items: center;
@@ -75,9 +70,7 @@
             border-radius: 20px;
             margin-top: 20px;
             font-size: 0.95rem;
-            backdrop-filter: blur(5px);
         }
-
         .status-dot {
             width: 10px;
             height: 10px;
@@ -85,8 +78,6 @@
             background-color: var(--accent-green);
             box-shadow: 0 0 8px var(--accent-green);
         }
-
-        /* Action Buttons */
         .button-group {
             display: flex;
             gap: 15px;
@@ -94,7 +85,6 @@
             flex-wrap: wrap;
             margin-top: 30px;
         }
-
         .btn {
             padding: 14px 28px;
             border-radius: 10px;
@@ -109,33 +99,57 @@
             gap: 10px;
             font-size: 0.95rem;
         }
-
         .btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
+        .btn-red { background-color: var(--accent-red); }
+        .btn-blue { background-color: var(--accent-blue); }
+        .btn-gold { background-color: var(--accent-gold); color: #000; }
+        .btn-gray { background-color: #2f3542; }
 
-        .btn-red { 
-            background-color: var(--accent-red); 
-            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+        /* Login / User section */
+        .user-section {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
         }
-        .btn-blue { 
-            background-color: var(--accent-blue); 
-            box-shadow: 0 4px 15px rgba(84, 160, 255, 0.3);
+        .user-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 20px 28px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            min-width: 280px;
         }
-        .btn-gold { 
-            background-color: var(--accent-gold); 
-            color: #000; 
-            box-shadow: 0 4px 15px rgba(255, 165, 2, 0.3);
+        .user-card img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+        }
+        .user-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        .user-info p {
+            color: var(--accent-gold);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        #google-btn-container {
+            display: flex;
+            justify-content: center;
         }
 
-        /* Content Section */
         .main-container {
             width: 100%;
             max-width: 1000px;
             margin-top: 20px;
         }
-
         .section-title {
             font-size: 1.5rem;
             margin-bottom: 25px;
@@ -144,13 +158,11 @@
             gap: 12px;
             font-weight: 700;
         }
-
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
         }
-
         .card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -158,38 +170,26 @@
             padding: 28px;
             transition: all 0.3s ease;
         }
-
         .card:hover {
             background-color: var(--card-hover);
             transform: translateY(-2px);
         }
-
         .card-gold {
             border-color: rgba(255, 165, 2, 0.4);
-            box-shadow: 0 0 15px rgba(255, 165, 2, 0.05);
         }
-
         .card-header {
             display: flex;
             align-items: center;
             gap: 12px;
             margin-bottom: 14px;
         }
-
-        .card-header i {
-            font-size: 1.3rem;
-        }
-
-        .card-header h3 {
-            font-size: 1.15rem;
-        }
-
+        .card-header i { font-size: 1.3rem; }
+        .card-header h3 { font-size: 1.15rem; }
         .card p {
             color: var(--text-muted);
             font-size: 0.95rem;
             line-height: 1.6;
         }
-
         code {
             background: rgba(255, 255, 255, 0.08);
             padding: 2px 6px;
@@ -197,8 +197,6 @@
             color: #fff;
             font-family: monospace;
         }
-
-        /* Toast Popup */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -211,29 +209,20 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             font-weight: 600;
             z-index: 100;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-    <!-- Hero Section -->
     <div class="hero">
         <h1>ARCHER GIVEAWAYS</h1>
         <p>The central hub for DonutSMP rains, event announcements, and claim requirements.</p>
-
-        <!-- Live Server Status Indicator -->
+        
         <div class="status-badge">
             <div class="status-dot" id="status-dot"></div>
             <span id="server-status">Checking donut-smp.net...</span>
         </div>
 
-        <!-- Links & Buttons -->
         <div class="button-group">
             <button class="btn btn-red" onclick="copyIP()">
                 <i class="fa-solid fa-copy"></i> Copy IP
@@ -245,17 +234,32 @@
                 <i class="fa-solid fa-ticket"></i> Open Claim Ticket
             </a>
         </div>
+
+        <!-- Login / User Section -->
+        <div class="user-section">
+            <!-- Google Sign-In button will appear here when not logged in -->
+            <div id="google-btn-container"></div>
+
+            <!-- Shown when logged in -->
+            <div id="user-card" class="user-card" style="display: none;">
+                <img id="user-picture" src="" alt="Profile">
+                <div class="user-info">
+                    <h3 id="user-name">User</h3>
+                    <p id="user-coins">0 Coins</p>
+                </div>
+                <button class="btn btn-gray" onclick="signOut()" style="margin-left: auto; padding: 8px 16px; font-size: 0.85rem;">
+                    Sign Out
+                </button>
+            </div>
+        </div>
     </div>
 
-    <!-- Main Container -->
     <div class="main-container">
         <h2 class="section-title">
             <i class="fa-solid fa-cloud-showers-heavy" style="color: var(--accent-blue);"></i> 
             DonutSMP Rains & Claims
         </h2>
-
         <div class="cards-grid">
-            <!-- Requirement Card -->
             <div class="card card-gold">
                 <div class="card-header">
                     <i class="fa-solid fa-sack-dollar" style="color: var(--accent-gold);"></i>
@@ -263,8 +267,6 @@
                 </div>
                 <p>To claim rewards from our community rains, your account must have at least <span style="color: var(--accent-gold); font-weight: 600;">5,000,000 (5M) coins</span> on DonutSMP.</p>
             </div>
-
-            <!-- Process Card -->
             <div class="card">
                 <div class="card-header">
                     <i class="fa-solid fa-ticket" style="color: var(--accent-red);"></i>
@@ -272,8 +274,6 @@
                 </div>
                 <p>Join our Discord server and navigate to the <code>#claim-rain</code> channel to open a support ticket with staff.</p>
             </div>
-
-            <!-- Verification Card -->
             <div class="card">
                 <div class="card-header">
                     <i class="fa-solid fa-shield-halved" style="color: var(--accent-blue);"></i>
@@ -284,13 +284,84 @@
         </div>
     </div>
 
-    <!-- Notification Popup -->
     <div id="toast" class="toast">
         <i class="fa-solid fa-check-circle"></i> IP copied to clipboard!
     </div>
 
     <script>
-        // Fetch Live DonutSMP Status
+        // =============== GOOGLE SIGN-IN ===============
+        const CLIENT_ID = "263646768191-7854avn92k94rq8pbit809o0erq48grq.apps.googleusercontent.com";
+
+        function handleCredentialResponse(response) {
+            // Decode the JWT token
+            const data = JSON.parse(atob(response.credential.split('.')[1]));
+            
+            const user = {
+                id: data.sub,
+                name: data.name,
+                email: data.email,
+                picture: data.picture,
+                coins: 0
+            };
+
+            // Check if user already exists in localStorage
+            const saved = localStorage.getItem("archer_user_" + user.id);
+            if (saved) {
+                const savedUser = JSON.parse(saved);
+                user.coins = savedUser.coins || 0;
+            }
+
+            // Save user
+            localStorage.setItem("archer_user_" + user.id, JSON.stringify(user));
+            localStorage.setItem("archer_current_user", user.id);
+
+            showLoggedIn(user);
+        }
+
+        function showLoggedIn(user) {
+            document.getElementById("google-btn-container").style.display = "none";
+            document.getElementById("user-card").style.display = "flex";
+            document.getElementById("user-picture").src = user.picture;
+            document.getElementById("user-name").innerText = user.name;
+            document.getElementById("user-coins").innerText = user.coins.toLocaleString() + " Coins";
+        }
+
+        function signOut() {
+            localStorage.removeItem("archer_current_user");
+            document.getElementById("user-card").style.display = "none";
+            document.getElementById("google-btn-container").style.display = "flex";
+            // Re-render the Google button
+            google.accounts.id.renderButton(
+                document.getElementById("google-btn-container"),
+                { theme: "filled_black", size: "large", shape: "pill", text: "signin_with" }
+            );
+        }
+
+        // Initialize Google Sign-In
+        window.onload = function () {
+            google.accounts.id.initialize({
+                client_id: CLIENT_ID,
+                callback: handleCredentialResponse
+            });
+
+            // Check if already logged in
+            const currentUserId = localStorage.getItem("archer_current_user");
+            if (currentUserId) {
+                const saved = localStorage.getItem("archer_user_" + currentUserId);
+                if (saved) {
+                    showLoggedIn(JSON.parse(saved));
+                    return;
+                }
+            }
+
+            // Show Google button
+            google.accounts.id.renderButton(
+                document.getElementById("google-btn-container"),
+                { theme: "filled_black", size: "large", shape: "pill", text: "signin_with" }
+            );
+        };
+
+        // =============== SERVER STATUS ===============
         async function fetchServerStatus() {
             try {
                 const response = await fetch('https://api.mcsrvstat.us/3/donut-smp.net');
@@ -298,32 +369,25 @@
                 
                 const statusText = document.getElementById('server-status');
                 const statusDot = document.getElementById('status-dot');
-
                 if (data.online) {
                     statusText.innerText = `donut-smp.net — ${data.players.online.toLocaleString()} Players Online`;
                     statusDot.style.backgroundColor = '#2ed573';
-                    statusDot.style.boxShadow = '0 0 8px #2ed573';
                 } else {
                     statusText.innerText = `donut-smp.net — Offline`;
                     statusDot.style.backgroundColor = '#ff4757';
-                    statusDot.style.boxShadow = '0 0 8px #ff4757';
                 }
             } catch (err) {
                 document.getElementById('server-status').innerText = 'donut-smp.net — Status Unavailable';
             }
         }
 
-        // Copy IP Address Function
         function copyIP() {
             navigator.clipboard.writeText('donut-smp.net');
             const toast = document.getElementById('toast');
             toast.style.display = 'block';
-            setTimeout(() => {
-                toast.style.display = 'none';
-            }, 2500);
+            setTimeout(() => toast.style.display = 'none', 2500);
         }
 
-        // Load status on load
         fetchServerStatus();
     </script>
 </body>
