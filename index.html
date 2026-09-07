@@ -1,1 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archer Giveaways | DonutSMP</title>
+    
+    <!-- Link to your favicon image -->
+    <link rel="icon" type="image/jpeg" href="favicon.ico">
 
+    <style>
+        /* Modern Dark Gaming Theme CSS */
+        :root {
+            --primary: #ff5555; /* Archer Red Accent */
+            --gold: #ffaa00;    /* DonutSMP Coin Gold */
+            --bg-dark: #121212;
+            --bg-card: #1e1e1e;
+            --text-light: #ffffff;
+            --text-muted: #aaaaaa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 65vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(18, 18, 18, 1)), url('favicon.ico') center/cover no-repeat;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--primary);
+            margin-bottom: 10px;
+            text-shadow: 0 0 12px rgba(255, 85, 85, 0.6);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            max-width: 650px;
+        }
+
+        /* Server Status Box */
+        .server-status {
+            background: var(--bg-card);
+            padding: 12px 25px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid #333;
+            margin-bottom: 25px;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            background-color: #55ff55;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #55ff55;
+        }
+
+        .ip-box {
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        /* Action Buttons */
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 26px;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            border: none;
+            display: inline-block;
+        }
+
+        .btn-primary { background-color: var(--primary); }
+        .btn-primary:hover { background-color: #ff3333; transform: translateY(-2px); }
+
+        .btn-discord { background-color: #5865F2; }
+        .btn-discord:hover { background-color: #4752C4; transform: translateY(-2px); }
+
+        .btn-claim { background-color: var(--gold); color: #000; }
+        .btn-claim:hover { background-color: #e69900; transform: translateY(-2px); }
+
+        /* Content Sections */
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            margin-bottom: 15px;
+            border-bottom: 2px solid #222;
+            padding-bottom: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #2a2a2a;
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .card.highlight {
+            border: 1px solid var(--gold);
+        }
+
+        .card.highlight h3 {
+            color: var(--gold);
+        }
+
+        .badge {
+            background: #2a2a2a;
+            color: var(--gold);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            border-top: 1px solid #222;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Header -->
+    <header class="hero">
+        <h1>ARCHER GIVEAWAYS</h1>
+        <p>The home for DonutSMP rains, events, and community perks!</p>
+
+        <!-- Live DonutSMP Status Bar -->
+        <div class="server-status">
+            <span class="status-dot" id="status-dot"></span>
+            <span class="ip-box" onclick="copyIP()" id="ip-text">donut-smp.net</span>
+            <span style="color: var(--text-muted); font-size: 0.9rem;" id="player-count">(Loading DonutSMP stats...)</span>
+        </div>
+
+        <!-- Buttons -->
+        <div class="btn-group">
+            <button class="btn btn-primary" onclick="copyIP()">Copy IP</button>
+            <a href="https://discord.gg/YOURDISCORD" target="_blank" class="btn btn-discord">Join Discord</a>
+            <a href="https://discord.gg/YOURDISCORD" target="_blank" class="btn btn-claim">Open Claim Ticket</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        
+        <h2 class="section-title">🌧️ DonutSMP Rains & Claims</h2>
+        <div class="grid">
+            <div class="card highlight">
+                <h3>💰 5M Coins Requirement</h3>
+                <p>To claim rewards from our community rains, your account must have at least <span class="badge">5,000,000 (5M) coins</span> on DonutSMP.</p>
+            </div>
+            <div class="card">
+                <h3>🎟️ How to Claim</h3>
+                <p>Join our Discord server and navigate to the <code>#claim-rain</code> channel to open a support ticket with staff.</p>
+            </div>
+            <div class="card">
+                <h3>🛡️ Staff Verification</h3>
+                <p>Once your ticket is open, staff will verify your balance in-game using <code>/coins [username]</code> before paying out your rewards.</p>
+            </div>
+        </div>
+
+        <h2 class="section-title">📜 Server Rules</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>1. Be Respectful</h3>
+                <p>Treat all community members and staff with respect during rains and events.</p>
+            </div>
+            <div class="card">
+                <h3>2. Fair Claiming</h3>
+                <p>Do not attempt to claim rain rewards on alt accounts or forge coin verification screenshots.</p>
+            </div>
+            <div class="card">
+                <h3>3. Follow Staff Instructions</h3>
+                <p>Always listen to host instructions during active rain drops and event distributions.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Archer Giveaways. Not affiliated with Mojang, Microsoft, or DonutSMP.</p>
+    </footer>
+
+    <!-- JavaScript for Live DonutSMP Server Status & Copy IP -->
+    <script>
+        // Server IP targeted for DonutSMP
+        const SERVER_IP = "donut-smp.net"; 
+
+        // Function to Copy IP to Clipboard
+        function copyIP() {
+            navigator.clipboard.writeText(SERVER_IP);
+            alert("Server IP copied to clipboard: " + SERVER_IP);
+        }
+
+        // Fetch Live Minecraft Server Player Count & Online Status
+        async function fetchServerStatus() {
+            try {
+                const response = await fetch(`https://api.mcsrvstat.us/2/${SERVER_IP}`);
+                const data = await response.json();
+
+                const statusDot = document.getElementById('status-dot');
+                const playerCount = document.getElementById('player-count');
+
+                if (data.online) {
+                    statusDot.style.backgroundColor = "#55ff55";
+                    statusDot.style.boxShadow = "0 0 8px #55ff55";
+                    playerCount.innerText = `${data.players.online.toLocaleString()} Players Online`;
+                } else {
+                    statusDot.style.backgroundColor = "#ff5555";
+                    statusDot.style.boxShadow = "0 0 8px #ff5555";
+                    playerCount.innerText = "Offline";
+                }
+            } catch (error) {
+                document.getElementById('player-count').innerText = "Status unavailable";
+            }
+        }
+
+        // Run status check on load
+        fetchServerStatus();
+    </script>
+</body>
+</html>
