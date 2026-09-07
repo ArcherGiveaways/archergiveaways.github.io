@@ -3,276 +3,327 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Archer Giveaways | DonutSMP</title>
+    <title>Archer Giveaways - DonutSMP Rains</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     
-    <!-- Link to your favicon image -->
-    <link rel="icon" type="image/jpeg" href="favicon.ico">
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* Modern Dark Gaming Theme CSS */
         :root {
-            --primary: #ff5555; /* Archer Red Accent */
-            --gold: #ffaa00;    /* DonutSMP Coin Gold */
-            --bg-dark: #121212;
-            --bg-card: #1e1e1e;
-            --text-light: #ffffff;
-            --text-muted: #aaaaaa;
+            --bg-color: #0d0e12;
+            --card-bg: #16181e;
+            --card-hover: #1f222b;
+            --accent-red: #ff4757;
+            --accent-gold: #ffa502;
+            --accent-blue: #54a0ff;
+            --accent-green: #2ed573;
+            --text-main: #ffffff;
+            --text-muted: #a4b0be;
+            --border-color: #232732;
         }
 
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            line-height: 1.6;
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 65vh;
+            background-color: var(--bg-color);
+            color: var(--text-main);
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+            background-image: radial-gradient(circle at top, rgba(255, 71, 87, 0.08) 0%, transparent 60%);
+        }
+
+        /* Hero Container */
+        .hero {
             text-align: center;
-            background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(18, 18, 18, 1)), url('favicon.ico') center/cover no-repeat;
-            padding: 20px;
+            margin-bottom: 40px;
+            max-width: 800px;
         }
 
         .hero h1 {
-            font-size: 3.8rem;
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: var(--accent-red);
             text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--primary);
-            margin-bottom: 10px;
-            text-shadow: 0 0 12px rgba(255, 85, 85, 0.6);
+            letter-spacing: 2px;
+            text-shadow: 0 0 25px rgba(255, 71, 87, 0.4);
         }
 
         .hero p {
-            font-size: 1.2rem;
             color: var(--text-muted);
-            margin-bottom: 25px;
-            max-width: 650px;
+            font-size: 1.15rem;
+            margin-top: 10px;
         }
 
-        /* Server Status Box */
-        .server-status {
-            background: var(--bg-card);
-            padding: 12px 25px;
-            border-radius: 8px;
-            display: flex;
+        /* Server Status Badge */
+        .status-badge {
+            display: inline-flex;
             align-items: center;
-            gap: 12px;
-            border: 1px solid #333;
-            margin-bottom: 25px;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 8px 18px;
+            border-radius: 20px;
+            margin-top: 20px;
+            font-size: 0.95rem;
+            backdrop-filter: blur(5px);
         }
 
         .status-dot {
-            width: 12px;
-            height: 12px;
-            background-color: #55ff55;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
-            box-shadow: 0 0 8px #55ff55;
-        }
-
-        .ip-box {
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            color: #fff;
+            background-color: var(--accent-green);
+            box-shadow: 0 0 8px var(--accent-green);
         }
 
         /* Action Buttons */
-        .btn-group {
+        .button-group {
             display: flex;
             gap: 15px;
-            flex-wrap: wrap;
             justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
         }
 
         .btn {
-            padding: 12px 26px;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-weight: 600;
             text-decoration: none;
-            color: #fff;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: 0.3s;
+            color: white;
             cursor: pointer;
             border: none;
-            display: inline-block;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
         }
 
-        .btn-primary { background-color: var(--primary); }
-        .btn-primary:hover { background-color: #ff3333; transform: translateY(-2px); }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
 
-        .btn-discord { background-color: #5865F2; }
-        .btn-discord:hover { background-color: #4752C4; transform: translateY(-2px); }
+        .btn-red { 
+            background-color: var(--accent-red); 
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+        }
+        .btn-blue { 
+            background-color: var(--accent-blue); 
+            box-shadow: 0 4px 15px rgba(84, 160, 255, 0.3);
+        }
+        .btn-gold { 
+            background-color: var(--accent-gold); 
+            color: #000; 
+            box-shadow: 0 4px 15px rgba(255, 165, 2, 0.3);
+        }
 
-        .btn-claim { background-color: var(--gold); color: #000; }
-        .btn-claim:hover { background-color: #e69900; transform: translateY(-2px); }
-
-        /* Content Sections */
-        .container {
+        /* Content Section */
+        .main-container {
+            width: 100%;
             max-width: 1000px;
-            margin: 40px auto;
-            padding: 0 20px;
+            margin-top: 20px;
         }
 
         .section-title {
-            margin-bottom: 15px;
-            border-bottom: 2px solid #222;
-            padding-bottom: 10px;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
         }
 
-        .grid {
+        .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
-            margin-top: 20px;
-            margin-bottom: 40px;
         }
 
         .card {
-            background: var(--bg-card);
-            padding: 25px;
-            border-radius: 8px;
-            border: 1px solid #2a2a2a;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 28px;
+            transition: all 0.3s ease;
         }
 
-        .card h3 {
-            color: var(--primary);
-            margin-bottom: 10px;
+        .card:hover {
+            background-color: var(--card-hover);
+            transform: translateY(-2px);
         }
 
-        .card.highlight {
-            border: 1px solid var(--gold);
+        .card-gold {
+            border-color: rgba(255, 165, 2, 0.4);
+            box-shadow: 0 0 15px rgba(255, 165, 2, 0.05);
         }
 
-        .card.highlight h3 {
-            color: var(--gold);
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
         }
 
-        .badge {
-            background: #2a2a2a;
-            color: var(--gold);
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: bold;
+        .card-header i {
+            font-size: 1.3rem;
         }
 
-        footer {
-            text-align: center;
-            padding: 20px;
+        .card-header h3 {
+            font-size: 1.15rem;
+        }
+
+        .card p {
             color: var(--text-muted);
-            border-top: 1px solid #222;
-            margin-top: 50px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        code {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #fff;
+            font-family: monospace;
+        }
+
+        /* Toast Popup */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-red);
+            color: white;
+            padding: 14px 24px;
+            border-radius: 10px;
+            display: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            font-weight: 600;
+            z-index: 100;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-    <!-- Hero Header -->
-    <header class="hero">
+    <!-- Hero Section -->
+    <div class="hero">
         <h1>ARCHER GIVEAWAYS</h1>
-        <p>The home for DonutSMP rains, events, and community perks!</p>
+        <p>The central hub for DonutSMP rains, event announcements, and claim requirements.</p>
 
-        <!-- Live DonutSMP Status Bar -->
-        <div class="server-status">
-            <span class="status-dot" id="status-dot"></span>
-            <span class="ip-box" onclick="copyIP()" id="ip-text">donut-smp.net</span>
-            <span style="color: var(--text-muted); font-size: 0.9rem;" id="player-count">(Loading DonutSMP stats...)</span>
+        <!-- Live Server Status Indicator -->
+        <div class="status-badge">
+            <div class="status-dot" id="status-dot"></div>
+            <span id="server-status">Checking donut-smp.net...</span>
         </div>
 
-        <!-- Buttons -->
-        <div class="btn-group">
-            <button class="btn btn-primary" onclick="copyIP()">Copy IP</button>
-            <a href="https://discord.gg/YOURDISCORD" target="_blank" class="btn btn-discord">Join Discord</a>
-            <a href="https://discord.gg/YOURDISCORD" target="_blank" class="btn btn-claim">Open Claim Ticket</a>
+        <!-- Links & Buttons -->
+        <div class="button-group">
+            <button class="btn btn-red" onclick="copyIP()">
+                <i class="fa-solid fa-copy"></i> Copy IP
+            </button>
+            <a href="https://discord.gg/YOUR_DISCORD_INVITE" target="_blank" class="btn btn-blue">
+                <i class="fa-brands fa-discord"></i> Join Discord
+            </a>
+            <a href="https://discord.gg/YOUR_DISCORD_INVITE" target="_blank" class="btn btn-gold">
+                <i class="fa-solid fa-ticket"></i> Open Claim Ticket
+            </a>
         </div>
-    </header>
+    </div>
 
-    <!-- Main Content -->
-    <div class="container">
-        
-        <h2 class="section-title">🌧️ DonutSMP Rains & Claims</h2>
-        <div class="grid">
-            <div class="card highlight">
-                <h3>💰 5M Coins Requirement</h3>
-                <p>To claim rewards from our community rains, your account must have at least <span class="badge">5,000,000 (5M) coins</span> on DonutSMP.</p>
+    <!-- Main Container -->
+    <div class="main-container">
+        <h2 class="section-title">
+            <i class="fa-solid fa-cloud-showers-heavy" style="color: var(--accent-blue);"></i> 
+            DonutSMP Rains & Claims
+        </h2>
+
+        <div class="cards-grid">
+            <!-- Requirement Card -->
+            <div class="card card-gold">
+                <div class="card-header">
+                    <i class="fa-solid fa-sack-dollar" style="color: var(--accent-gold);"></i>
+                    <h3 style="color: var(--accent-gold);">5M Coins Requirement</h3>
+                </div>
+                <p>To claim rewards from our community rains, your account must have at least <span style="color: var(--accent-gold); font-weight: 600;">5,000,000 (5M) coins</span> on DonutSMP.</p>
             </div>
+
+            <!-- Process Card -->
             <div class="card">
-                <h3>🎟️ How to Claim</h3>
+                <div class="card-header">
+                    <i class="fa-solid fa-ticket" style="color: var(--accent-red);"></i>
+                    <h3 style="color: var(--accent-red);">How to Claim</h3>
+                </div>
                 <p>Join our Discord server and navigate to the <code>#claim-rain</code> channel to open a support ticket with staff.</p>
             </div>
+
+            <!-- Verification Card -->
             <div class="card">
-                <h3>🛡️ Staff Verification</h3>
+                <div class="card-header">
+                    <i class="fa-solid fa-shield-halved" style="color: var(--accent-blue);"></i>
+                    <h3 style="color: var(--accent-blue);">Staff Verification</h3>
+                </div>
                 <p>Once your ticket is open, staff will verify your balance in-game using <code>/coins [username]</code> before paying out your rewards.</p>
             </div>
         </div>
-
-        <h2 class="section-title">📜 Server Rules</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>1. Be Respectful</h3>
-                <p>Treat all community members and staff with respect during rains and events.</p>
-            </div>
-            <div class="card">
-                <h3>2. Fair Claiming</h3>
-                <p>Do not attempt to claim rain rewards on alt accounts or forge coin verification screenshots.</p>
-            </div>
-            <div class="card">
-                <h3>3. Follow Staff Instructions</h3>
-                <p>Always listen to host instructions during active rain drops and event distributions.</p>
-            </div>
-        </div>
-
     </div>
 
-    <footer>
-        <p>&copy; 2026 Archer Giveaways. Not affiliated with Mojang, Microsoft, or DonutSMP.</p>
-    </footer>
+    <!-- Notification Popup -->
+    <div id="toast" class="toast">
+        <i class="fa-solid fa-check-circle"></i> IP copied to clipboard!
+    </div>
 
-    <!-- JavaScript for Live DonutSMP Server Status & Copy IP -->
     <script>
-        // Server IP targeted for DonutSMP
-        const SERVER_IP = "donut-smp.net"; 
-
-        // Function to Copy IP to Clipboard
-        function copyIP() {
-            navigator.clipboard.writeText(SERVER_IP);
-            alert("Server IP copied to clipboard: " + SERVER_IP);
-        }
-
-        // Fetch Live Minecraft Server Player Count & Online Status
+        // Fetch Live DonutSMP Status
         async function fetchServerStatus() {
             try {
-                const response = await fetch(`https://api.mcsrvstat.us/2/${SERVER_IP}`);
+                const response = await fetch('https://api.mcsrvstat.us/3/donut-smp.net');
                 const data = await response.json();
-
+                
+                const statusText = document.getElementById('server-status');
                 const statusDot = document.getElementById('status-dot');
-                const playerCount = document.getElementById('player-count');
 
                 if (data.online) {
-                    statusDot.style.backgroundColor = "#55ff55";
-                    statusDot.style.boxShadow = "0 0 8px #55ff55";
-                    playerCount.innerText = `${data.players.online.toLocaleString()} Players Online`;
+                    statusText.innerText = `donut-smp.net — ${data.players.online.toLocaleString()} Players Online`;
+                    statusDot.style.backgroundColor = '#2ed573';
+                    statusDot.style.boxShadow = '0 0 8px #2ed573';
                 } else {
-                    statusDot.style.backgroundColor = "#ff5555";
-                    statusDot.style.boxShadow = "0 0 8px #ff5555";
-                    playerCount.innerText = "Offline";
+                    statusText.innerText = `donut-smp.net — Offline`;
+                    statusDot.style.backgroundColor = '#ff4757';
+                    statusDot.style.boxShadow = '0 0 8px #ff4757';
                 }
-            } catch (error) {
-                document.getElementById('player-count').innerText = "Status unavailable";
+            } catch (err) {
+                document.getElementById('server-status').innerText = 'donut-smp.net — Status Unavailable';
             }
         }
 
-        // Run status check on load
+        // Copy IP Address Function
+        function copyIP() {
+            navigator.clipboard.writeText('donut-smp.net');
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 2500);
+        }
+
+        // Load status on load
         fetchServerStatus();
     </script>
 </body>
