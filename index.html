@@ -1,1440 +1,3445 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Archer Giveaways</title>
+  <title>Archer Giveaways</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link
+  <link
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
->
+  >
 
-<link
+  <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
->
+  >
 
-<script
-    src="https://accounts.google.com/gsi/client"
-    async
-    defer
-></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 
-<style>
+  <style>
+    :root {
+      --bg: #09070f;
+      --panel: #100c18;
+      --panel2: #151020;
+      --panel3: #1a1327;
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+      --purple: #9b5cff;
+      --purple-dark: #6d35d0;
+      --purple-soft: rgba(155, 92, 255, .13);
 
-body {
-    font-family: "Poppins", sans-serif;
-    background: #080808;
-    color: white;
-    min-height: 100vh;
-}
+      --green: #55e39a;
+      --red: #ff6275;
+      --yellow: #ffd166;
 
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background:
+      --text: #f7f3ff;
+      --muted: #9c95aa;
+
+      --border: rgba(255,255,255,.075);
+
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
         radial-gradient(
-            circle at 50% -10%,
-            rgba(168,85,247,.18),
-            transparent 38%
-        );
-    pointer-events: none;
-}
-
-.container {
-    width: min(1180px, 92%);
-    margin: auto;
-    position: relative;
-}
-
-/* =========================
-   HEADER
-========================= */
-
-header {
-    height: 76px;
-    border-bottom: 1px solid rgba(255,255,255,.08);
-    display: flex;
-    align-items: center;
-}
-
-.nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.logo {
-    font-size: 24px;
-    font-weight: 800;
-}
-
-.logo span {
-    color: #a855f7;
-}
-
-.nav-right {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-button {
-    font-family: inherit;
-}
-
-.google,
-.profile {
-    border: 1px solid rgba(255,255,255,.1);
-    border-radius: 12px;
-    padding: 10px 15px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.google {
-    background: white;
-    color: #111;
-}
-
-.profile {
-    display: none;
-    align-items: center;
-    gap: 9px;
-    background: #151515;
-    color: white;
-}
-
-.profile img {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-}
-
-/* =========================
-   HERO
-========================= */
-
-.hero {
-    text-align: center;
-    padding: 78px 0 42px;
-}
-
-.eyebrow {
-    color: #c084fc;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-size: 12px;
-}
-
-.hero h1 {
-    font-size: clamp(42px, 7vw, 76px);
-    line-height: 1.02;
-    margin: 12px 0;
-}
-
-.hero h1 span {
-    color: #a855f7;
-}
-
-.hero p {
-    max-width: 650px;
-    margin: auto;
-    color: #999;
-    font-size: 16px;
-}
-
-.actions {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-top: 26px;
-}
-
-.btn {
-    border: 0;
-    border-radius: 12px;
-    padding: 12px 18px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: .2s;
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-}
-
-.primary {
-    background: #a855f7;
-    color: white;
-}
-
-.secondary {
-    background: #5865f2;
-    color: white;
-}
-
-.dark {
-    background: #171717;
-    color: white;
-    border: 1px solid rgba(255,255,255,.08);
-}
-
-.status {
-    margin: 26px auto 0;
-    width: max-content;
-    max-width: 100%;
-    padding: 8px 14px;
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 999px;
-    background: #111;
-    color: #aaa;
-    font-size: 13px;
-}
-
-.online {
-    color: #4ade80;
-}
-
-/* =========================
-   GIVEAWAYS
-========================= */
-
-.featured {
-    padding: 25px 0;
-}
-
-.section-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    margin-bottom: 18px;
-}
-
-.section-head h2 {
-    font-size: 25px;
-}
-
-.section-head p {
-    color: #777;
-    font-size: 13px;
-}
-
-.giveaways {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-}
-
-.giveaway {
-    background: #111;
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 15px 40px rgba(0,0,0,.25);
-}
-
-.giveaway-top {
-    height: 155px;
-    background:
-        linear-gradient(
-            135deg,
-            #050505,
-            #191919
-        );
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 46px;
-}
-
-.giveaway-top.purple {
-    background:
-        linear-gradient(
-            135deg,
-            #100718,
-            #241033
-        );
-}
-
-.giveaway-top.blue {
-    background:
-        linear-gradient(
-            135deg,
-            #061018,
-            #102b3b
-        );
-}
-
-.giveaway-body {
-    padding: 20px;
-}
-
-.tag {
-    display: inline-block;
-
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-
-    color: #c084fc;
-
-    background:
-        rgba(168,85,247,.12);
-
-    padding: 5px 8px;
-    border-radius: 6px;
-}
-
-.giveaway h3 {
-    font-size: 20px;
-    margin: 11px 0 5px;
-}
-
-.prize {
-    font-size: 14px;
-    color: #aaa;
-}
-
-.enter {
-    width: 100%;
-    margin-top: 16px;
-}
-
-/* =========================
-   INFO
-========================= */
-
-.info {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-    padding: 45px 0 70px;
-}
-
-.info-card {
-    background: #101010;
-    border: 1px solid rgba(255,255,255,.07);
-    border-radius: 18px;
-    padding: 22px;
-}
-
-.info-card i {
-    color: #a855f7;
-    font-size: 22px;
-    margin-bottom: 13px;
-}
-
-.info-card h3 {
-    margin-bottom: 7px;
-}
-
-.info-card p {
-    color: #888;
-    font-size: 13px;
-    line-height: 1.7;
-}
-
-/* =========================
-   PROFILE MENU
-========================= */
-
-.profile-menu {
-    position: fixed;
-
-    top: 70px;
-    right: 4%;
-
-    width: 280px;
-
-    background: #111;
-
-    border:
-        1px solid rgba(255,255,255,.1);
-
-    border-radius: 16px;
-
-    padding: 18px;
-
-    display: none;
-
-    z-index: 20;
-
-    box-shadow:
-        0 20px 60px #000;
-}
-
-.profile-menu.open {
-    display: block;
-}
-
-.profile-row {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-}
-
-.profile-row img {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-}
-
-.profile-email {
-    color: #777;
-    font-size: 11px;
-}
-
-.stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-top: 15px;
-}
-
-.stat {
-    background: #181818;
-    border-radius: 10px;
-    padding: 10px;
-
-    font-size: 12px;
-    color: #aaa;
-}
-
-.stat strong {
-    display: block;
-    color: white;
-    font-size: 16px;
-}
-
-.logout {
-    width: 100%;
-    margin-top: 12px;
-}
-
-/* =========================
-   LOGIN MODAL
-========================= */
-
-.modal {
-    position: fixed;
-    inset: 0;
-
-    background:
-        rgba(0,0,0,.78);
-
-    backdrop-filter: blur(8px);
-
-    display: none;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 20px;
-
-    z-index: 50;
-}
-
-.modal.show {
-    display: flex;
-}
-
-.modal-box {
-    width: min(430px,100%);
-
-    background: #121212;
-
-    border:
-        1px solid rgba(255,255,255,.1);
-
-    border-radius: 20px;
-
-    padding: 28px;
-
-    text-align: center;
-}
-
-.modal-box h2 {
-    margin-bottom: 8px;
-}
-
-.modal-box p {
-    color: #999;
-    font-size: 14px;
-    line-height: 1.6;
-}
-
-.modal-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.modal-actions .btn {
-    flex: 1;
-}
-
-.close {
-    margin-top: 12px;
-    background: none;
-    border: 0;
-    color: #777;
-    cursor: pointer;
-}
-
-/* =========================
-   TOAST
-========================= */
-
-.toast {
-    position: fixed;
-
-    bottom: 22px;
-    left: 50%;
-
-    transform:
-        translateX(-50%)
-        translateY(20px);
-
-    background: #181818;
-
-    border:
-        1px solid rgba(255,255,255,.1);
-
-    padding: 11px 16px;
-
-    border-radius: 10px;
-
-    opacity: 0;
-
-    pointer-events: none;
-
-    transition: .25s;
-
-    z-index: 100;
-}
-
-.toast.show {
-    opacity: 1;
-
-    transform:
-        translateX(-50%)
-        translateY(0);
-}
-
-/* =========================
-   FOOTER
-========================= */
-
-footer {
-    border-top:
-        1px solid rgba(255,255,255,.07);
-
-    padding: 25px 0;
-
-    color: #666;
-
-    text-align: center;
-
-    font-size: 12px;
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:800px) {
-
-    .giveaways,
-    .info {
-        grid-template-columns: 1fr;
+          circle at 75% 0%,
+          rgba(125, 60, 220, .17),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 10% 25%,
+          rgba(92, 40, 170, .08),
+          transparent 30%
+        ),
+        var(--bg);
+
+      color: var(--text);
+      font-family: "Poppins", sans-serif;
     }
 
-    .hero {
-        padding-top: 55px;
+    button {
+      font-family: inherit;
     }
 
-    .section-head {
-        display: block;
+    /* =========================
+       TOP
+    ========================= */
+
+    .topbar {
+      height: 74px;
+
+      position: sticky;
+      top: 0;
+      z-index: 100;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 0 28px;
+
+      background: rgba(9,7,15,.88);
+      backdrop-filter: blur(18px);
+
+      border-bottom: 1px solid var(--border);
     }
 
-    .section-head p {
-        margin-top: 5px;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 11px;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--purple),
+          var(--purple-dark)
+        );
+
+      box-shadow:
+        0 0 30px rgba(155,92,255,.22);
+    }
+
+    .login-button,
+    .profile-button {
+      height: 44px;
+
+      display: flex;
+      align-items: center;
+      gap: 9px;
+
+      padding: 0 14px;
+
+      border-radius: 11px;
+      border: 1px solid var(--border);
+
+      background: rgba(255,255,255,.035);
+      color: white;
+
+      cursor: pointer;
+
+      transition: .2s;
+    }
+
+    .login-button:hover,
+    .profile-button:hover {
+      background: var(--purple-soft);
+      border-color: rgba(155,92,255,.35);
+    }
+
+    .google-icon {
+      width: 19px;
+      height: 19px;
+    }
+
+    .profile-avatar {
+      width: 29px;
+      height: 29px;
+
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* =========================
+       PAGE
+    ========================= */
+
+    .page {
+      width: min(1480px, calc(100% - 40px));
+      margin: auto;
+
+      padding: 25px 0 50px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 305px minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    /* =========================
+       SIDEBAR
+    ========================= */
+
+    .sidebar {
+      height: calc(100vh - 122px);
+      min-height: 520px;
+
+      position: sticky;
+      top: 97px;
+
+      overflow: hidden;
+
+      background: var(--panel);
+
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .sidebar-head {
+      height: 70px;
+
+      padding: 17px 18px;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-title {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .sidebar-description {
+      margin-top: 2px;
+
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .active-events {
+      height: calc(100% - 70px);
+
+      overflow-y: auto;
+
+      padding: 12px;
+
+      scrollbar-width: thin;
+      scrollbar-color: rgba(155,92,255,.45) transparent;
+    }
+
+    .active-events::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    .active-events::-webkit-scrollbar-thumb {
+      background: rgba(155,92,255,.4);
+      border-radius: 99px;
+    }
+
+    .event-mini {
+      position: relative;
+
+      min-height: 112px;
+
+      margin-bottom: 10px;
+      padding: 13px;
+
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 14px;
+
+      background: rgba(255,255,255,.025);
+
+      transition: .2s;
+    }
+
+    .event-mini:hover {
+      background: rgba(155,92,255,.055);
+      border-color: rgba(155,92,255,.22);
+      transform: translateY(-1px);
+    }
+
+    .event-type {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+
+      padding: 4px 7px;
+
+      border-radius: 6px;
+
+      font-size: 8px;
+      font-weight: 800;
+      letter-spacing: .7px;
+      text-transform: uppercase;
+
+      color: #c9a9ff;
+      background: rgba(155,92,255,.1);
+    }
+
+    .event-type.rain {
+      color: #86edb7;
+      background: rgba(85,227,154,.08);
+    }
+
+    .event-name {
+      margin-top: 9px;
+
+      font-size: 12px;
+      font-weight: 700;
+
+      padding-right: 10px;
+    }
+
+    .event-prize {
+      margin-top: 3px;
+
+      color: var(--muted);
+
+      font-size: 10px;
+    }
+
+    .event-time {
+      position: absolute;
+
+      right: 12px;
+      bottom: 13px;
+
+      color: #706a79;
+
+      font-size: 8px;
+    }
+
+    .tiny-enter {
+      position: absolute;
+
+      left: 11px;
+      bottom: 10px;
+
+      width: 23px;
+      height: 23px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 6px;
+
+      background: rgba(255,255,255,.035);
+      color: #aaa3b5;
+
+      cursor: pointer;
+
+      transition: .2s;
+    }
+
+    .tiny-enter:hover {
+      color: white;
+      background: var(--purple);
+      border-color: var(--purple);
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    .main {
+      min-width: 0;
+    }
+
+    .heading {
+      margin-bottom: 16px;
+    }
+
+    .eyebrow {
+      margin-bottom: 5px;
+
+      color: #aa7aff;
+
+      font-size: 9px;
+      font-weight: 800;
+
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .heading h1 {
+      font-size: clamp(25px, 3vw, 35px);
+      line-height: 1.05;
+
+      letter-spacing: -1px;
+    }
+
+    .heading p {
+      margin-top: 7px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+    }
+
+    /* =========================
+       FEATURED
+    ========================= */
+
+    .featured {
+      min-height: 210px;
+
+      position: relative;
+      overflow: hidden;
+
+      padding: 27px 30px;
+
+      border-radius: 21px;
+
+      border: 1px solid rgba(155,92,255,.22);
+
+      background:
+        radial-gradient(
+          circle at 88% 25%,
+          rgba(174,106,255,.2),
+          transparent 30%
+        ),
+        linear-gradient(
+          135deg,
+          #1b112a,
+          #100b17
+        );
+    }
+
+    .featured-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .featured-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+
+      color: #c6a5ff;
+
+      font-size: 9px;
+      font-weight: 800;
+
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .featured-title {
+      margin-top: 10px;
+
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 800;
+
+      letter-spacing: -.7px;
+    }
+
+    .featured-prize {
+      margin-top: 2px;
+
+      color: #c7b4e7;
+
+      font-size: 17px;
+    }
+
+    .featured-bottom {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      flex-wrap: wrap;
+
+      margin-top: 21px;
+    }
+
+    .featured-pill {
+      padding: 7px 10px;
+
+      border-radius: 8px;
+
+      background: rgba(255,255,255,.05);
+
+      color: #bbb3c7;
+
+      font-size: 9px;
+    }
+
+    .featured-enter {
+      margin-left: auto;
+
+      border: none;
+
+      padding: 11px 19px;
+
+      border-radius: 9px;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--purple),
+          var(--purple-dark)
+        );
+
+      color: white;
+
+      font-size: 10px;
+      font-weight: 700;
+
+      cursor: pointer;
+
+      transition: .2s;
+    }
+
+    .featured-enter:hover {
+      transform: translateY(-1px);
+    }
+
+    /* =========================
+       ACCOUNT
+    ========================= */
+
+    .account-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr 1fr;
+
+      gap: 11px;
+
+      margin-top: 17px;
+    }
+
+    .account-card {
+      min-height: 132px;
+
+      padding: 16px;
+
+      background: var(--panel);
+
+      border: 1px solid var(--border);
+      border-radius: 15px;
+    }
+
+    .card-label {
+      color: var(--muted);
+
+      font-size: 9px;
+      font-weight: 700;
+
+      text-transform: uppercase;
+      letter-spacing: .8px;
+    }
+
+    .account-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      margin-top: 12px;
+    }
+
+    .account-user img {
+      width: 38px;
+      height: 38px;
+
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .account-name {
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .account-email {
+      max-width: 180px;
+
+      margin-top: 2px;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      color: var(--muted);
+
+      font-size: 8px;
+    }
+
+    .verification-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 7px;
+
+      margin-top: 14px;
+    }
+
+    .verification-status {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .verification-dot {
+      width: 7px;
+      height: 7px;
+
+      border-radius: 50%;
+
+      background: var(--red);
+    }
+
+    .verification-status.verified {
+      color: var(--green);
+    }
+
+    .verification-status.verified .verification-dot {
+      background: var(--green);
+      box-shadow: 0 0 8px rgba(85,227,154,.5);
+    }
+
+    .verify-button {
+      padding: 6px 9px;
+
+      border: 1px solid rgba(155,92,255,.3);
+      border-radius: 7px;
+
+      background: rgba(155,92,255,.08);
+      color: #c8a9ff;
+
+      font-size: 8px;
+      font-weight: 700;
+
+      cursor: pointer;
+    }
+
+    .verify-button:hover {
+      background: rgba(155,92,255,.17);
+    }
+
+    .coin-number {
+      margin-top: 7px;
+
+      font-size: 24px;
+      font-weight: 800;
+
+      letter-spacing: -.8px;
+    }
+
+    .coin-sub {
+      color: var(--muted);
+      font-size: 8px;
+    }
+
+    /* =========================
+       BARS
+    ========================= */
+
+    .progress {
+      margin-top: 13px;
+    }
+
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+
+      margin-bottom: 5px;
+
+      color: var(--muted);
+
+      font-size: 8px;
+    }
+
+    .progress-top strong {
+      color: #ddd6e7;
+    }
+
+    .progress-track {
+      height: 6px;
+
+      overflow: hidden;
+
+      border-radius: 99px;
+
+      background: rgba(255,255,255,.055);
+    }
+
+    .progress-fill {
+      height: 100%;
+
+      width: 0%;
+
+      border-radius: inherit;
+
+      background:
+        linear-gradient(
+          90deg,
+          #7540d3,
+          #b27cff
+        );
+
+      transition: width .35s;
+    }
+
+    .progress-fill.green {
+      background:
+        linear-gradient(
+          90deg,
+          #37b878,
+          #71efad
+        );
+    }
+
+    /* =========================
+       EVENT GRID
+    ========================= */
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      margin: 23px 0 11px;
+    }
+
+    .section-heading h2 {
+      font-size: 15px;
+    }
+
+    .section-heading span {
+      color: var(--muted);
+      font-size: 8px;
+    }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
+    }
+
+    .event-card {
+      min-height: 205px;
+
+      position: relative;
+
+      padding: 17px;
+
+      border: 1px solid var(--border);
+      border-radius: 16px;
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(255,255,255,.032),
+          rgba(255,255,255,.014)
+        ),
+        var(--panel);
+
+      transition: .2s;
+    }
+
+    .event-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(155,92,255,.23);
+    }
+
+    .event-card.featured-card {
+      background:
+        radial-gradient(
+          circle at 90% 10%,
+          rgba(155,92,255,.12),
+          transparent 35%
+        ),
+        var(--panel);
+    }
+
+    .card-event-type {
+      display: inline-flex;
+
+      padding: 5px 8px;
+
+      border-radius: 7px;
+
+      color: #c6a5ff;
+      background: rgba(155,92,255,.1);
+
+      font-size: 8px;
+      font-weight: 800;
+
+      text-transform: uppercase;
+      letter-spacing: .7px;
+    }
+
+    .card-event-type.rain {
+      color: #85eeb7;
+      background: rgba(85,227,154,.08);
+    }
+
+    .card-title {
+      margin-top: 14px;
+
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .card-prize {
+      margin-top: 3px;
+
+      font-size: 24px;
+      font-weight: 800;
+
+      letter-spacing: -.7px;
+    }
+
+    .card-description {
+      margin-top: 4px;
+
+      color: var(--muted);
+
+      font-size: 9px;
+      line-height: 1.5;
+    }
+
+    .card-footer {
+      position: absolute;
+
+      left: 17px;
+      right: 17px;
+      bottom: 17px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-time {
+      color: #706a79;
+      font-size: 8px;
+    }
+
+    .card-enter {
+      width: 31px;
+      height: 31px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px;
+
+      background: rgba(255,255,255,.035);
+      color: #aaa3b5;
+
+      cursor: pointer;
+
+      transition: .2s;
+    }
+
+    .card-enter:hover {
+      background: var(--purple);
+      border-color: var(--purple);
+      color: white;
+    }
+
+    /* =========================
+       PROFILE MENU
+    ========================= */
+
+    .account-area {
+      position: relative;
     }
 
     .profile-menu {
-        right: 4%;
-        left: 4%;
-        width: auto;
-    }
-}
+      position: absolute;
 
-</style>
+      top: 54px;
+      right: 0;
+
+      width: 245px;
+
+      display: none;
+
+      padding: 10px;
+
+      background: #130d1e;
+
+      border: 1px solid var(--border);
+      border-radius: 14px;
+
+      box-shadow: 0 20px 60px rgba(0,0,0,.45);
+    }
+
+    .profile-menu.open {
+      display: block;
+    }
+
+    .menu-header {
+      padding: 9px;
+
+      border-bottom: 1px solid var(--border);
+
+      margin-bottom: 6px;
+    }
+
+    .menu-name {
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .menu-email {
+      margin-top: 2px;
+
+      color: var(--muted);
+      font-size: 8px;
+    }
+
+    .menu-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 10px;
+
+      margin-top: 5px;
+
+      border-radius: 8px;
+
+      background: rgba(255,255,255,.025);
+
+      font-size: 9px;
+    }
+
+    .logout {
+      width: 100%;
+
+      margin-top: 7px;
+
+      padding: 9px;
+
+      border: 1px solid rgba(255,98,117,.15);
+      border-radius: 8px;
+
+      background: rgba(255,98,117,.05);
+      color: #ff8797;
+
+      font-size: 9px;
+      font-weight: 700;
+
+      cursor: pointer;
+    }
+
+    /* =========================
+       MODAL
+    ========================= */
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+
+      z-index: 500;
+
+      display: none;
+      align-items: center;
+      justify-content: center;
+
+      padding: 20px;
+
+      background: rgba(0,0,0,.73);
+
+      backdrop-filter: blur(8px);
+    }
+
+    .overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      width: min(430px,100%);
+
+      padding: 23px;
+
+      border: 1px solid var(--border);
+      border-radius: 18px;
+
+      background: #130d1e;
+
+      box-shadow: 0 30px 100px rgba(0,0,0,.55);
+    }
+
+    .modal-icon {
+      width: 45px;
+      height: 45px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 12px;
+
+      background: var(--purple-soft);
+      color: #c29aff;
+    }
+
+    .modal h3 {
+      margin-top: 14px;
+
+      font-size: 19px;
+    }
+
+    .modal p {
+      margin-top: 6px;
+
+      color: var(--muted);
+
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    .link-code {
+      margin-top: 16px;
+
+      padding: 13px;
+
+      text-align: center;
+
+      border: 1px dashed rgba(155,92,255,.35);
+      border-radius: 10px;
+
+      background: rgba(155,92,255,.06);
+
+      color: #d4bcff;
+
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 8px;
+
+      margin-top: 17px;
+    }
+
+    .modal-primary,
+    .modal-secondary {
+      flex: 1;
+
+      padding: 10px;
+
+      border-radius: 9px;
+
+      font-size: 9px;
+      font-weight: 700;
+
+      cursor: pointer;
+    }
+
+    .modal-primary {
+      border: none;
+
+      background: var(--purple);
+      color: white;
+    }
+
+    .modal-secondary {
+      border: 1px solid var(--border);
+
+      background: rgba(255,255,255,.03);
+      color: #aaa3b5;
+    }
+
+    /* =========================
+       TOAST
+    ========================= */
+
+    .toast {
+      position: fixed;
+
+      right: 20px;
+      bottom: 20px;
+
+      z-index: 900;
+
+      max-width: 340px;
+
+      padding: 12px 15px;
+
+      border: 1px solid var(--border);
+      border-radius: 10px;
+
+      background: #171020;
+
+      color: white;
+
+      font-size: 9px;
+
+      box-shadow: 0 15px 50px rgba(0,0,0,.4);
+
+      opacity: 0;
+      transform: translateY(80px);
+
+      transition: .25s;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 950px) {
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+
+        height: 265px;
+        min-height: 0;
+      }
+
+      .active-events {
+        display: flex;
+
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+
+      .event-mini {
+        flex: 0 0 245px;
+      }
+
+      .account-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 650px) {
+
+      .topbar {
+        padding: 0 14px;
+      }
+
+      .page {
+        width: calc(100% - 24px);
+      }
+
+      .brand {
+        font-size: 16px;
+      }
+
+      .brand-icon {
+        width: 34px;
+        height: 34px;
+      }
+
+      .login-button span {
+        display: none;
+      }
+
+      .featured {
+        padding: 22px;
+      }
+
+      .featured-enter {
+        width: 100%;
+        margin-left: 0;
+      }
+
+      .events-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
+  <!-- =========================
+       HEADER
+  ========================= -->
 
-<div class="container nav">
+  <header class="topbar">
 
-    <div class="logo">
-        Archer <span>Giveaways</span>
+    <div class="brand">
+
+      <div class="brand-icon">
+        <i class="fa-solid fa-bolt"></i>
+      </div>
+
+      <span>Archer Giveaways</span>
+
     </div>
 
-    <div class="nav-right">
 
-        <button
-            class="google"
-            id="googleBtn"
-            onclick="loginWithGoogle()"
+    <div class="account-area">
+
+      <button
+        class="login-button"
+        id="loginButton"
+        onclick="startGoogleLogin()"
+      >
+        <img
+          class="google-icon"
+          src="https://www.gstatic.com/images/branding/product/1x/googleg_48dp.png"
+          alt=""
         >
-            <i class="fa-brands fa-google"></i>
-            Sign in with Google
-        </button>
 
-        <button
-            class="profile"
-            id="profileBtn"
-            onclick="toggleProfile()"
+        <span>Sign in with Google</span>
+      </button>
+
+
+      <button
+        class="profile-button"
+        id="profileButton"
+        style="display:none"
+        onclick="toggleProfile()"
+      >
+        <img
+          id="headerAvatar"
+          class="profile-avatar"
+          alt=""
         >
-            <img id="navAvatar" src="" alt="">
-            <span id="navName">Profile</span>
-            <i class="fa-solid fa-chevron-down"></i>
-        </button>
 
-    </div>
+        <span id="headerName">Account</span>
 
-</div>
-
-</header>
+        <i
+          class="fa-solid fa-chevron-down"
+          style="font-size:8px"
+        ></i>
+      </button>
 
 
-<main class="container">
+      <div
+        class="profile-menu"
+        id="profileMenu"
+      >
 
-<section class="hero">
+        <div class="menu-header">
 
-    <div class="eyebrow">
-        DonutSMP Rewards
-    </div>
+          <div
+            class="menu-name"
+            id="menuName"
+          >
+            Account
+          </div>
 
-    <h1>
-        Win <span>Big.</span> Play Fair.
-    </h1>
-
-    <p>
-        Enter Archer Giveaways and Rains for a chance
-        to receive the prizes shown.
-        Your account is required before you can enter or claim.
-    </p>
-
-    <div class="actions">
-
-        <button
-            class="btn secondary"
-            onclick="joinDiscord()"
-        >
-            <i class="fa-brands fa-discord"></i>
-            Join Discord
-        </button>
-
-        <button
-            class="btn dark"
-            onclick="openTicket()"
-        >
-            <i class="fa-solid fa-ticket"></i>
-            Claim Support
-        </button>
-
-    </div>
-
-    <div class="status">
-
-        Server:
-        <span class="online">
-            ● Online
-        </span>
-
-    </div>
-
-</section>
-
-
-<section class="featured">
-
-    <div class="section-head">
-
-        <div>
-
-            <h2>
-                Featured Giveaways
-            </h2>
-
-            <p>
-                Our highest-value active rewards
-            </p>
+          <div
+            class="menu-email"
+            id="menuEmail"
+          ></div>
 
         </div>
 
-    </div>
 
+        <div class="menu-row">
 
-    <div class="giveaways">
+          <span>Coins</span>
 
+          <strong id="menuCoins">
+            0
+          </strong>
 
-        <!-- GIVEAWAY 1 -->
+        </div>
 
-        <article class="giveaway">
 
-            <div class="giveaway-top purple">
-                🎁
-            </div>
+        <div class="menu-row">
 
-            <div class="giveaway-body">
+          <span>Discord</span>
 
-                <span class="tag">
-                    Giveaway
-                </span>
+          <strong id="menuVerification">
+            Not verified
+          </strong>
 
-                <h3>
-                    5,000,000 Coins
-                </h3>
+        </div>
 
-                <div class="prize">
-                    One winner • Prize shown above
-                </div>
 
-                <button
-                    class="btn primary enter"
-                    onclick="requireLogin('Enter Giveaway')"
-                >
-                    Enter Giveaway
-                </button>
-
-            </div>
-
-        </article>
-
-
-        <!-- GIVEAWAY 2 -->
-
-        <article class="giveaway">
-
-            <div class="giveaway-top">
-                💎
-            </div>
-
-            <div class="giveaway-body">
-
-                <span class="tag">
-                    Giveaway
-                </span>
-
-                <h3>
-                    Premium Reward
-                </h3>
-
-                <div class="prize">
-                    One winner • Prize shown above
-                </div>
-
-                <button
-                    class="btn primary enter"
-                    onclick="requireLogin('Enter Giveaway')"
-                >
-                    Enter Giveaway
-                </button>
-
-            </div>
-
-        </article>
-
-
-        <!-- RAIN -->
-
-        <article class="giveaway">
-
-            <div class="giveaway-top blue">
-                🌧️
-            </div>
-
-            <div class="giveaway-body">
-
-                <span class="tag">
-                    Rain
-                </span>
-
-                <h3>
-                    Community Rain
-                </h3>
-
-                <div class="prize">
-                    Everyone eligible receives an equal share
-                </div>
-
-                <button
-                    class="btn primary enter"
-                    onclick="requireLogin('Join Rain')"
-                >
-                    Join Rain
-                </button>
-
-            </div>
-
-        </article>
-
-
-    </div>
-
-</section>
-
-
-<section class="info">
-
-
-    <div class="info-card">
-
-        <i class="fa-solid fa-user-shield"></i>
-
-        <h3>
-            Account Required
-        </h3>
-
-        <p>
-            You must sign in with Google before
-            entering a giveaway or joining a Rain.
-        </p>
-
-    </div>
-
-
-    <div class="info-card">
-
-        <i class="fa-solid fa-trophy"></i>
-
-        <h3>
-            Giveaways
-        </h3>
-
-        <p>
-            Enter an active giveaway for a chance
-            to win the exact prize listed on it.
-        </p>
-
-    </div>
-
-
-    <div class="info-card">
-
-        <i class="fa-solid fa-cloud-rain"></i>
-
-        <h3>
-            Rains
-        </h3>
-
-        <p>
-            Rains are community rewards where
-            eligible participants receive an equal share.
-        </p>
-
-    </div>
-
-
-</section>
-
-</main>
-
-
-<footer>
-
-    Archer Giveaways • DonutSMP
-
-</footer>
-
-
-<!-- PROFILE MENU -->
-
-<div
-    class="profile-menu"
-    id="profileMenu"
->
-
-    <div class="profile-row">
-
-        <img
-            id="menuAvatar"
-            src=""
-            alt=""
+        <button
+          class="logout"
+          onclick="logout()"
         >
+          <i class="fa-solid fa-right-from-bracket"></i>
+          Log out
+        </button>
 
-        <div>
+      </div>
 
-            <strong id="menuName">
-                User
-            </strong>
+    </div>
+
+  </header>
+
+
+  <main class="page">
+
+    <div class="layout">
+
+      <!-- =========================
+           ACTIVE SIDEBAR
+      ========================= -->
+
+      <aside class="sidebar">
+
+        <div class="sidebar-head">
+
+          <div class="sidebar-title">
+            Active
+          </div>
+
+          <div class="sidebar-description">
+            Active rains & giveaways
+          </div>
+
+        </div>
+
+
+        <div
+          class="active-events"
+          id="activeEvents"
+        ></div>
+
+      </aside>
+
+
+      <!-- =========================
+           MAIN
+      ========================= -->
+
+      <section class="main">
+
+        <div class="heading">
+
+          <div class="eyebrow">
+            DonutSMP
+          </div>
+
+          <h1>
+            Rains & Giveaways
+          </h1>
+
+          <p>
+            Enter active events and win coins.
+          </p>
+
+        </div>
+
+
+        <!-- FEATURED -->
+
+        <section
+          class="featured"
+          id="featured"
+        ></section>
+
+
+        <!-- ACCOUNT -->
+
+        <section class="account-grid">
+
+          <!-- USER -->
+
+          <div class="account-card">
+
+            <div class="card-label">
+              Account
+            </div>
+
+            <div class="account-user">
+
+              <img
+                id="accountAvatar"
+                src="https://ui-avatars.com/api/?name=Guest"
+                alt=""
+              >
+
+              <div>
+
+                <div
+                  class="account-name"
+                  id="accountName"
+                >
+                  Not signed in
+                </div>
+
+                <div
+                  class="account-email"
+                  id="accountEmail"
+                >
+                  Sign in to access giveaways
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- VERIFICATION -->
+
+          <div class="account-card">
+
+            <div class="card-label">
+              Discord
+            </div>
+
+
+            <div class="verification-row">
+
+              <div
+                class="verification-status"
+                id="verificationStatus"
+              >
+
+                <span class="verification-dot"></span>
+
+                <span id="verificationText">
+                  Not verified
+                </span>
+
+              </div>
+
+
+              <button
+                class="verify-button"
+                id="verifyButton"
+                onclick="verifyDiscord()"
+              >
+                Verify
+              </button>
+
+            </div>
+
+
+            <div class="progress">
+
+              <div class="progress-top">
+
+                <span>
+                  Invite qualification
+                </span>
+
+                <strong id="inviteText">
+                  0 / 2
+                </strong>
+
+              </div>
+
+
+              <div class="progress-track">
+
+                <div
+                  class="progress-fill green"
+                  id="inviteBar"
+                ></div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- COINS -->
+
+          <div class="account-card">
+
+            <div class="card-label">
+              Coins
+            </div>
 
             <div
-                class="profile-email"
-                id="menuEmail"
+              class="coin-number"
+              id="coinBalance"
             >
-                email
+              0
             </div>
 
+            <div class="coin-sub">
+              Your DonutSMP balance
+            </div>
+
+
+            <div class="progress">
+
+              <div class="progress-top">
+
+                <span>
+                  Account progress
+                </span>
+
+                <strong id="accountProgressText">
+                  0%
+                </strong>
+
+              </div>
+
+
+              <div class="progress-track">
+
+                <div
+                  class="progress-fill"
+                  id="accountProgress"
+                ></div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- EVENTS -->
+
+        <div class="section-heading">
+
+          <h2>
+            Active events
+          </h2>
+
+          <span>
+            Click the small arrow to enter
+          </span>
+
         </div>
+
+
+        <section
+          class="events-grid"
+          id="eventsGrid"
+        ></section>
+
+      </section>
 
     </div>
 
-
-    <div class="stats">
-
-        <div class="stat">
-
-            Coins
-
-            <strong id="menuCoins">
-                0
-            </strong>
-
-        </div>
+  </main>
 
 
-        <div class="stat">
+  <!-- =========================
+       MODAL
+  ========================= -->
 
-            Status
+  <div
+    class="overlay"
+    id="overlay"
+  >
 
-            <strong>
-                Verified
-            </strong>
+    <div class="modal">
 
-        </div>
-
-    </div>
-
-
-    <button
-        class="btn dark logout"
-        onclick="logout()"
-    >
-        Sign out
-    </button>
-
-</div>
+      <div class="modal-icon">
+        <i
+          class="fa-solid fa-lock"
+          id="modalIcon"
+        ></i>
+      </div>
 
 
-<!-- LOGIN MODAL -->
+      <h3 id="modalTitle">
+        Sign in required
+      </h3>
 
-<div
-    class="modal"
-    id="loginModal"
->
 
-    <div class="modal-box">
+      <p id="modalText">
+        You need to sign in before entering.
+      </p>
 
-        <h2>
-            Sign in required
-        </h2>
 
-        <p>
-            You need to be logged in before you can
-            enter a giveaway or join a Rain.
-        </p>
+      <div
+        class="link-code"
+        id="linkCodeBox"
+        style="display:none"
+      ></div>
 
-        <div class="modal-actions">
 
-            <button
-                class="btn primary"
-                onclick="closeLogin(); loginWithGoogle()"
-            >
-                Sign in with Google
-            </button>
-
-        </div>
+      <div class="modal-buttons">
 
         <button
-            class="close"
-            onclick="closeLogin()"
+          class="modal-primary"
+          id="modalPrimary"
+          onclick="modalPrimaryAction()"
         >
-            Cancel
+          Continue
         </button>
+
+        <button
+          class="modal-secondary"
+          onclick="closeModal()"
+        >
+          Close
+        </button>
+
+      </div>
 
     </div>
 
-</div>
+  </div>
 
 
-<div
+  <div
     class="toast"
     id="toast"
-></div>
+  ></div>
 
 
-<script>
+  <script>
 
-/* =========================
-   CONFIG
-========================= */
+    /* =========================================================
+       CONFIG
+    ========================================================= */
 
-const GOOGLE_CLIENT_ID =
-    "263646768191-7854avn92k94grq8pbit809o0erq48grq.apps.googleusercontent.com";
+    const GOOGLE_CLIENT_ID =
+      "263646768191-7854avn92k94rq8pbit809o0erq48grq.apps.googleusercontent.com";
 
-const DISCORD_INVITE =
-    "https://discord.gg/p4k77YM92n";
+    const PIPEDREAM_URL =
+      "https://eo2i1vsqxk41gdt.m.pipedream.net";
 
-
-/* =========================
-   GOOGLE LOGIN
-========================= */
-
-let googleReady = false;
+    const DISCORD_INVITE =
+      "https://discord.gg/p4k77YM92n";
 
 
-function decodeGoogleToken(token) {
+    /* =========================================================
+       EVENTS
+       
+       Owner panel comes later.
+       These are frontend placeholders for now.
+    ========================================================= */
 
-    try {
+    const EVENTS = [
 
-        const parts =
-            token.split(".");
+      {
+        id: "rain-weekend",
+        type: "rain",
+        title: "Weekend Coin Rain",
+        prize: 5000000,
+        description: "Everyone receives an equal share.",
+        time: "Ends in 42m"
+      },
 
-        if (parts.length !== 3) {
-            return null;
-        }
+      {
+        id: "giveaway-5m",
+        type: "giveaway",
+        title: "5M Coin Giveaway",
+        prize: 5000000,
+        description: "One winner receives the full prize.",
+        time: "Ends in 1h 12m"
+      },
 
-        const payload =
-            parts[1]
-                .replace(/-/g, "+")
-                .replace(/_/g, "/");
+      {
+        id: "giveaway-millionaire",
+        type: "giveaway",
+        title: "Millionaire Drop",
+        prize: 2500000,
+        description: "One lucky winner receives the prize.",
+        time: "Ends in 2h"
+      },
 
-        const padded =
-            payload +
-            "=".repeat(
-                (4 - payload.length % 4) % 4
-            );
+      {
+        id: "rain-community",
+        type: "rain",
+        title: "Community Rain",
+        prize: 1000000,
+        description: "The prize is divided evenly.",
+        time: "Ends in 3h"
+      },
 
-        return JSON.parse(
+      {
+        id: "giveaway-starter",
+        type: "giveaway",
+        title: "Starter Giveaway",
+        prize: 500000,
+        description: "A community giveaway.",
+        time: "Ends in 4h"
+      }
 
-            decodeURIComponent(
+    ];
 
-                atob(padded)
-                    .split("")
-                    .map(function(c) {
 
-                        return "%" +
-                            (
-                                "00" +
-                                c.charCodeAt(0)
-                                    .toString(16)
-                            ).slice(-2);
+    /* =========================================================
+       STATE
+    ========================================================= */
 
-                    })
-                    .join("")
+    let currentUser = null;
+    let selectedEvent = null;
+    let modalAction = null;
 
-            )
 
+    /* =========================================================
+       STORAGE
+    ========================================================= */
+
+    function userKey(id) {
+      return "archer_user_" + id;
+    }
+
+
+    function loadUser(user) {
+
+      const saved =
+        JSON.parse(
+          localStorage.getItem(
+            userKey(user.googleId)
+          ) || "null"
         );
+
+
+      return {
+
+        ...user,
+
+        coins:
+          saved?.coins ?? 0,
+
+        discordVerified:
+          saved?.discordVerified ?? false,
+
+        discordId:
+          saved?.discordId ?? null,
+
+        linkCode:
+          saved?.linkCode ?? null,
+
+        invites:
+          saved?.invites ?? 0,
+
+        enteredEvents:
+          saved?.enteredEvents ?? []
+
+      };
 
     }
 
-    catch (error) {
 
-        return null;
+    function saveUser() {
 
-    }
+      if (!currentUser) return;
 
-}
-
-
-function handleGoogleCredential(response) {
-
-    const googleUser =
-        decodeGoogleToken(
-            response.credential
-        );
-
-    if (!googleUser) {
-
-        alert(
-            "Could not read the Google login."
-        );
-
-        return;
+      localStorage.setItem(
+        userKey(currentUser.googleId),
+        JSON.stringify({
+          coins: currentUser.coins,
+          discordVerified: currentUser.discordVerified,
+          discordId: currentUser.discordId,
+          linkCode: currentUser.linkCode,
+          invites: currentUser.invites,
+          enteredEvents: currentUser.enteredEvents
+        })
+      );
 
     }
 
 
-    const user = {
+    /* =========================================================
+       PIPEDREAM
+       
+       Existing workflow actions:
+       register
+       link
+       getCoins
+       getAccount
+    ========================================================= */
 
-        id: googleUser.sub,
-
-        name:
-            googleUser.name ||
-            "Google User",
-
-        email:
-            googleUser.email ||
-            "",
-
-        picture:
-            googleUser.picture ||
-            "",
-
-        coins: 0,
-
-        discordId: null
-
-    };
-
-
-    localStorage.setItem(
-
-        "archer_user_" + user.id,
-
-        JSON.stringify(user)
-
-    );
-
-
-    localStorage.setItem(
-
-        "archer_current_user",
-
-        user.id
-
-    );
-
-
-    showUser(user);
-
-    toast(
-        "Signed in successfully!"
-    );
-
-}
-
-
-function initializeGoogle() {
-
-    if (
-        googleReady ||
-        typeof google === "undefined" ||
-        !google.accounts?.id
+    async function pipedream(
+      action,
+      method = "GET",
+      data = null
     ) {
-        return;
+
+      let url =
+        PIPEDREAM_URL +
+        "?action=" +
+        encodeURIComponent(action);
+
+
+      const options = {
+        method,
+        headers: {}
+      };
+
+
+      if (data) {
+
+        options.headers["Content-Type"] =
+          "application/json";
+
+        options.body =
+          JSON.stringify(data);
+
+      }
+
+
+      const response =
+        await fetch(
+          url,
+          options
+        );
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          "Pipedream returned HTTP " +
+          response.status
+        );
+
+      }
+
+
+      const text =
+        await response.text();
+
+
+      if (!text) {
+        return {};
+      }
+
+
+      try {
+        return JSON.parse(text);
+      } catch {
+        return {
+          raw: text
+        };
+      }
+
     }
 
 
-    google.accounts.id.initialize({
+    /* =========================================================
+       GOOGLE
+    ========================================================= */
+
+    function initializeGoogle() {
+
+      if (
+        !window.google ||
+        !window.google.accounts ||
+        !window.google.accounts.id
+      ) {
+
+        setTimeout(
+          initializeGoogle,
+          200
+        );
+
+        return;
+
+      }
+
+
+      google.accounts.id.initialize({
 
         client_id:
-            GOOGLE_CLIENT_ID,
+          GOOGLE_CLIENT_ID,
 
         callback:
-            handleGoogleCredential,
+          handleGoogleCredential,
 
-        ux_mode:
-            "popup",
+        auto_select:
+          false
 
-        context:
-            "signin"
-
-    });
-
-
-    googleReady = true;
-
-}
-
-
-function waitForGoogle() {
-
-    if (
-        typeof google !== "undefined" &&
-        google.accounts?.id
-    ) {
-
-        initializeGoogle();
-
-        return;
+      });
 
     }
 
 
-    setTimeout(
-        waitForGoogle,
-        100
-    );
+    function startGoogleLogin() {
 
-}
+      if (
+        !window.google ||
+        !window.google.accounts
+      ) {
 
-
-function loginWithGoogle() {
-
-    if (
-        typeof google === "undefined" ||
-        !google.accounts?.id
-    ) {
-
-        waitForGoogle();
-
-        toast(
-            "Google login is still loading..."
+        showToast(
+          "Google Sign-In is still loading."
         );
 
         return;
 
+      }
+
+
+      google.accounts.id.prompt();
+
     }
 
+
+    function handleGoogleCredential(response) {
+
+      try {
+
+        const payload =
+          parseJwt(
+            response.credential
+          );
+
+
+        currentUser =
+          loadUser({
+
+            googleId:
+              payload.sub,
+
+            name:
+              payload.name ||
+              payload.given_name ||
+              "Google User",
+
+            email:
+              payload.email ||
+              "",
+
+            picture:
+              payload.picture ||
+              "https://ui-avatars.com/api/?name=User"
+
+          });
+
+
+        saveUser();
+
+        updateUI();
+
+        closeModal();
+
+        showToast(
+          "Signed in successfully."
+        );
+
+
+        /*
+         * Register/sync the Google account
+         * with the existing Pipedream workflow.
+         */
+
+        registerAccount();
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        showToast(
+          "Google sign-in failed."
+        );
+
+      }
+
+    }
+
+
+    async function registerAccount() {
+
+      if (!currentUser) return;
+
+
+      try {
+
+        const code =
+          currentUser.linkCode ||
+          generateLinkCode();
+
+
+        currentUser.linkCode =
+          code;
+
+
+        saveUser();
+
+
+        await pipedream(
+          "register",
+          "POST",
+          {
+            code:
+              currentUser.linkCode,
+
+            googleId:
+              currentUser.googleId,
+
+            name:
+              currentUser.name,
+
+            email:
+              currentUser.email
+          }
+        );
+
+
+        await refreshAccount();
+
+
+      } catch (error) {
+
+        console.warn(
+          "Account registration sync failed:",
+          error
+        );
+
+      }
+
+    }
+
+
+    /* =========================================================
+       ACCOUNT REFRESH
+       
+       Pulls the account from the existing Pipedream flow.
+    ========================================================= */
+
+    async function refreshAccount() {
+
+      if (!currentUser) return;
+
+
+      try {
+
+        const data =
+          await pipedream(
+            "getAccount",
+            "GET"
+          );
+
+
+        /*
+         * Support the response shapes used by the
+         * existing workflow without breaking the UI.
+         */
+
+        const account =
+          data.account ||
+          data.user ||
+          data.data ||
+          data;
+
+
+        if (
+          account.coins !== undefined
+        ) {
+
+          currentUser.coins =
+            Number(account.coins) || 0;
+
+        }
+
+
+        if (
+          account.discordVerified !== undefined
+        ) {
+
+          currentUser.discordVerified =
+            Boolean(
+              account.discordVerified
+            );
+
+        } else if (
+          account.verified !== undefined
+        ) {
+
+          currentUser.discordVerified =
+            Boolean(
+              account.verified
+            );
+
+        }
+
+
+        if (
+          account.discordId !== undefined
+        ) {
+
+          currentUser.discordId =
+            account.discordId;
+
+        }
+
+
+        if (
+          account.invites !== undefined
+        ) {
+
+          currentUser.invites =
+            Number(account.invites) || 0;
+
+        }
+
+
+        if (
+          account.linkCode
+        ) {
+
+          currentUser.linkCode =
+            account.linkCode;
+
+        }
+
+
+        saveUser();
+
+        updateUI();
+
+
+      } catch (error) {
+
+        console.warn(
+          "Could not refresh Pipedream account:",
+          error
+        );
+
+      }
+
+    }
+
+
+    /* =========================================================
+       COINS
+       
+       Existing getCoins action is also retained.
+    ========================================================= */
+
+    async function refreshCoins() {
+
+      if (!currentUser) return;
+
+
+      try {
+
+        const data =
+          await pipedream(
+            "getCoins",
+            "GET"
+          );
+
+
+        const coins =
+          data.coins ??
+          data.balance ??
+          data.data?.coins;
+
+
+        if (
+          coins !== undefined
+        ) {
+
+          currentUser.coins =
+            Number(coins) || 0;
+
+          saveUser();
+
+          updateUI();
+
+        }
+
+
+      } catch (error) {
+
+        console.warn(
+          "Coin refresh failed:",
+          error
+        );
+
+      }
+
+    }
+
+
+    /* =========================================================
+       DISCORD VERIFY / LINK
+       
+       This uses the existing ARCHER-XXXXX linking system.
+    ========================================================= */
+
+    async function verifyDiscord() {
+
+      if (!currentUser) {
+
+        openLoginModal();
+
+        return;
+
+      }
+
+
+      /*
+       * Already verified.
+       */
+
+      if (
+        currentUser.discordVerified
+      ) {
+
+        showToast(
+          "Your Discord is already verified."
+        );
+
+        return;
+
+      }
+
+
+      /*
+       * Make sure the account is registered
+       * and has a link code.
+       */
+
+      if (
+        !currentUser.linkCode
+      ) {
+
+        currentUser.linkCode =
+          generateLinkCode();
+
+        saveUser();
+
+      }
+
+
+      try {
+
+        await pipedream(
+          "register",
+          "POST",
+          {
+
+            code:
+              currentUser.linkCode,
+
+            googleId:
+              currentUser.googleId,
+
+            name:
+              currentUser.name,
+
+            email:
+              currentUser.email
+
+          }
+        );
+
+      } catch (error) {
+
+        console.warn(
+          "Registration sync failed:",
+          error
+        );
+
+      }
+
+
+      showLinkModal();
+
+    }
+
+
+    function showLinkModal() {
+
+      document.getElementById(
+        "modalIcon"
+      ).className =
+        "fa-brands fa-discord";
+
+
+      document.getElementById(
+        "modalTitle"
+      ).textContent =
+        "Verify your Discord";
+
+
+      document.getElementById(
+        "modalText"
+      ).innerHTML =
+        "Join the Archer Discord and use your existing verification/link command with the code below.";
+
+
+      const codeBox =
+        document.getElementById(
+          "linkCodeBox"
+        );
+
+
+      codeBox.style.display =
+        "block";
+
+
+      codeBox.textContent =
+        currentUser.linkCode;
+
+
+      document.getElementById(
+        "modalPrimary"
+      ).textContent =
+        "Check verification";
+
+
+      modalAction =
+        async () => {
+
+          await checkVerification();
+
+        };
+
+
+      document.getElementById(
+        "overlay"
+      ).classList.add("open");
+
+    }
+
+
+    async function checkVerification() {
+
+      if (!currentUser) return;
+
+
+      try {
+
+        /*
+         * The existing workflow's `link` action
+         * is used for the account-link check.
+         */
+
+        const result =
+          await pipedream(
+            "link",
+            "POST",
+            {
+
+              code:
+                currentUser.linkCode,
+
+              googleId:
+                currentUser.googleId,
+
+              name:
+                currentUser.name,
+
+              email:
+                currentUser.email
+
+            }
+          );
+
+
+        const account =
+          result.account ||
+          result.user ||
+          result.data ||
+          result;
+
+
+        const verified =
+          Boolean(
+            account.discordVerified ??
+            account.verified ??
+            result.discordVerified ??
+            result.verified
+          );
+
+
+        if (verified) {
+
+          currentUser.discordVerified =
+            true;
+
+
+          if (
+            account.discordId
+          ) {
+
+            currentUser.discordId =
+              account.discordId;
+
+          }
+
+
+          saveUser();
+
+          updateUI();
+
+          closeModal();
+
+          showToast(
+            "Discord verified successfully!"
+          );
+
+          return;
+
+        }
+
+
+        /*
+         * If the response did not explicitly say
+         * verified, refresh the account once.
+         */
+
+        await refreshAccount();
+
+
+        if (
+          currentUser.discordVerified
+        ) {
+
+          closeModal();
+
+          showToast(
+            "Discord verified successfully!"
+          );
+
+          return;
+
+        }
+
+
+        showToast(
+          "Discord is not verified yet."
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "Verification check failed:",
+          error
+        );
+
+        showToast(
+          "Could not check verification right now."
+        );
+
+      }
+
+    }
+
+
+    /* =========================================================
+       ENTER EVENT
+       
+       Login + Discord verification + 2 invites.
+    ========================================================= */
+
+    function enterEvent(eventId) {
+
+      selectedEvent =
+        EVENTS.find(
+          event =>
+            event.id === eventId
+        );
+
+
+      if (!selectedEvent) {
+
+        showToast(
+          "Event not found."
+        );
+
+        return;
+
+      }
+
+
+      /*
+       * LOGIN
+       */
+
+      if (!currentUser) {
+
+        openLoginModal();
+
+        return;
+
+      }
+
+
+      /*
+       * DISCORD
+       */
+
+      if (
+        !currentUser.discordVerified
+      ) {
+
+        showLinkModal();
+
+        return;
+
+      }
+
+
+      /*
+       * INVITES
+       */
+
+      if (
+        Number(
+          currentUser.invites || 0
+        ) < 2
+      ) {
+
+        openInviteRequirement();
+
+        return;
+
+      }
+
+
+      /*
+       * ALREADY ENTERED
+       */
+
+      if (
+        currentUser.enteredEvents.includes(
+          selectedEvent.id
+        )
+      ) {
+
+        showToast(
+          "You're already entered in this event."
+        );
+
+        return;
+
+      }
+
+
+      /*
+       * FRONTEND ENTRY RECORD.
+       *
+       * The real giveaway entry endpoint can
+       * be connected when the owner panel/backend
+       * is built.
+       */
+
+      currentUser.enteredEvents.push(
+        selectedEvent.id
+      );
+
+
+      saveUser();
+
+
+      showToast(
+        "You're entered in " +
+        selectedEvent.title +
+        "!"
+      );
+
+    }
+
+
+    function openInviteRequirement() {
+
+      document.getElementById(
+        "modalIcon"
+      ).className =
+        "fa-solid fa-user-group";
+
+
+      document.getElementById(
+        "modalTitle"
+      ).textContent =
+        "Not qualified yet";
+
+
+      document.getElementById(
+        "modalText"
+      ).textContent =
+        "You need 2 successful Discord invites before you can enter giveaways and rains.";
+
+
+      document.getElementById(
+        "linkCodeBox"
+      ).style.display =
+        "none";
+
+
+      document.getElementById(
+        "modalPrimary"
+      ).textContent =
+        "View progress";
+
+
+      modalAction =
+        () => {
+
+          closeModal();
+
+          document
+            .querySelector(".account-grid")
+            .scrollIntoView({
+              behavior: "smooth"
+            });
+
+        };
+
+
+      document.getElementById(
+        "overlay"
+      ).classList.add("open");
+
+    }
+
+
+    /* =========================================================
+       LOGIN MODAL
+    ========================================================= */
+
+    function openLoginModal() {
+
+      document.getElementById(
+        "modalIcon"
+      ).className =
+        "fa-solid fa-lock";
+
+
+      document.getElementById(
+        "modalTitle"
+      ).textContent =
+        "Sign in required";
+
+
+      document.getElementById(
+        "modalText"
+      ).textContent =
+        "You need to sign in with Google before entering an event.";
+
+
+      document.getElementById(
+        "linkCodeBox"
+      ).style.display =
+        "none";
+
+
+      document.getElementById(
+        "modalPrimary"
+      ).textContent =
+        "Sign in";
+
+
+      modalAction =
+        () => {
+
+          closeModal();
+
+          setTimeout(
+            startGoogleLogin,
+            150
+          );
+
+        };
+
+
+      document.getElementById(
+        "overlay"
+      ).classList.add("open");
+
+    }
+
+
+    function modalPrimaryAction() {
+
+      if (modalAction) {
+
+        modalAction();
+
+      }
+
+    }
+
+
+    function closeModal() {
+
+      document.getElementById(
+        "overlay"
+      ).classList.remove("open");
+
+      modalAction = null;
+
+    }
+
+
+    /* =========================================================
+       UI
+    ========================================================= */
+
+    function updateUI() {
+
+      const login =
+        document.getElementById(
+          "loginButton"
+        );
+
+      const profile =
+        document.getElementById(
+          "profileButton"
+        );
+
+
+      if (!currentUser) {
+
+        login.style.display =
+          "flex";
+
+        profile.style.display =
+          "none";
+
+
+        document.getElementById(
+          "accountAvatar"
+        ).src =
+          "https://ui-avatars.com/api/?name=Guest";
+
+
+        document.getElementById(
+          "accountName"
+        ).textContent =
+          "Not signed in";
+
+
+        document.getElementById(
+          "accountEmail"
+        ).textContent =
+          "Sign in to access giveaways";
+
+
+        document.getElementById(
+          "coinBalance"
+        ).textContent =
+          "0";
+
+
+        updateVerification(false);
+
+        updateInviteBar(0);
+
+        return;
+
+      }
+
+
+      login.style.display =
+        "none";
+
+      profile.style.display =
+        "flex";
+
+
+      document.getElementById(
+        "headerAvatar"
+      ).src =
+        currentUser.picture;
+
+
+      document.getElementById(
+        "headerName"
+      ).textContent =
+        currentUser.name.split(" ")[0];
+
+
+      document.getElementById(
+        "accountAvatar"
+      ).src =
+        currentUser.picture;
+
+
+      document.getElementById(
+        "accountName"
+      ).textContent =
+        currentUser.name;
+
+
+      document.getElementById(
+        "accountEmail"
+      ).textContent =
+        currentUser.email;
+
+
+      document.getElementById(
+        "coinBalance"
+      ).textContent =
+        formatNumber(
+          currentUser.coins
+        );
+
+
+      document.getElementById(
+        "menuCoins"
+      ).textContent =
+        formatNumber(
+          currentUser.coins
+        );
+
+
+      document.getElementById(
+        "menuName"
+      ).textContent =
+        currentUser.name;
+
+
+      document.getElementById(
+        "menuEmail"
+      ).textContent =
+        currentUser.email;
+
+
+      updateVerification(
+        currentUser.discordVerified
+      );
+
+
+      updateInviteBar(
+        currentUser.invites
+      );
+
+
+      const progress =
+        Math.min(
+          100,
+          Math.round(
+            (
+              Number(
+                currentUser.coins || 0
+              ) / 5000000
+            ) * 100
+          )
+        );
+
+
+      document.getElementById(
+        "accountProgress"
+      ).style.width =
+        progress + "%";
+
+
+      document.getElementById(
+        "accountProgressText"
+      ).textContent =
+        progress + "%";
+
+    }
+
+
+    function updateVerification(
+      verified
+    ) {
+
+      const status =
+        document.getElementById(
+          "verificationStatus"
+        );
+
+      const text =
+        document.getElementById(
+          "verificationText"
+        );
+
+      const button =
+        document.getElementById(
+          "verifyButton"
+        );
+
+      const menu =
+        document.getElementById(
+          "menuVerification"
+        );
+
+
+      if (verified) {
+
+        status.classList.add(
+          "verified"
+        );
+
+        text.textContent =
+          "Verified";
+
+        menu.textContent =
+          "Verified";
+
+        button.textContent =
+          "Verified";
+
+      } else {
+
+        status.classList.remove(
+          "verified"
+        );
+
+        text.textContent =
+          "Not verified";
+
+        menu.textContent =
+          "Not verified";
+
+        button.textContent =
+          "Verify";
+
+      }
+
+    }
+
+
+    function updateInviteBar(
+      invites
+    ) {
+
+      const amount =
+        Math.min(
+          2,
+          Math.max(
+            0,
+            Number(invites || 0)
+          )
+        );
+
+
+      const percentage =
+        (amount / 2) * 100;
+
+
+      document.getElementById(
+        "inviteBar"
+      ).style.width =
+        percentage + "%";
+
+
+      document.getElementById(
+        "inviteText"
+      ).textContent =
+        amount + " / 2";
+
+    }
+
+
+    /* =========================================================
+       RENDER EVENTS
+    ========================================================= */
+
+    function renderEvents() {
+
+      renderSidebar();
+      renderFeatured();
+      renderGrid();
+
+    }
+
+
+    function renderSidebar() {
+
+      const container =
+        document.getElementById(
+          "activeEvents"
+        );
+
+
+      container.innerHTML =
+        "";
+
+
+      EVENTS.forEach(
+        event => {
+
+          const item =
+            document.createElement(
+              "div"
+            );
+
+
+          item.className =
+            "event-mini";
+
+
+          item.innerHTML = `
+
+            <div class="event-type ${event.type}">
+              <i class="fa-solid ${
+                event.type === "rain"
+                  ? "fa-cloud-rain"
+                  : "fa-gift"
+              }"></i>
+
+              ${
+                event.type === "rain"
+                  ? "Rain"
+                  : "Giveaway"
+              }
+            </div>
+
+            <div class="event-name">
+              ${escapeHtml(event.title)}
+            </div>
+
+            <div class="event-prize">
+              ${formatNumber(event.prize)} Coins
+            </div>
+
+            <div class="event-time">
+              ${escapeHtml(event.time)}
+            </div>
+
+            <button
+              class="tiny-enter"
+              onclick="enterEvent('${event.id}')"
+              title="Enter"
+            >
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+          `;
+
+
+          container.appendChild(
+            item
+          );
+
+        }
+      );
+
+    }
+
+
+    function renderFeatured() {
+
+      const featured =
+        document.getElementById(
+          "featured"
+        );
+
+
+      const biggest =
+        [...EVENTS].sort(
+          (a,b) =>
+            b.prize - a.prize
+        )[0];
+
+
+      featured.innerHTML = `
+
+        <div class="featured-content">
+
+          <div class="featured-label">
+
+            <i class="fa-solid fa-star"></i>
+
+            Biggest active ${
+              biggest.type === "rain"
+                ? "rain"
+                : "giveaway"
+            }
+
+          </div>
+
+
+          <div class="featured-title">
+            ${escapeHtml(biggest.title)}
+          </div>
+
+
+          <div class="featured-prize">
+            ${formatNumber(biggest.prize)} Coins
+          </div>
+
+
+          <div class="featured-bottom">
+
+            <div class="featured-pill">
+              <i class="fa-regular fa-clock"></i>
+              ${escapeHtml(biggest.time)}
+            </div>
+
+            <div class="featured-pill">
+              ${
+                biggest.type === "rain"
+                  ? "Equal share"
+                  : "One winner"
+              }
+            </div>
+
+
+            <button
+              class="featured-enter"
+              onclick="enterEvent('${biggest.id}')"
+            >
+              Enter
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }
+
+
+    function renderGrid() {
+
+      const grid =
+        document.getElementById(
+          "eventsGrid"
+        );
+
+
+      grid.innerHTML =
+        "";
+
+
+      EVENTS.forEach(
+        event => {
+
+          const card =
+            document.createElement(
+              "article"
+            );
+
+
+          card.className =
+            "event-card" +
+            (
+              event.prize >= 5000000
+                ? " featured-card"
+                : ""
+            );
+
+
+          card.innerHTML = `
+
+            <div class="card-event-type ${event.type}">
+              <i class="fa-solid ${
+                event.type === "rain"
+                  ? "fa-cloud-rain"
+                  : "fa-gift"
+              }"></i>
+
+              ${
+                event.type === "rain"
+                  ? "Rain"
+                  : "Giveaway"
+              }
+            </div>
+
+
+            <div class="card-title">
+              ${escapeHtml(event.title)}
+            </div>
+
+
+            <div class="card-prize">
+              ${formatNumber(event.prize)}
+            </div>
+
+
+            <div class="card-description">
+              ${escapeHtml(event.description)}
+            </div>
+
+
+            <div class="card-footer">
+
+              <div class="card-time">
+                ${escapeHtml(event.time)}
+              </div>
+
+
+              <button
+                class="card-enter"
+                onclick="enterEvent('${event.id}')"
+              >
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+
+            </div>
+
+          `;
+
+
+          grid.appendChild(
+            card
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =========================================================
+       PROFILE
+    ========================================================= */
+
+    function toggleProfile() {
+
+      document
+        .getElementById(
+          "profileMenu"
+        )
+        .classList.toggle(
+          "open"
+        );
+
+    }
+
+
+    document.addEventListener(
+      "click",
+      event => {
+
+        const area =
+          document.querySelector(
+            ".account-area"
+          );
+
+        if (
+          !area.contains(
+            event.target
+          )
+        ) {
+
+          document
+            .getElementById(
+              "profileMenu"
+            )
+            .classList.remove(
+              "open"
+            );
+
+        }
+
+      }
+    );
+
+
+    function logout() {
+
+      currentUser =
+        null;
+
+
+      if (
+        window.google &&
+        google.accounts &&
+        google.accounts.id
+      ) {
+
+        google.accounts.id.disableAutoSelect();
+
+      }
+
+
+      document
+        .getElementById(
+          "profileMenu"
+        )
+        .classList.remove(
+          "open"
+        );
+
+
+      updateUI();
+
+
+      showToast(
+        "Signed out."
+      );
+
+    }
+
+
+    /* =========================================================
+       HELPERS
+    ========================================================= */
+
+    function generateLinkCode() {
+
+      const chars =
+        "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+
+      let code =
+        "ARCHER-";
+
+
+      for (
+        let i = 0;
+        i < 5;
+        i++
+      ) {
+
+        code +=
+          chars[
+            Math.floor(
+              Math.random() *
+              chars.length
+            )
+          ];
+
+      }
+
+
+      return code;
+
+    }
+
+
+    function parseJwt(token) {
+
+      const base64Url =
+        token.split(".")[1];
+
+
+      const base64 =
+        base64Url
+          .replace(/-/g, "+")
+          .replace(/_/g, "/");
+
+
+      const jsonPayload =
+        decodeURIComponent(
+          atob(base64)
+            .split("")
+            .map(
+              character =>
+                "%" +
+                (
+                  "00" +
+                  character
+                    .charCodeAt(0)
+                    .toString(16)
+                ).slice(-2)
+            )
+            .join("")
+        );
+
+
+      return JSON.parse(
+        jsonPayload
+      );
+
+    }
+
+
+    function formatNumber(number) {
+
+      return Number(
+        number || 0
+      ).toLocaleString(
+        "en-US"
+      );
+
+    }
+
+
+    function escapeHtml(value) {
+
+      return String(value)
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
+
+    }
+
+
+    function showToast(message) {
+
+      const toast =
+        document.getElementById(
+          "toast"
+        );
+
+
+      toast.textContent =
+        message;
+
+
+      toast.classList.add(
+        "show"
+      );
+
+
+      clearTimeout(
+        window.__toastTimer
+      );
+
+
+      window.__toastTimer =
+        setTimeout(
+          () => {
+
+            toast.classList.remove(
+              "show"
+            );
+
+          },
+          3500
+        );
+
+    }
+
+
+    /* =========================================================
+       START
+    ========================================================= */
+
+    renderEvents();
+
+    updateUI();
 
     initializeGoogle();
 
-    google.accounts.id.prompt();
 
-}
+    /*
+     * Refresh account data periodically.
+     * This means the website can pick up
+     * verification / coins / invite changes
+     * without requiring a page refresh.
+     */
 
+    setInterval(
+      () => {
 
-/* =========================
-   USER
-========================= */
+        if (currentUser) {
 
-function currentUser() {
+          refreshAccount();
 
-    const id =
-        localStorage.getItem(
-            "archer_current_user"
-        );
+        }
 
-    if (!id) {
-        return null;
-    }
-
-    return JSON.parse(
-
-        localStorage.getItem(
-            "archer_user_" + id
-        ) || "null"
-
+      },
+      60000
     );
 
-}
-
-
-function showUser(user) {
-
-    document.getElementById(
-        "googleBtn"
-    ).style.display = "none";
-
-
-    const profile =
-        document.getElementById(
-            "profileBtn"
-        );
-
-    profile.style.display = "flex";
-
-
-    document.getElementById(
-        "navAvatar"
-    ).src = user.picture;
-
-
-    document.getElementById(
-        "navName"
-    ).textContent =
-        user.name.split(" ")[0];
-
-
-    document.getElementById(
-        "menuAvatar"
-    ).src = user.picture;
-
-
-    document.getElementById(
-        "menuName"
-    ).textContent =
-        user.name;
-
-
-    document.getElementById(
-        "menuEmail"
-    ).textContent =
-        user.email;
-
-
-    document.getElementById(
-        "menuCoins"
-    ).textContent =
-        user.coins || 0;
-
-}
-
-
-function toggleProfile() {
-
-    document.getElementById(
-        "profileMenu"
-    ).classList.toggle("open");
-
-}
-
-
-function logout() {
-
-    localStorage.removeItem(
-        "archer_current_user"
-    );
-
-    document.getElementById(
-        "profileMenu"
-    ).classList.remove("open");
-
-    location.reload();
-
-}
-
-
-/* =========================
-   LOGIN GATE
-========================= */
-
-function requireLogin(action) {
-
-    if (!currentUser()) {
-
-        document.getElementById(
-            "loginModal"
-        ).classList.add("show");
-
-        return;
-
-    }
-
-
-    toast(
-        action +
-        " opened — giveaway entry flow coming next."
-    );
-
-}
-
-
-function closeLogin() {
-
-    document.getElementById(
-        "loginModal"
-    ).classList.remove("show");
-
-}
-
-
-/* =========================
-   BUTTONS
-========================= */
-
-function joinDiscord() {
-
-    window.open(
-        DISCORD_INVITE,
-        "_blank"
-    );
-
-}
-
-
-function openTicket() {
-
-    if (!currentUser()) {
-
-        requireLogin(
-            "Claim Support"
-        );
-
-        return;
-
-    }
-
-
-    toast(
-        "Claim support will open here."
-    );
-
-}
-
-
-function toast(text) {
-
-    const element =
-        document.getElementById(
-            "toast"
-        );
-
-    element.textContent =
-        text;
-
-    element.classList.add(
-        "show"
-    );
-
-
-    clearTimeout(
-        window._toast
-    );
-
-
-    window._toast =
-        setTimeout(
-
-            function() {
-
-                element.classList.remove(
-                    "show"
-                );
-
-            },
-
-            2500
-
-        );
-
-}
-
-
-/* =========================
-   STARTUP
-========================= */
-
-waitForGoogle();
-
-
-const savedUser =
-    currentUser();
-
-
-if (savedUser) {
-
-    showUser(
-        savedUser
-    );
-
-}
-
-</script>
+  </script>
 
 </body>
 </html>
-```
