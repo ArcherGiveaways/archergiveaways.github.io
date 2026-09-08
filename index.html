@@ -1,13 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Archer Giveaways - DonutSMP Rains</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
 
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
@@ -20,6 +34,7 @@
     >
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -27,464 +42,775 @@
         }
 
         body {
+
             font-family: "Poppins", sans-serif;
+
             background:
-                radial-gradient(circle at top, #202020 0%, #0d0d0d 45%, #080808 100%);
+                radial-gradient(
+                    circle at top,
+                    #202020 0%,
+                    #0d0d0d 45%,
+                    #080808 100%
+                );
+
             color: white;
+
             min-height: 100vh;
         }
 
         .container {
+
             width: min(1100px, 92%);
+
             margin: auto;
         }
 
         header {
+
             padding: 25px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.08);
         }
 
         .nav {
+
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
             gap: 20px;
         }
 
         .logo {
+
             font-size: 25px;
+
             font-weight: 800;
         }
 
         .logo span {
+
             color: #a855f7;
+        }
+
+        button {
+
+            font-family: inherit;
         }
 
         .google-btn,
         .discord-btn,
         .link-btn,
         .copy-btn {
+
             border: none;
+
             cursor: pointer;
+
             color: white;
-            font-family: inherit;
+
             font-weight: 600;
+
             border-radius: 12px;
+
             padding: 12px 18px;
+
             transition: 0.2s;
         }
 
         .google-btn {
+
             background: white;
+
             color: #111;
         }
 
-        .google-btn:hover,
-        .discord-btn:hover,
-        .link-btn:hover,
-        .copy-btn:hover {
-            transform: translateY(-2px);
-            opacity: 0.9;
-        }
-
         .discord-btn {
+
             background: #5865F2;
         }
 
         .link-btn {
+
             background: #a855f7;
+
             width: 100%;
+
             margin-top: 12px;
         }
 
         .copy-btn {
+
             background: #252525;
+
             width: 100%;
+
             margin-top: 12px;
         }
 
+        button:hover {
+
+            transform: translateY(-2px);
+
+            opacity: 0.9;
+        }
+
         .hero {
+
             text-align: center;
+
             padding: 80px 0 50px;
         }
 
         .hero h1 {
-            font-size: clamp(38px, 7vw, 70px);
+
+            font-size:
+                clamp(38px, 7vw, 70px);
+
             line-height: 1.05;
+
             font-weight: 800;
         }
 
         .hero h1 span {
+
             color: #a855f7;
         }
 
         .hero p {
+
             color: #aaa;
+
             max-width: 650px;
+
             margin: 20px auto;
+
             font-size: 17px;
         }
 
         .buttons {
+
             display: flex;
+
             justify-content: center;
+
             gap: 12px;
+
             flex-wrap: wrap;
+
             margin-top: 25px;
         }
 
         .status {
+
             margin: 30px auto 0;
+
             padding: 15px 20px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
+
+            background:
+                rgba(255,255,255,0.04);
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+
             border-radius: 15px;
+
             max-width: 500px;
         }
 
         .online {
+
             color: #4ade80;
+
             font-weight: 700;
         }
 
         .offline {
+
             color: #f87171;
+
+            font-weight: 700;
+        }
+
+        .checking {
+
+            color: #facc15;
+
             font-weight: 700;
         }
 
         .cards {
+
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
             gap: 18px;
+
             padding: 30px 0 70px;
         }
 
         .card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
+
+            background:
+                rgba(255,255,255,0.04);
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+
             border-radius: 18px;
+
             padding: 25px;
         }
 
         .card i {
+
             font-size: 25px;
+
             color: #a855f7;
+
             margin-bottom: 15px;
         }
 
         .card h2 {
+
             font-size: 20px;
+
             margin-bottom: 10px;
         }
 
         .card p {
+
             color: #aaa;
+
             line-height: 1.7;
         }
 
         .user-box {
+
             display: none;
+
             margin: 25px auto 0;
+
             max-width: 500px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+
+            background:
+                rgba(255,255,255,0.05);
+
+            border:
+                1px solid rgba(255,255,255,0.1);
+
             border-radius: 18px;
+
             padding: 20px;
+
             text-align: left;
         }
 
         .user-info {
+
             display: flex;
+
             align-items: center;
+
             gap: 15px;
         }
 
         .user-info img {
+
             width: 55px;
+
             height: 55px;
+
             border-radius: 50%;
         }
 
         .user-name {
+
             font-weight: 700;
         }
 
         .user-email {
+
             color: #999;
+
             font-size: 13px;
         }
 
         .coins {
+
             margin-top: 15px;
+
             padding: 12px;
-            background: rgba(168,85,247,0.1);
+
+            background:
+                rgba(168,85,247,0.1);
+
             border-radius: 10px;
         }
 
         .linked {
+
             color: #4ade80;
+
             margin-top: 10px;
+
             font-size: 14px;
+
+            font-weight: 600;
         }
 
         .not-linked {
+
             color: #facc15;
+
             margin-top: 10px;
+
+            font-size: 14px;
+        }
+
+        .linking {
+
+            color: #60a5fa;
+
+            margin-top: 10px;
+
             font-size: 14px;
         }
 
         footer {
-            border-top: 1px solid rgba(255,255,255,0.08);
+
+            border-top:
+                1px solid rgba(255,255,255,0.08);
+
             padding: 30px 0;
+
             text-align: center;
+
             color: #777;
         }
 
-        /* MODAL */
-
         .modal {
+
             display: none;
+
             position: fixed;
+
             inset: 0;
-            background: rgba(0,0,0,0.75);
+
+            background:
+                rgba(0,0,0,0.75);
+
             backdrop-filter: blur(7px);
+
             justify-content: center;
+
             align-items: center;
+
             z-index: 1000;
+
             padding: 20px;
         }
 
         .modal-box {
+
             width: min(450px, 100%);
+
             background: #171717;
-            border: 1px solid rgba(255,255,255,0.1);
+
+            border:
+                1px solid rgba(255,255,255,0.1);
+
             border-radius: 20px;
+
             padding: 30px;
+
             text-align: center;
         }
 
         .modal-box h2 {
+
             margin-bottom: 10px;
         }
 
         .modal-box p {
+
             color: #999;
+
             margin-bottom: 20px;
         }
 
         .code {
+
             font-size: 28px;
+
             font-weight: 800;
+
             letter-spacing: 3px;
+
             color: #c084fc;
+
             background: #0d0d0d;
+
             border-radius: 12px;
+
             padding: 18px;
+
             word-break: break-all;
         }
 
         .close-btn {
+
             margin-top: 12px;
+
             background: transparent;
+
             border: none;
+
             color: #888;
+
             cursor: pointer;
-            font-family: inherit;
         }
 
         @media (max-width: 800px) {
+
             .cards {
+
                 grid-template-columns: 1fr;
             }
 
             .nav {
+
                 flex-direction: column;
             }
         }
+
     </style>
+
 </head>
+
 
 <body>
 
+
 <header>
+
     <div class="container nav">
 
         <div class="logo">
-            Archer <span>Giveaways</span>
+
+            Archer
+            <span>Giveaways</span>
+
         </div>
 
-        <div>
-            <button class="google-btn" onclick="loginWithGoogle()">
-                <i class="fa-brands fa-google"></i>
-                Sign in with Google
-            </button>
-        </div>
+
+        <button
+            class="google-btn"
+            onclick="loginWithGoogle()"
+        >
+
+            <i class="fa-brands fa-google"></i>
+
+            Sign in with Google
+
+        </button>
 
     </div>
+
 </header>
+
 
 <main>
 
-    <section class="hero container">
 
-        <h1>
-            DonutSMP <span>Rains</span>
-        </h1>
+<section class="hero container">
 
-        <p>
-            Welcome to Archer Giveaways. Claim your DonutSMP rain rewards
-            after meeting the requirements.
-        </p>
 
-        <div class="buttons">
+    <h1>
 
-            <button class="discord-btn" onclick="joinDiscord()">
-                <i class="fa-brands fa-discord"></i>
-                Join Archer Discord
-            </button>
+        DonutSMP
+        <span>Rains</span>
 
-            <button class="discord-btn" onclick="openTicket()">
-                <i class="fa-solid fa-ticket"></i>
-                Open Claim Ticket
-            </button>
+    </h1>
 
-            <button class="copy-btn" onclick="copyIP()">
-                <i class="fa-solid fa-copy"></i>
-                Copy Server IP
-            </button>
 
-        </div>
+    <p>
 
-        <div class="status">
-            Server:
-            <span id="serverStatus">Checking...</span>
-        </div>
+        Welcome to Archer Giveaways.
+        Claim your DonutSMP rain rewards
+        after meeting the requirements.
 
-        <div class="user-box" id="userBox">
+    </p>
 
-            <div class="user-info">
 
-                <img id="userAvatar" src="" alt="User">
+    <div class="buttons">
 
-                <div>
-                    <div class="user-name" id="userName">
-                        User
-                    </div>
 
-                    <div class="user-email" id="userEmail">
-                        email
-                    </div>
+        <button
+            class="discord-btn"
+            onclick="joinDiscord()"
+        >
+
+            <i class="fa-brands fa-discord"></i>
+
+            Join Archer Discord
+
+        </button>
+
+
+        <button
+            class="discord-btn"
+            onclick="openTicket()"
+        >
+
+            <i class="fa-solid fa-ticket"></i>
+
+            Open Claim Ticket
+
+        </button>
+
+
+        <button
+            class="copy-btn"
+            onclick="copyIP()"
+        >
+
+            <i class="fa-solid fa-copy"></i>
+
+            Copy Server IP
+
+        </button>
+
+
+    </div>
+
+
+    <div class="status">
+
+        Server:
+
+        <span
+            id="serverStatus"
+            class="checking"
+        >
+
+            Checking...
+
+        </span>
+
+    </div>
+
+
+    <div
+        class="user-box"
+        id="userBox"
+    >
+
+
+        <div class="user-info">
+
+
+            <img
+                id="userAvatar"
+                src=""
+                alt="User"
+            >
+
+
+            <div>
+
+                <div
+                    class="user-name"
+                    id="userName"
+                >
+                    User
+                </div>
+
+
+                <div
+                    class="user-email"
+                    id="userEmail"
+                >
+                    email
                 </div>
 
             </div>
 
-            <div class="coins">
-                💰 Coins:
-                <strong id="userCoins">0</strong>
-            </div>
-
-            <div id="linkStatus" class="not-linked">
-                Discord not linked
-            </div>
-
-            <button
-                class="link-btn"
-                id="linkButton"
-                onclick="generateLinkCode()"
-            >
-                <i class="fa-brands fa-discord"></i>
-                Link Discord
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <section class="container cards">
-
-        <div class="card">
-
-            <i class="fa-solid fa-coins"></i>
-
-            <h2>5M Coins Required</h2>
-
-            <p>
-                You need at least 5 million DonutSMP coins to qualify
-                for the giveaway.
-            </p>
 
         </div>
 
 
-        <div class="card">
+        <div class="coins">
 
-            <i class="fa-solid fa-link"></i>
+            💰 Coins:
 
-            <h2>Link Your Discord</h2>
-
-            <p>
-                Sign in with Google, generate your linking code,
-                then use the code in Archer Discord.
-            </p>
+            <strong id="userCoins">
+                0
+            </strong>
 
         </div>
 
 
-        <div class="card">
+        <div
+            id="linkStatus"
+            class="not-linked"
+        >
 
-            <i class="fa-solid fa-shield-halved"></i>
-
-            <h2>Staff Verification</h2>
-
-            <p>
-                After linking your accounts, staff can verify your
-                claim and process the reward.
-            </p>
+            Discord not linked
 
         </div>
 
-    </section>
+
+        <button
+            class="link-btn"
+            id="linkButton"
+            onclick="generateLinkCode()"
+        >
+
+            <i class="fa-brands fa-discord"></i>
+
+            Link Discord
+
+        </button>
+
+
+    </div>
+
+
+</section>
+
+
+<section class="container cards">
+
+
+    <div class="card">
+
+        <i class="fa-solid fa-coins"></i>
+
+        <h2>
+            5M Coins Required
+        </h2>
+
+        <p>
+
+            You need at least 5 million
+            DonutSMP coins to qualify
+            for the giveaway.
+
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <i class="fa-solid fa-link"></i>
+
+        <h2>
+            Link Your Discord
+        </h2>
+
+        <p>
+
+            Sign in with Google,
+            generate your linking code,
+            then use the code in Archer Discord.
+
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <i class="fa-solid fa-shield-halved"></i>
+
+        <h2>
+            Staff Verification
+        </h2>
+
+        <p>
+
+            After linking your accounts,
+            staff can verify your claim.
+
+        </p>
+
+    </div>
+
+
+</section>
+
 
 </main>
 
 
 <footer>
 
-    <div class="container">
-
-        Archer Giveaways • DonutSMP
-
-    </div>
+    Archer Giveaways • DonutSMP
 
 </footer>
 
 
-<!-- LINK CODE MODAL -->
+<div
+    class="modal"
+    id="linkModal"
+>
 
-<div class="modal" id="linkModal">
 
     <div class="modal-box">
 
-        <h2>Link Your Discord</h2>
+
+        <h2>
+            Link Your Discord
+        </h2>
+
 
         <p>
-            Copy this code and use it with the
-            <strong>/link</strong> command in Archer Discord.
+
+            Copy this code and use it with
+            <strong>/link</strong>
+            in Archer Discord.
+
         </p>
 
-        <div class="code" id="linkCode">
+
+        <div
+            class="code"
+            id="linkCode"
+        >
+
             ARCHER-XXXXX
+
         </div>
 
-        <button class="copy-btn" onclick="copyLinkCommand()">
+
+        <button
+            class="copy-btn"
+            onclick="copyLinkCommand()"
+        >
+
             <i class="fa-solid fa-copy"></i>
+
             Copy /link command
+
         </button>
 
-        <button class="close-btn" onclick="closeModal()">
+
+        <button
+            class="close-btn"
+            onclick="closeModal()"
+        >
+
             Close
+
         </button>
+
 
     </div>
 
@@ -493,429 +819,811 @@
 
 <script>
 
-    /* =========================
-       CONFIG
-    ========================= */
 
-    const PIPEDREAM_URL =
-        "https://eo2i1vsqxk41gdt.m.pipedream.net";
-
-    const DISCORD_INVITE =
-        "https://discord.gg/p4k77YM92n";
-
-    const SERVER_IP =
-        "donut-smp.net";
-
-    const GOOGLE_CLIENT_ID =
-        "263646768191-7854avn92k94rq8pbit809o0erq48grq.apps.googleusercontent.com";
+/* =====================================================
+   CONFIG
+===================================================== */
 
 
-    /* =========================
-       GOOGLE LOGIN
-    ========================= */
-
-    function loginWithGoogle() {
-
-        const redirect =
-            "https://accounts.google.com/o/oauth2/v2/auth" +
-            "?client_id=" + encodeURIComponent(GOOGLE_CLIENT_ID) +
-            "&redirect_uri=" + encodeURIComponent(window.location.origin) +
-            "&response_type=id_token" +
-            "&scope=openid%20email%20profile" +
-            "&nonce=" + Math.random().toString(36).substring(2);
-
-        window.location.href = redirect;
-    }
+const PIPEDREAM_URL =
+    "https://eo2i1vsqxk41gdt.m.pipedream.net";
 
 
-    function decodeGoogleToken(token) {
-
-        try {
-
-            const payload =
-                token.split(".")[1]
-                    .replace(/-/g, "+")
-                    .replace(/_/g, "/");
-
-            return JSON.parse(
-                decodeURIComponent(
-                    atob(payload)
-                        .split("")
-                        .map(function(c) {
-                            return "%" +
-                                ("00" + c.charCodeAt(0).toString(16))
-                                .slice(-2);
-                        })
-                        .join("")
-                )
-            );
-
-        } catch {
-
-            return null;
-
-        }
-
-    }
+const DISCORD_INVITE =
+    "https://discord.gg/p4k77YM92n";
 
 
-    function checkGoogleLogin() {
-
-        const hash =
-            window.location.hash.substring(1);
-
-        if (!hash) return;
-
-        const params =
-            new URLSearchParams(hash);
-
-        const token =
-            params.get("id_token");
-
-        if (!token) return;
-
-        const googleUser =
-            decodeGoogleToken(token);
-
-        if (!googleUser) return;
-
-        const user = {
-
-            id: googleUser.sub,
-
-            name:
-                googleUser.name || "Google User",
-
-            email:
-                googleUser.email || "",
-
-            picture:
-                googleUser.picture || "",
-
-            coins: 0,
-
-            discordId: null,
-
-            linkCode: null,
-
-            linkCodeCreated: null
-
-        };
+const SERVER_IP =
+    "donut-smp.net";
 
 
-        localStorage.setItem(
-            "archer_user_" + user.id,
-            JSON.stringify(user)
+const GOOGLE_CLIENT_ID =
+    "263646768191-7854avn92k94rq8pbit809o0erq48grq.apps.googleusercontent.com";
+
+
+/* =====================================================
+   GOOGLE LOGIN
+===================================================== */
+
+
+function loginWithGoogle() {
+
+    const redirect =
+        "https://accounts.google.com/o/oauth2/v2/auth" +
+        "?client_id=" +
+        encodeURIComponent(GOOGLE_CLIENT_ID) +
+        "&redirect_uri=" +
+        encodeURIComponent(window.location.origin) +
+        "&response_type=id_token" +
+        "&scope=openid%20email%20profile" +
+        "&nonce=" +
+        Math.random()
+            .toString(36)
+            .substring(2);
+
+
+    window.location.href =
+        redirect;
+
+}
+
+
+function decodeGoogleToken(token) {
+
+    try {
+
+        const payload =
+            token
+                .split(".")[1]
+                .replace(/-/g, "+")
+                .replace(/_/g, "/");
+
+
+        return JSON.parse(
+
+            decodeURIComponent(
+
+                atob(payload)
+                    .split("")
+                    .map(function(c) {
+
+                        return "%" +
+                            (
+                                "00" +
+                                c.charCodeAt(0)
+                                    .toString(16)
+                            )
+                            .slice(-2);
+
+                    })
+                    .join("")
+
+            )
+
         );
 
-        localStorage.setItem(
-            "archer_current_user",
-            user.id
+    }
+
+    catch {
+
+        return null;
+
+    }
+
+}
+
+
+function checkGoogleLogin() {
+
+    const hash =
+        window.location.hash.substring(1);
+
+
+    if (!hash) {
+
+        return;
+
+    }
+
+
+    const params =
+        new URLSearchParams(hash);
+
+
+    const token =
+        params.get("id_token");
+
+
+    if (!token) {
+
+        return;
+
+    }
+
+
+    const googleUser =
+        decodeGoogleToken(token);
+
+
+    if (!googleUser) {
+
+        return;
+
+    }
+
+
+    const user = {
+
+        id:
+            googleUser.sub,
+
+        name:
+            googleUser.name ||
+            "Google User",
+
+        email:
+            googleUser.email ||
+            "",
+
+        picture:
+            googleUser.picture ||
+            "",
+
+        coins:
+            0,
+
+        discordId:
+            null,
+
+        linkCode:
+            null,
+
+        linkCodeCreated:
+            null
+
+    };
+
+
+    localStorage.setItem(
+
+        "archer_user_" +
+        user.id,
+
+        JSON.stringify(user)
+
+    );
+
+
+    localStorage.setItem(
+
+        "archer_current_user",
+
+        user.id
+
+    );
+
+
+    window.location.hash = "";
+
+
+    showUser(user);
+
+
+    syncAccount();
+
+}
+
+
+/* =====================================================
+   USER DISPLAY
+===================================================== */
+
+
+function showUser(user) {
+
+
+    document.getElementById(
+        "userBox"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "userAvatar"
+    ).src =
+        user.picture ||
+        "https://via.placeholder.com/55";
+
+
+    document.getElementById(
+        "userName"
+    ).textContent =
+        user.name;
+
+
+    document.getElementById(
+        "userEmail"
+    ).textContent =
+        user.email;
+
+
+    document.getElementById(
+        "userCoins"
+    ).textContent =
+        user.coins || 0;
+
+
+    const status =
+        document.getElementById(
+            "linkStatus"
         );
 
-        window.location.hash = "";
 
-        showUser(user);
+    const button =
+        document.getElementById(
+            "linkButton"
+        );
+
+
+    if (user.discordId) {
+
+
+        status.textContent =
+            "✓ Discord linked";
+
+
+        status.className =
+            "linked";
+
+
+        button.style.display =
+            "none";
+
+
+    }
+
+    else {
+
+
+        status.textContent =
+            "Discord not linked";
+
+
+        status.className =
+            "not-linked";
+
+
+        button.style.display =
+            "block";
+
+    }
+
+}
+
+
+/* =====================================================
+   LOAD SAVED USER
+===================================================== */
+
+
+function loadSavedUser() {
+
+
+    const id =
+        localStorage.getItem(
+            "archer_current_user"
+        );
+
+
+    if (!id) {
+
+        return;
 
     }
 
 
-    /* =========================
-       USER DISPLAY
-    ========================= */
-
-    function showUser(user) {
-
-        document.getElementById("userBox").style.display = "block";
-
-        document.getElementById("userAvatar").src =
-            user.picture || "https://via.placeholder.com/55";
-
-        document.getElementById("userName").textContent =
-            user.name;
-
-        document.getElementById("userEmail").textContent =
-            user.email;
-
-        document.getElementById("userCoins").textContent =
-            user.coins || 0;
+    const raw =
+        localStorage.getItem(
+            "archer_user_" + id
+        );
 
 
-        if (user.discordId) {
+    if (!raw) {
 
-            document.getElementById("linkStatus").textContent =
-                "✓ Discord linked";
-
-            document.getElementById("linkStatus").className =
-                "linked";
-
-            document.getElementById("linkButton").style.display =
-                "none";
-
-        } else {
-
-            document.getElementById("linkStatus").textContent =
-                "Discord not linked";
-
-            document.getElementById("linkStatus").className =
-                "not-linked";
-
-            document.getElementById("linkButton").style.display =
-                "block";
-        }
+        return;
 
     }
 
 
-    function loadSavedUser() {
+    try {
 
-        const id =
-            localStorage.getItem("archer_current_user");
-
-        if (!id) return;
-
-        const raw =
-            localStorage.getItem("archer_user_" + id);
-
-        if (!raw) return;
-
-        try {
-
-            const user =
-                JSON.parse(raw);
-
-            showUser(user);
-
-        } catch {
-
-            console.log("Could not load saved user.");
-
-        }
-
-    }
-
-
-    /* =========================
-       LINK DISCORD
-    ========================= */
-
-    async function generateLinkCode() {
-
-        const id =
-            localStorage.getItem("archer_current_user");
-
-        if (!id) {
-
-            alert("Please sign in with Google first.");
-
-            return;
-        }
-
-
-        const raw =
-            localStorage.getItem("archer_user_" + id);
-
-        if (!raw) return;
 
         const user =
             JSON.parse(raw);
 
 
-        const code =
-            "ARCHER-" +
-            Math.random()
-                .toString(36)
-                .substring(2, 7)
-                .toUpperCase();
+        showUser(user);
 
 
-        user.linkCode = code;
+    }
 
-        user.linkCodeCreated = Date.now();
+    catch {
+
+        console.log(
+            "Could not load saved user."
+        );
+
+    }
+
+}
 
 
-        localStorage.setItem(
-            "archer_user_" + id,
-            JSON.stringify(user)
+/* =====================================================
+   SYNC ACCOUNT FROM PIPEDREAM
+===================================================== */
+
+
+async function syncAccount() {
+
+
+    const googleId =
+        localStorage.getItem(
+            "archer_current_user"
         );
 
 
-        try {
+    if (!googleId) {
 
-            const response =
-                await fetch(
-                    PIPEDREAM_URL +
-                    "?action=register",
-                    {
+        return;
 
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-
-                        body: JSON.stringify({
-
-                            code: code,
-
-                            googleId: user.id,
-
-                            name: user.name,
-
-                            email: user.email
-
-                        })
-
-                    }
-                );
+    }
 
 
-            const data =
-                await response.json();
+    try {
 
 
-            if (!data.success) {
+        const response =
+            await fetch(
 
-                alert(
-                    "Could not create the Discord link code."
-                );
+                PIPEDREAM_URL +
+                "?action=getAccount&googleId=" +
+                encodeURIComponent(
+                    googleId
+                )
 
-                return;
-
-            }
-
-
-            document.getElementById("linkCode")
-                .textContent = code;
-
-            document.getElementById("linkModal")
-                .style.display = "flex";
-
-
-        } catch (error) {
-
-            console.error(error);
-
-            alert(
-                "Could not connect to the linking server."
             );
+
+
+        if (!response.ok) {
+
+            return;
 
         }
 
-    }
+
+        const data =
+            await response.json();
 
 
-    function copyLinkCommand() {
+        if (
+            !data.success ||
+            !data.account
+        ) {
 
-        const code =
-            document.getElementById("linkCode")
-                .textContent;
+            return;
 
-        navigator.clipboard.writeText(
-            "/link " + code
+        }
+
+
+        const raw =
+            localStorage.getItem(
+                "archer_user_" +
+                googleId
+            );
+
+
+        if (!raw) {
+
+            return;
+
+        }
+
+
+        const user =
+            JSON.parse(raw);
+
+
+        user.discordId =
+            data.account.discordId ||
+            null;
+
+
+        user.coins =
+            data.account.coins ||
+            0;
+
+
+        localStorage.setItem(
+
+            "archer_user_" +
+            googleId,
+
+            JSON.stringify(user)
+
         );
 
-        alert("Copied /link command!");
+
+        showUser(user);
+
 
     }
 
+    catch (error) {
 
-    function closeModal() {
-
-        document.getElementById("linkModal")
-            .style.display = "none";
-
-    }
-
-
-    /* =========================
-       DISCORD
-    ========================= */
-
-    function joinDiscord() {
-
-        window.open(
-            DISCORD_INVITE,
-            "_blank"
+        console.log(
+            "Account sync failed:",
+            error
         );
 
     }
 
+}
 
-    function openTicket() {
 
-        window.open(
-            DISCORD_INVITE,
-            "_blank"
+/* =====================================================
+   GENERATE LINK CODE
+===================================================== */
+
+
+async function generateLinkCode() {
+
+
+    const id =
+        localStorage.getItem(
+            "archer_current_user"
         );
+
+
+    if (!id) {
 
         alert(
-            "Join Archer Discord and open a claim ticket there."
+            "Please sign in with Google first."
         );
+
+        return;
 
     }
 
 
-    /* =========================
-       SERVER IP
-    ========================= */
-
-    function copyIP() {
-
-        navigator.clipboard.writeText(
-            SERVER_IP
+    const raw =
+        localStorage.getItem(
+            "archer_user_" + id
         );
+
+
+    if (!raw) {
+
+        return;
+
+    }
+
+
+    const user =
+        JSON.parse(raw);
+
+
+    const code =
+
+        "ARCHER-" +
+
+        Math.random()
+            .toString(36)
+            .substring(2, 7)
+            .toUpperCase();
+
+
+    user.linkCode =
+        code;
+
+
+    user.linkCodeCreated =
+        Date.now();
+
+
+    localStorage.setItem(
+
+        "archer_user_" + id,
+
+        JSON.stringify(user)
+
+    );
+
+
+    const status =
+        document.getElementById(
+            "linkStatus"
+        );
+
+
+    status.textContent =
+        "Creating link code...";
+
+
+    status.className =
+        "linking";
+
+
+    try {
+
+
+        const response =
+            await fetch(
+
+                PIPEDREAM_URL +
+                "?action=register",
+
+                {
+
+                    method:
+                        "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            code:
+                                code,
+
+                            googleId:
+                                user.id,
+
+                            name:
+                                user.name,
+
+                            email:
+                                user.email
+
+                        })
+
+                }
+
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+
+            status.textContent =
+                "Could not create link code.";
+
+
+            status.className =
+                "not-linked";
+
+
+            alert(
+                data.message ||
+                data.error ||
+                "Could not create link code."
+            );
+
+
+            return;
+
+        }
+
+
+        document.getElementById(
+            "linkCode"
+        ).textContent =
+            code;
+
+
+        document.getElementById(
+            "linkModal"
+        ).style.display =
+            "flex";
+
+
+        status.textContent =
+            "Waiting for Discord link...";
+
+
+        status.className =
+            "linking";
+
+
+    }
+
+    catch (error) {
+
+
+        console.error(error);
+
+
+        status.textContent =
+            "Connection failed.";
+
+
+        status.className =
+            "not-linked";
+
 
         alert(
-            "Copied server IP: " + SERVER_IP
+            "Could not connect to Pipedream."
         );
 
     }
 
-
-    /* =========================
-       SERVER STATUS
-    ========================= */
-
-    async function fetchServerStatus() {
-
-        const statusElement =
-            document.getElementById("serverStatus");
-
-        try {
-
-            const response =
-                await fetch(
-                    "https://api.mcsrvstat.us/3/" +
-                    SERVER_IP
-                );
-
-            const data =
-                await response.json();
+}
 
 
-            if (data.online) {
+/* =====================================================
+   COPY LINK COMMAND
+===================================================== */
 
-                statusElement.textContent =
-                    "Online";
 
-                statusElement.className =
-                    "online";
+function copyLinkCommand() {
 
-            } else {
 
-                statusElement.textContent =
-                    "Offline";
+    const code =
+        document.getElementById(
+            "linkCode"
+        ).textContent;
 
-                statusElement.className =
-                    "offline";
 
-            }
+    navigator.clipboard.writeText(
 
-        } catch {
+        "/link " + code
+
+    );
+
+
+    alert(
+        "Copied /link command!"
+    );
+
+}
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+
+function closeModal() {
+
+
+    document.getElementById(
+        "linkModal"
+    ).style.display =
+        "none";
+
+}
+
+
+/* =====================================================
+   DISCORD
+===================================================== */
+
+
+function joinDiscord() {
+
+
+    window.open(
+
+        DISCORD_INVITE,
+
+        "_blank"
+
+    );
+
+}
+
+
+function openTicket() {
+
+
+    window.open(
+
+        DISCORD_INVITE,
+
+        "_blank"
+
+    );
+
+
+    alert(
+
+        "Join Archer Discord and open a claim ticket there."
+
+    );
+
+}
+
+
+/* =====================================================
+   COPY SERVER IP
+===================================================== */
+
+
+function copyIP() {
+
+
+    navigator.clipboard.writeText(
+        SERVER_IP
+    );
+
+
+    alert(
+
+        "Copied server IP: " +
+        SERVER_IP
+
+    );
+
+}
+
+
+/* =====================================================
+   SERVER STATUS
+===================================================== */
+
+
+async function fetchServerStatus() {
+
+
+    const statusElement =
+        document.getElementById(
+            "serverStatus"
+        );
+
+
+    try {
+
+
+        const response =
+            await fetch(
+
+                "https://api.mcsrvstat.us/3/" +
+                SERVER_IP
+
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (data.online) {
+
 
             statusElement.textContent =
-                "Unavailable";
+                "Online";
+
+
+            statusElement.className =
+                "online";
+
+
+        }
+
+        else {
+
+
+            statusElement.textContent =
+                "Offline";
+
 
             statusElement.className =
                 "offline";
@@ -924,18 +1632,54 @@
 
     }
 
+    catch {
 
-    /* =========================
-       START
-    ========================= */
 
-    checkGoogleLogin();
+        statusElement.textContent =
+            "Unavailable";
 
-    loadSavedUser();
 
-    fetchServerStatus();
+        statusElement.className =
+            "offline";
+
+    }
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+
+checkGoogleLogin();
+
+loadSavedUser();
+
+fetchServerStatus();
+
+syncAccount();
+
+
+/*
+ * Check every 3 seconds.
+ *
+ * This is what makes the website notice
+ * when /link is used in Discord.
+ */
+
+
+setInterval(
+
+    syncAccount,
+
+    3000
+
+);
+
 
 </script>
 
 </body>
+
 </html>
