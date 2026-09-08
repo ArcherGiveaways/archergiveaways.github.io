@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,6 +33,13 @@
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     >
+
+    <!-- Google Identity Services -->
+    <script
+        src="https://accounts.google.com/gsi/client"
+        async
+        defer
+    ></script>
 
     <style>
 
@@ -838,52 +846,53 @@ const SERVER_IP =
 
 
 const GOOGLE_CLIENT_ID =
-    "263646768191-7854avn92k94rq8pbit809o0erq48grq.apps.googleusercontent.com";
+    "263646768191-7854avn92k94rq8pbit809o0erq48gr.apps.googleusercontent.com";
 
 
 /* =====================================================
    GOOGLE LOGIN
+   Google Identity Services
 ===================================================== */
 
 
-function loginWithGoogle() {
-
-    const redirect =
-        "https://accounts.google.com/o/oauth2/v2/auth" +
-        "?client_id=" +
-        encodeURIComponent(GOOGLE_CLIENT_ID) +
-        "&redirect_uri=" +
-        encodeURIComponent(window.location.origin) +
-        "&response_type=id_token" +
-        "&scope=openid%20email%20profile" +
-        "&nonce=" +
-        Math.random()
-            .toString(36)
-            .substring(2);
+let googleReady = false;
 
 
-    window.location.href =
-        redirect;
-
-}
-
-
+/*
+ * Decode the JWT payload returned by Google.
+ */
 function decodeGoogleToken(token) {
 
     try {
 
+        const parts =
+            token.split(".");
+
+        if (parts.length !== 3) {
+
+            return null;
+
+        }
+
+
         const payload =
-            token
-                .split(".")[1]
+            parts[1]
                 .replace(/-/g, "+")
                 .replace(/_/g, "/");
+
+
+        const padded =
+            payload +
+            "=".repeat(
+                (4 - payload.length % 4) % 4
+            );
 
 
         return JSON.parse(
 
             decodeURIComponent(
 
-                atob(payload)
+                atob(padded)
                     .split("")
                     .map(function(c) {
 
@@ -904,7 +913,12 @@ function decodeGoogleToken(token) {
 
     }
 
-    catch {
+    catch (error) {
+
+        console.error(
+            "Google token decode failed:",
+            error
+        );
 
         return null;
 
@@ -913,28 +927,19 @@ function decodeGoogleToken(token) {
 }
 
 
-function checkGoogleLogin() {
+/*
+ * Google calls this after successful login.
+ */
+function handleGoogleCredential(response) {
 
-    const hash =
-        window.location.hash.substring(1);
+    if (
+        !response ||
+        !response.credential
+    ) {
 
-
-    if (!hash) {
-
-        return;
-
-    }
-
-
-    const params =
-        new URLSearchParams(hash);
-
-
-    const token =
-        params.get("id_token");
-
-
-    if (!token) {
+        alert(
+            "Google login failed."
+        );
 
         return;
 
@@ -942,10 +947,61 @@ function checkGoogleLogin() {
 
 
     const googleUser =
-        decodeGoogleToken(token);
+        decodeGoogleToken(
+            response.credential
+        );
 
 
     if (!googleUser) {
+
+        alert(
+            "Could not read the Google login."
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * Make sure this token was issued
+     * for our Google OAuth client.
+     */
+    if (
+        googleUser.aud &&
+        googleUser.aud !== GOOGLE_CLIENT_ID
+    ) {
+
+        console.error(
+            "Google token audience mismatch."
+        );
+
+        alert(
+            "Google login verification failed."
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * Make sure the token came from Google.
+     */
+    if (
+        googleUser.iss !==
+            "https://accounts.google.com" &&
+        googleUser.iss !==
+            "accounts.google.com"
+    ) {
+
+        console.error(
+            "Invalid Google token issuer."
+        );
+
+        alert(
+            "Google login verification failed."
+        );
 
         return;
 
@@ -1003,13 +1059,116 @@ function checkGoogleLogin() {
     );
 
 
-    window.location.hash = "";
-
-
     showUser(user);
 
 
     syncAccount();
+
+}
+
+
+/*
+ * Initialize Google Identity Services.
+ */
+function initializeGoogle() {
+
+    if (
+        googleReady
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        typeof google === "undefined" ||
+        !google.accounts ||
+        !google.accounts.id
+    ) {
+
+        return;
+
+    }
+
+
+    google.accounts.id.initialize({
+
+        client_id:
+            GOOGLE_CLIENT_ID,
+
+        callback:
+            handleGoogleCredential,
+
+        ux_mode:
+            "popup",
+
+        context:
+            "signin"
+
+    });
+
+
+    googleReady = true;
+
+}
+
+
+/*
+ * Wait for the Google library to load.
+ */
+function waitForGoogle() {
+
+    if (
+        typeof google !== "undefined" &&
+        google.accounts &&
+        google.accounts.id
+    ) {
+
+        initializeGoogle();
+
+        return;
+
+    }
+
+
+    setTimeout(
+        waitForGoogle,
+        100
+    );
+
+}
+
+
+/*
+ * Existing button calls this.
+ */
+function loginWithGoogle() {
+
+    if (
+        typeof google === "undefined" ||
+        !google.accounts ||
+        !google.accounts.id
+    ) {
+
+        alert(
+            "Google login is still loading. Please try again in a moment."
+        );
+
+        waitForGoogle();
+
+        return;
+
+    }
+
+
+    initializeGoogle();
+
+
+    /*
+     * Open Google's sign-in prompt.
+     */
+    google.accounts.id.prompt();
 
 }
 
@@ -1652,11 +1811,18 @@ async function fetchServerStatus() {
 ===================================================== */
 
 
-checkGoogleLogin();
+/*
+ * Google loads asynchronously.
+ * This waits for it and initializes GIS.
+ */
+waitForGoogle();
+
 
 loadSavedUser();
 
+
 fetchServerStatus();
+
 
 syncAccount();
 
@@ -1664,11 +1830,9 @@ syncAccount();
 /*
  * Check every 3 seconds.
  *
- * This is what makes the website notice
+ * This makes the website notice
  * when /link is used in Discord.
  */
-
-
 setInterval(
 
     syncAccount,
@@ -1683,3 +1847,4 @@ setInterval(
 </body>
 
 </html>
+```
