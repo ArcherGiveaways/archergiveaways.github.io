@@ -14,7 +14,6 @@
     Archer Giveaways - Owner Dashboard
   </title>
 
-
   <style>
 
     :root {
@@ -26,7 +25,6 @@
       --danger: #ef4444;
       --success: #22c55e;
     }
-
 
     body {
       font-family:
@@ -45,21 +43,19 @@
       padding: 24px;
     }
 
-
     .container {
       max-width: 1000px;
       margin: 0 auto;
     }
-
 
     h1,
     h2 {
       color:
         var(--text);
 
-      margin-bottom: 16px;
+      margin-bottom:
+        16px;
     }
-
 
     .grid {
       display: grid;
@@ -70,7 +66,6 @@
       gap: 24px;
     }
 
-
     @media (min-width: 768px) {
 
       .grid {
@@ -79,7 +74,6 @@
       }
 
     }
-
 
     .card {
       background:
@@ -95,12 +89,10 @@
         1px solid #334155;
     }
 
-
     .form-group {
       margin-bottom:
         12px;
     }
-
 
     label {
       display:
@@ -116,8 +108,8 @@
         4px;
     }
 
-
     input,
+    select,
     button {
       width:
         100%;
@@ -141,7 +133,6 @@
         border-box;
     }
 
-
     button {
       background:
         var(--accent);
@@ -159,28 +150,62 @@
         8px;
     }
 
-
     button:hover {
       opacity:
         0.9;
     }
-
 
     button.danger {
       background:
         var(--danger);
     }
 
-
     #eventsList {
       margin-top:
         12px;
     }
 
+    .event-row {
+      border-bottom:
+        1px solid #334155;
+
+      padding:
+        12px 0;
+    }
+
+    .event-row:last-child {
+      border-bottom:
+        none;
+    }
+
+    .event-meta {
+      color:
+        var(--text-muted);
+
+      font-size:
+        0.8rem;
+
+      margin-top:
+        4px;
+    }
+
+    .delete-button {
+      width:
+        auto;
+
+      float:
+        right;
+
+      padding:
+        6px 12px;
+
+      margin-top:
+        -34px;
+    }
+
   </style>
 
 </head>
-
 
 <body>
 
@@ -192,7 +217,6 @@
 
 
     <div class="grid">
-
 
       <!-- CREATE EVENT -->
 
@@ -209,17 +233,7 @@
             Event Type
           </label>
 
-          <select
-            id="eventType"
-            style="
-              width:100%;
-              padding:10px;
-              border-radius:6px;
-              border:1px solid #334155;
-              background:#0f172a;
-              color:#f8fafc;
-            "
-          >
+          <select id="eventType">
 
             <option value="giveaway">
               Giveaway
@@ -273,9 +287,9 @@
           <input
             type="number"
             id="eventPrize"
-            value="0"
             min="1"
             step="1"
+            value="0"
             placeholder="e.g. 5000000"
           >
 
@@ -291,9 +305,9 @@
           <input
             type="number"
             id="eventDuration"
-            value="60"
             min="1"
             step="1"
+            value="60"
           >
 
         </div>
@@ -308,7 +322,7 @@
       </div>
 
 
-      <!-- EVENT MANAGER -->
+      <!-- EVENTS -->
 
       <div class="card">
 
@@ -316,22 +330,18 @@
           Active Events
         </h2>
 
-
         <div id="eventsList">
           Loading...
         </div>
 
-
         <button
           class="danger"
           onclick="clearAllEvents()"
-          style="margin-top:16px;"
         >
           Clear All Events
         </button>
 
       </div>
-
 
     </div>
 
@@ -344,25 +354,34 @@
       "https://archer.arcdepths.workers.dev";
 
 
-    function escapeHtml(value) {
+    function escapeHtml(
+      value
+    ) {
 
-      return String(value || "")
+      return String(
+        value || ""
+      )
+
         .replace(
           /&/g,
           "&amp;"
         )
+
         .replace(
           /</g,
           "&lt;"
         )
+
         .replace(
           />/g,
           "&gt;"
         )
+
         .replace(
           /"/g,
           "&quot;"
         )
+
         .replace(
           /'/g,
           "&#039;"
@@ -384,7 +403,7 @@
     }
 
 
-    function getTimeText(
+    function getRemainingText(
       event
     ) {
 
@@ -417,17 +436,9 @@
           );
 
 
-        const days =
-          Math.floor(
-            seconds / 86400
-          );
-
-
         const hours =
           Math.floor(
-            (
-              seconds % 86400
-            ) / 3600
+            seconds / 3600
           );
 
 
@@ -443,35 +454,114 @@
           seconds % 60;
 
 
-        if (days > 0) {
-          return (
-            `${days}d ${hours}h`
-          );
-        }
-
-
         if (hours > 0) {
+
           return (
-            `${hours}h ${minutes}m`
+            `Ends in ${hours}h ${minutes}m`
           );
+
         }
 
 
         if (minutes > 0) {
+
           return (
-            `${minutes}m ${secs}s`
+            `Ends in ${minutes}m ${secs}s`
           );
+
         }
 
 
         return (
-          `${secs}s`
+          `Ends in ${secs}s`
         );
 
       }
 
 
       return event.time || "";
+
+    }
+
+
+    async function getEvents() {
+
+      const response =
+        await fetch(
+          `${WORKER_URL}/events`
+        );
+
+
+      const data =
+        await response.json();
+
+
+      if (
+        !response.ok ||
+        !data.success
+      ) {
+
+        throw new Error(
+          data.error ||
+          "Failed to load events."
+        );
+
+      }
+
+
+      return Array.isArray(
+        data.events
+      )
+        ? data.events
+        : [];
+
+    }
+
+
+    async function saveEvents(
+      events
+    ) {
+
+      const response =
+        await fetch(
+          `${WORKER_URL}/admin/events`,
+          {
+
+            method:
+              "POST",
+
+            headers: {
+              "Content-Type":
+                "application/json"
+            },
+
+            body:
+              JSON.stringify({
+                events
+              })
+
+          }
+        );
+
+
+      const data =
+        await response.json();
+
+
+      if (
+        !response.ok ||
+        !data.success
+      ) {
+
+        throw new Error(
+          data.error ||
+          "Failed to save events."
+        );
+
+      }
+
+
+      return data;
 
     }
 
@@ -486,26 +576,22 @@
 
       try {
 
-        const res =
-          await fetch(
-            `${WORKER_URL}/events`
-          );
-
-
-        const data =
-          await res.json();
+        const events =
+          await getEvents();
 
 
         if (
-          !data.success ||
-          !Array.isArray(
-            data.events
-          ) ||
-          data.events.length === 0
+          events.length === 0
         ) {
 
           listEl.innerHTML =
-            "<p style='color:var(--text-muted)'>No active events.</p>";
+            `
+              <p
+                style="color:var(--text-muted)"
+              >
+                No active events.
+              </p>
+            `;
 
           return;
 
@@ -513,62 +599,64 @@
 
 
         listEl.innerHTML =
-          data.events
+          events
             .map(
-              (evt, index) => `
+              (event, index) => `
 
                 <div
-                  style="
-                    border-bottom:1px solid #334155;
-                    padding:10px 0;
-                  "
+                  class="event-row"
                 >
 
                   <strong>
                     ${escapeHtml(
-                      evt.title
+                      event.title
                     )}
                   </strong>
 
-                  <br>
-
-                  <small
-                    style="color:var(--text-muted)"
-                  >
-                    ${
-                      evt.type === "rain"
-                        ? "Rain"
-                        : "Giveaway"
-                    }
-                    ·
-                    Prize:
-                    ${formatNumber(
-                      evt.prize
-                    )}
-                    coins
-                  </small>
-
-                  <br>
-
-                  <small
-                    style="color:var(--text-muted)"
-                  >
-                    ${escapeHtml(
-                      getTimeText(evt)
-                    )}
-                  </small>
-
                   <button
-                    class="danger"
-                    style="
-                      width:auto;
-                      padding:6px 12px;
-                      float:right;
-                    "
+                    class="danger delete-button"
                     onclick="removeEvent(${index})"
                   >
                     Delete
                   </button>
+
+                  <div class="event-meta">
+
+                    ${
+                      event.type === "rain"
+                        ? "Coin Rain"
+                        : "Giveaway"
+                    }
+
+                    · Prize:
+
+                    ${
+                      formatNumber(
+                        event.prize
+                      )
+                    }
+
+                    coins
+
+                  </div>
+
+                  <div class="event-meta">
+
+                    ${escapeHtml(
+                      event.description
+                    )}
+
+                  </div>
+
+                  <div class="event-meta">
+
+                    ${escapeHtml(
+                      getRemainingText(
+                        event
+                      )
+                    )}
+
+                  </div>
 
                 </div>
 
@@ -580,12 +668,19 @@
       } catch (error) {
 
         console.error(
+          "Load events error:",
           error
         );
 
 
         listEl.innerHTML =
-          "<p style='color:var(--danger)'>Failed to load events.</p>";
+          `
+            <p
+              style="color:var(--danger)"
+            >
+              Failed to load events.
+            </p>
+          `;
 
       }
 
@@ -652,40 +747,21 @@
       }
 
 
+      if (duration <= 0) {
+
+        alert(
+          "Please provide a valid duration."
+        );
+
+        return;
+
+      }
+
+
       try {
 
-        const res =
-          await fetch(
-            `${WORKER_URL}/events`
-          );
-
-
-        if (!res.ok) {
-          throw new Error(
-            "Could not load events."
-          );
-        }
-
-
-        const data =
-          await res.json();
-
-
         const currentEvents =
-          Array.isArray(
-            data.events
-          )
-            ? data.events
-            : [];
-
-
-        const endsAt =
-          Date.now() +
-          (
-            duration *
-            60 *
-            1000
-          );
+          await getEvents();
 
 
         const newEvent = {
@@ -702,7 +778,11 @@
 
           prize,
 
-          endsAt,
+          endsAt:
+            Date.now() +
+            duration *
+            60 *
+            1000,
 
           createdAt:
             Date.now()
@@ -715,62 +795,41 @@
         );
 
 
-        const saveResponse =
-          await fetch(
-            `${WORKER_URL}/admin/events`,
-            {
-
-              method:
-                "POST",
-
-              headers: {
-                "Content-Type":
-                  "application/json"
-              },
-
-              body:
-                JSON.stringify({
-                  events:
-                    currentEvents
-                })
-
-            }
-          );
-
-
-        const saveData =
-          await saveResponse.json();
-
-
-        if (
-          !saveResponse.ok ||
-          !saveData.success
-        ) {
-
-          throw new Error(
-            saveData.error ||
-            "Failed to save events."
-          );
-
-        }
+        await saveEvents(
+          currentEvents
+        );
 
 
         document.getElementById(
           "eventTitle"
-        ).value = "";
+        ).value =
+          "";
 
 
         document.getElementById(
           "eventDesc"
-        ).value = "";
+        ).value =
+          "";
 
 
         document.getElementById(
           "eventPrize"
-        ).value = "0";
+        ).value =
+          "0";
+
+
+        document.getElementById(
+          "eventDuration"
+        ).value =
+          "60";
 
 
         await loadEvents();
+
+
+        alert(
+          "Event published successfully."
+        );
 
 
       } catch (error) {
@@ -797,68 +856,19 @@
 
       try {
 
-        const res =
-          await fetch(
-            `${WORKER_URL}/events`
-          );
+        const events =
+          await getEvents();
 
 
-        const data =
-          await res.json();
-
-
-        let currentEvents =
-          Array.isArray(
-            data.events
-          )
-            ? data.events
-            : [];
-
-
-        currentEvents.splice(
+        events.splice(
           index,
           1
         );
 
 
-        const saveResponse =
-          await fetch(
-            `${WORKER_URL}/admin/events`,
-            {
-
-              method:
-                "POST",
-
-              headers: {
-                "Content-Type":
-                  "application/json"
-              },
-
-              body:
-                JSON.stringify({
-                  events:
-                    currentEvents
-                })
-
-            }
-          );
-
-
-        const saveData =
-          await saveResponse.json();
-
-
-        if (
-          !saveResponse.ok ||
-          !saveData.success
-        ) {
-
-          throw new Error(
-            saveData.error ||
-            "Failed to update events."
-          );
-
-        }
+        await saveEvents(
+          events
+        );
 
 
         await loadEvents();
@@ -867,6 +877,7 @@
       } catch (error) {
 
         console.error(
+          "Remove event error:",
           error
         );
 
@@ -895,43 +906,9 @@
 
       try {
 
-        const response =
-          await fetch(
-            `${WORKER_URL}/admin/events`,
-            {
-
-              method:
-                "POST",
-
-              headers: {
-                "Content-Type":
-                  "application/json"
-              },
-
-              body:
-                JSON.stringify({
-                  events: []
-                })
-
-            }
-          );
-
-
-        const data =
-          await response.json();
-
-
-        if (
-          !response.ok ||
-          !data.success
-        ) {
-
-          throw new Error(
-            data.error ||
-            "Failed to clear events."
-          );
-
-        }
+        await saveEvents(
+          []
+        );
 
 
         await loadEvents();
@@ -940,6 +917,7 @@
       } catch (error) {
 
         console.error(
+          "Clear events error:",
           error
         );
 
