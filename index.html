@@ -15,33 +15,35 @@
 
 
   /* =========================================================
-     EVENTS
+     STATE
   ========================================================= */
 
   let EVENTS = [];
 
-
-  /* =========================================================
-     STATE
-  ========================================================= */
-
   let currentUser = null;
+
   let selectedEvent = null;
+
   let modalAction = null;
 
 
   /* =========================================================
-     LOCAL USER
+     LOCAL STORAGE
   ========================================================= */
 
   function userKey(id) {
+
     return "archer_user_" + id;
+
   }
 
 
-  function loadLocalUser(user) {
+  function loadLocalUser(
+    user
+  ) {
 
     let saved = null;
+
 
     try {
 
@@ -188,11 +190,9 @@
     if (!response.ok) {
 
       throw new Error(
-
         result.error ||
         "Worker returned HTTP " +
         response.status
-
       );
 
     }
@@ -300,7 +300,9 @@
         });
 
 
-      if (!currentUser.linkCode) {
+      if (
+        !currentUser.linkCode
+      ) {
 
         currentUser.linkCode =
           generateLinkCode();
@@ -313,6 +315,7 @@
       updateUI();
 
       closeModal();
+
 
       showToast(
         "Signed in successfully."
@@ -351,7 +354,9 @@
       return;
 
 
-    if (!currentUser.linkCode) {
+    if (
+      !currentUser.linkCode
+    ) {
 
       currentUser.linkCode =
         generateLinkCode();
@@ -388,8 +393,8 @@
 
       /*
         IMPORTANT:
-        Always accept the link code
-        returned by the Worker.
+        Always use the code returned
+        by the Worker.
       */
 
       if (
@@ -461,7 +466,8 @@
 
 
     if (
-      account.email !== undefined
+      account.email !==
+      undefined
     ) {
 
       currentUser.email =
@@ -471,7 +477,8 @@
 
 
     if (
-      account.picture !== undefined
+      account.picture !==
+      undefined
     ) {
 
       currentUser.picture =
@@ -481,7 +488,8 @@
 
 
     if (
-      account.coins !== undefined
+      account.coins !==
+      undefined
     ) {
 
       currentUser.coins =
@@ -623,7 +631,9 @@
     }
 
 
-    if (!currentUser.linkCode) {
+    if (
+      !currentUser.linkCode
+    ) {
 
       currentUser.linkCode =
         generateLinkCode();
@@ -742,9 +752,11 @@
 
         closeModal();
 
+
         showToast(
           "Discord verified successfully! ✓"
         );
+
 
         return;
 
@@ -780,8 +792,11 @@
       !currentUser ||
       !currentUser.linkCode
 
-    )
+    ) {
+
       return;
+
+    }
 
 
     try {
@@ -808,7 +823,7 @@
 
 
   /* =========================================================
-     LIVE EVENTS
+     EVENTS
   ========================================================= */
 
   async function fetchEvents() {
@@ -822,13 +837,19 @@
 
 
       if (
-        Array.isArray(
+        !Array.isArray(
           data.events
         )
       ) {
 
-        EVENTS =
-          data.events.map(
+        return;
+
+      }
+
+
+      EVENTS =
+        data.events
+          .map(
             event => ({
 
               ...event,
@@ -836,7 +857,7 @@
               id:
                 String(
                   event.id || ""
-                ),
+                ).trim(),
 
               type:
                 event.type === "rain"
@@ -876,9 +897,8 @@
           );
 
 
-        renderEvents();
+      renderEvents();
 
-      }
 
     } catch (error) {
 
@@ -919,7 +939,7 @@
       }
 
 
-      const seconds =
+      const totalSeconds =
         Math.floor(
           remaining / 1000
         );
@@ -927,23 +947,26 @@
 
       const hours =
         Math.floor(
-          seconds / 3600
+          totalSeconds / 3600
         );
 
 
       const minutes =
         Math.floor(
           (
-            seconds % 3600
+            totalSeconds %
+            3600
           ) / 60
         );
 
 
-      const secs =
-        seconds % 60;
+      const seconds =
+        totalSeconds % 60;
 
 
-      if (hours > 0) {
+      if (
+        hours > 0
+      ) {
 
         return (
           `Ends in ${hours}h ${minutes}m`
@@ -952,17 +975,19 @@
       }
 
 
-      if (minutes > 0) {
+      if (
+        minutes > 0
+      ) {
 
         return (
-          `Ends in ${minutes}m ${secs}s`
+          `Ends in ${minutes}m ${seconds}s`
         );
 
       }
 
 
       return (
-        `Ends in ${secs}s`
+        `Ends in ${seconds}s`
       );
 
     }
@@ -1006,7 +1031,7 @@
 
 
   /* =========================================================
-     EVENT CLICK
+     EVENT BUTTON
   ========================================================= */
 
   function enterEvent(
@@ -1053,7 +1078,7 @@
 
 
     showToast(
-      "Your Google and Discord accounts are verified."
+      "Google and Discord verified."
     );
 
   }
@@ -1120,7 +1145,9 @@
 
   function modalPrimaryAction() {
 
-    if (modalAction) {
+    if (
+      modalAction
+    ) {
 
       modalAction();
 
@@ -1138,7 +1165,8 @@
     );
 
 
-    modalAction = null;
+    modalAction =
+      null;
 
   }
 
@@ -1165,6 +1193,7 @@
 
       login.style.display =
         "flex";
+
 
       profile.style.display =
         "none";
@@ -1297,14 +1326,18 @@
     const progress =
       Math.min(
         100,
+
         Math.round(
+
           (
             Number(
-              currentUser.coins || 0
+              currentUser.coins ||
+              0
             ) /
             5000000
           ) *
           100
+
         )
       );
 
@@ -1408,7 +1441,7 @@
 
 
   /* =========================================================
-     EVENTS RENDERING
+     RENDER
   ========================================================= */
 
   function renderEvents() {
@@ -1440,17 +1473,15 @@
       "";
 
 
-    if (!EVENTS.length) {
+    if (
+      EVENTS.length === 0
+    ) {
 
-      container.innerHTML = `
+      container.innerHTML =
 
-        <div class="empty-state">
-
+        `<div class="empty-state">
           No active events
-
-        </div>
-
-      `;
+        </div>`;
 
       return;
 
@@ -1518,7 +1549,9 @@
           >
 
             ${escapeHtml(
-              getEventTime(event)
+              getEventTime(
+                event
+              )
             )}
 
           </div>
@@ -1561,7 +1594,9 @@
       return;
 
 
-    if (!EVENTS.length) {
+    if (
+      EVENTS.length === 0
+    ) {
 
       featured.innerHTML = `
 
@@ -1571,34 +1606,21 @@
 
             <i class="fa-solid fa-clock"></i>
 
-            No active events
+            Waiting for events
 
           </div>
 
 
           <div class="featured-title">
 
-            Nothing is live right now
+            No Active Events
 
           </div>
 
 
           <div class="featured-prize">
 
-            Check back soon
-
-          </div>
-
-
-          <div class="featured-bottom">
-
-            <div class="featured-pill">
-
-              <i class="fa-solid fa-rotate"></i>
-
-              Live updates enabled
-
-            </div>
+            Check back soon!
 
           </div>
 
@@ -1730,7 +1752,9 @@
       "";
 
 
-    if (!EVENTS.length) {
+    if (
+      EVENTS.length === 0
+    ) {
 
       grid.innerHTML = `
 
@@ -1739,8 +1763,7 @@
           style="grid-column:1 / -1;"
         >
 
-          No active events right now.
-          New events will appear automatically.
+          No active giveaways or rains currently running.
 
         </div>
 
@@ -1762,10 +1785,15 @@
 
         card.className =
           "event-card" +
+
           (
-            event.prize >= 5000000
+            event.prize >=
+            5000000
+
               ? " featured-card"
+
               : ""
+
           );
 
 
@@ -1819,7 +1847,6 @@
 
           <div class="card-footer">
 
-
             <div
               class="card-time"
               data-event-id="${escapeHtml(
@@ -1828,7 +1855,9 @@
             >
 
               ${escapeHtml(
-                getEventTime(event)
+                getEventTime(
+                  event
+                )
               )}
 
             </div>
@@ -1839,13 +1868,11 @@
               onclick="enterEvent('${escapeHtml(
                 event.id
               )}')"
-              title="View"
             >
 
               <i class="fa-solid fa-arrow-right"></i>
 
             </button>
-
 
           </div>
 
@@ -1912,7 +1939,8 @@
 
   function logout() {
 
-    currentUser = null;
+    currentUser =
+      null;
 
 
     if (
@@ -2122,7 +2150,7 @@
 
 
   /* =========================================================
-     START
+     INITIALIZATION
   ========================================================= */
 
   renderEvents();
@@ -2135,7 +2163,7 @@
 
 
   /* =========================================================
-     EVENT REFRESH
+     LIVE EVENTS
   ========================================================= */
 
   setInterval(
