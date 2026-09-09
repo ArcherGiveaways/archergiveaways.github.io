@@ -1,3132 +1,1738 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>ArcherGiveaways</title>
-
-    <!-- Google Identity Services -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        :root {
-            --background: #08070d;
-            --sidebar: #0d0b15;
-            --panel: #12101b;
-            --panel-hover: #181522;
-            --border: #272332;
-
-            --purple: #8b5cf6;
-            --purple-light: #a78bfa;
-            --purple-dark: #6d28d9;
-
-            --orange: #ff9f43;
-            --green: #45e28a;
-            --red: #ff5c6c;
-
-            --white: #ffffff;
-            --text: #e9e6ef;
-            --muted: #898394;
-        }
-
-        body {
-            min-height: 100vh;
-            background:
-                radial-gradient(
-                    circle at 50% -20%,
-                    rgba(139, 92, 246, 0.22),
-                    transparent 45%
-                ),
-                var(--background);
-            color: var(--text);
-            font-family:
-                Inter,
-                ui-sans-serif,
-                system-ui,
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                sans-serif;
-            overflow-x: hidden;
-        }
-
-        button,
-        input,
-        select {
-            font: inherit;
-        }
-
-        button {
-            cursor: pointer;
-        }
-
-        /* =========================
-           NAVBAR
-        ========================= */
-
-        .navbar {
-            height: 74px;
-
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-
-            z-index: 100;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            padding: 0 28px;
-
-            background: rgba(8, 7, 13, 0.88);
-            backdrop-filter: blur(18px);
-
-            border-bottom: 1px solid var(--border);
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .brand-logo {
-            width: 42px;
-            height: 42px;
-
-            display: grid;
-            place-items: center;
-
-            border-radius: 13px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--purple),
-                    var(--purple-dark)
-                );
-
-            font-size: 20px;
-            font-weight: 900;
-
-            box-shadow:
-                0 8px 30px rgba(139, 92, 246, 0.28);
-        }
-
-        .brand-name {
-            font-size: 20px;
-            font-weight: 850;
-            letter-spacing: -0.5px;
-        }
-
-        .brand-name span {
-            color: var(--purple-light);
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .coin-display {
-            height: 42px;
-
-            display: flex;
-            align-items: center;
-            gap: 8px;
-
-            padding: 0 15px;
-
-            background: var(--panel);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-
-            color: var(--orange);
-            font-weight: 800;
-        }
-
-        .coin-icon {
-            font-size: 17px;
-        }
-
-        .profile-button {
-            height: 42px;
-
-            display: flex;
-            align-items: center;
-            gap: 9px;
-
-            padding: 0 13px;
-
-            background: var(--panel);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-
-            color: var(--white);
-
-            transition: 0.2s ease;
-        }
-
-        .profile-button:hover {
-            border-color: var(--purple);
-            background: var(--panel-hover);
-        }
-
-        .avatar {
-            width: 28px;
-            height: 28px;
-
-            display: grid;
-            place-items: center;
-
-            border-radius: 50%;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--purple),
-                    #4f46e5
-                );
-
-            color: white;
-            font-size: 12px;
-            font-weight: 900;
-        }
-
-        /* =========================
-           MAIN
-        ========================= */
-
-        .page {
-            display: flex;
-
-            padding-top: 74px;
-
-            min-height: 100vh;
-        }
-
-        /* =========================
-           SIDEBAR
-        ========================= */
-
-        .sidebar {
-            width: 315px;
-
-            position: fixed;
-            top: 74px;
-            bottom: 0;
-            left: 0;
-
-            padding: 25px 18px;
-
-            background:
-                linear-gradient(
-                    180deg,
-                    rgba(20, 16, 30, 0.95),
-                    rgba(10, 9, 14, 0.98)
-                );
-
-            border-right: 1px solid var(--border);
-
-            overflow-y: auto;
-        }
-
-        .sidebar-title {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            padding: 0 6px;
-            margin-bottom: 15px;
-        }
-
-        .sidebar-title h2 {
-            font-size: 15px;
-            font-weight: 800;
-        }
-
-        .live-label {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-
-            color: var(--green);
-
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
-        }
-
-        .live-dot {
-            width: 7px;
-            height: 7px;
-
-            border-radius: 50%;
-
-            background: var(--green);
-
-            box-shadow:
-                0 0 10px rgba(69, 226, 138, 0.7);
-        }
-
-        .sidebar-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .side-giveaway {
-            padding: 15px;
-
-            background: rgba(18, 16, 27, 0.85);
-
-            border: 1px solid var(--border);
-            border-radius: 15px;
-
-            transition: 0.2s ease;
-        }
-
-        .side-giveaway:hover {
-            transform: translateY(-2px);
-
-            background: var(--panel-hover);
-            border-color: #3a3249;
-        }
-
-        .side-top {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-        }
-
-        .side-type {
-            color: var(--purple-light);
-
-            font-size: 10px;
-            font-weight: 900;
-
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-
-            margin-bottom: 5px;
-        }
-
-        .side-name {
-            font-size: 14px;
-            font-weight: 800;
-        }
-
-        .side-host {
-            margin-top: 4px;
-
-            color: var(--muted);
-
-            font-size: 11px;
-        }
-
-        .side-prize {
-            color: var(--orange);
-
-            font-size: 13px;
-            font-weight: 900;
-
-            white-space: nowrap;
-        }
-
-        .side-info {
-            display: flex;
-            justify-content: space-between;
-
-            margin-top: 14px;
-
-            color: var(--muted);
-
-            font-size: 11px;
-        }
-
-        .side-progress {
-            height: 5px;
-
-            margin-top: 11px;
-
-            background: #211e29;
-
-            border-radius: 999px;
-
-            overflow: hidden;
-        }
-
-        .side-progress-bar {
-            height: 100%;
-
-            border-radius: inherit;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    var(--purple-dark),
-                    var(--purple-light)
-                );
-        }
-
-        /* =========================
-           CONTENT
-        ========================= */
-
-        .content {
-            width: calc(100% - 315px);
-
-            margin-left: 315px;
-
-            padding: 38px;
-        }
-
-        .welcome {
-            margin-bottom: 24px;
-        }
-
-        .welcome h1 {
-            font-size: 32px;
-            line-height: 1.1;
-
-            letter-spacing: -1px;
-        }
-
-        .welcome p {
-            margin-top: 7px;
-
-            color: var(--muted);
-            font-size: 14px;
-        }
-
-        /* =========================
-           FEATURED
-        ========================= */
-
-        .featured {
-            position: relative;
-
-            min-height: 465px;
-
-            padding: 40px;
-
-            overflow: hidden;
-
-            border-radius: 24px;
-
-            border: 1px solid #332a42;
-
-            background:
-                radial-gradient(
-                    circle at 75% 30%,
-                    rgba(139, 92, 246, 0.25),
-                    transparent 32%
-                ),
-                radial-gradient(
-                    circle at 10% 100%,
-                    rgba(109, 40, 217, 0.16),
-                    transparent 35%
-                ),
-                #100d18;
-
-            box-shadow:
-                0 25px 80px rgba(0, 0, 0, 0.28);
-        }
-
-        .featured-glow {
-            position: absolute;
-
-            width: 360px;
-            height: 360px;
-
-            right: -130px;
-            top: -160px;
-
-            border-radius: 50%;
-
-            background: var(--purple);
-
-            filter: blur(120px);
-
-            opacity: 0.16;
-
-            pointer-events: none;
-        }
-
-        .featured-content {
-            position: relative;
-            z-index: 2;
-
-            height: 100%;
-
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .featured-badge {
-            width: fit-content;
-
-            padding: 7px 11px;
-
-            border-radius: 999px;
-
-            background: rgba(139, 92, 246, 0.13);
-
-            border: 1px solid rgba(139, 92, 246, 0.28);
-
-            color: var(--purple-light);
-
-            font-size: 11px;
-            font-weight: 900;
-
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .featured-title {
-            margin-top: 20px;
-
-            max-width: 850px;
-
-            font-size: clamp(42px, 6vw, 76px);
-
-            line-height: 0.95;
-
-            letter-spacing: -3px;
-        }
-
-        .featured-title .purple {
-            color: var(--purple-light);
-        }
-
-        .featured-description {
-            max-width: 650px;
-
-            margin-top: 20px;
-
-            color: #aaa3b5;
-
-            font-size: 14px;
-            line-height: 1.65;
-        }
-
-        .featured-host {
-            margin-top: 17px;
-
-            color: var(--muted);
-
-            font-size: 12px;
-        }
-
-        .featured-host strong {
-            color: var(--text);
-        }
-
-        .featured-bottom {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-
-            gap: 20px;
-
-            margin-top: 40px;
-        }
-
-        .featured-stats {
-            display: flex;
-            flex-wrap: wrap;
-
-            gap: 10px;
-        }
-
-        .featured-stat {
-            min-width: 145px;
-
-            padding: 14px 16px;
-
-            background: rgba(8, 7, 13, 0.58);
-
-            border: 1px solid var(--border);
-
-            border-radius: 13px;
-        }
-
-        .featured-stat-label {
-            color: var(--muted);
-
-            font-size: 10px;
-            font-weight: 700;
-
-            text-transform: uppercase;
-        }
-
-        .featured-stat-value {
-            margin-top: 5px;
-
-            color: white;
-
-            font-size: 19px;
-            font-weight: 900;
-        }
-
-        .featured-stat-value.orange {
-            color: var(--orange);
-        }
-
-        .timer-box {
-            text-align: right;
-        }
-
-        .timer-label {
-            color: var(--muted);
-
-            font-size: 10px;
-            font-weight: 800;
-
-            text-transform: uppercase;
-        }
-
-        .timer {
-            margin-top: 5px;
-
-            color: white;
-
-            font-size: 27px;
-            font-weight: 900;
-
-            font-variant-numeric: tabular-nums;
-        }
-
-        .enter-button {
-            margin-top: 13px;
-
-            padding: 14px 26px;
-
-            border: 0;
-            border-radius: 12px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--purple),
-                    var(--purple-dark)
-                );
-
-            color: white;
-
-            font-weight: 900;
-
-            box-shadow:
-                0 10px 30px rgba(109, 40, 217, 0.25);
-
-            transition: 0.2s ease;
-        }
-
-        .enter-button:hover {
-            transform: translateY(-2px);
-
-            box-shadow:
-                0 15px 35px rgba(109, 40, 217, 0.38);
-        }
-
-        /* =========================
-           BELOW FEATURED
-        ========================= */
-
-        .section-heading {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            margin-top: 32px;
-            margin-bottom: 15px;
-        }
-
-        .section-heading h2 {
-            font-size: 19px;
-        }
-
-        .section-heading span {
-            color: var(--muted);
-            font-size: 12px;
-        }
-
-        .giveaway-grid {
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, minmax(0, 1fr));
-
-            gap: 14px;
-        }
-
-        .event-card {
-            padding: 20px;
-
-            background: var(--panel);
-
-            border: 1px solid var(--border);
-
-            border-radius: 17px;
-
-            transition: 0.2s ease;
-        }
-
-        .event-card:hover {
-            transform: translateY(-2px);
-
-            border-color: #3b334b;
-        }
-
-        .event-card-top {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-        }
-
-        .event-type {
-            color: var(--purple-light);
-
-            font-size: 10px;
-            font-weight: 900;
-
-            text-transform: uppercase;
-        }
-
-        .event-card h3 {
-            margin-top: 6px;
-
-            font-size: 16px;
-        }
-
-        .event-prize {
-            color: var(--orange);
-
-            font-size: 13px;
-            font-weight: 900;
-        }
-
-        .event-meta {
-            display: flex;
-            justify-content: space-between;
-
-            margin-top: 20px;
-
-            color: var(--muted);
-
-            font-size: 11px;
-        }
-
-        .event-button {
-            width: 100%;
-
-            margin-top: 15px;
-
-            padding: 10px;
-
-            background: #1a1722;
-
-            border: 1px solid var(--border);
-
-            border-radius: 9px;
-
-            color: white;
-
-            font-size: 12px;
-            font-weight: 800;
-        }
-
-        .event-button:hover {
-            background: var(--purple);
-            border-color: var(--purple);
-        }
-
-        /* =========================
-           HOST BOX
-        ========================= */
-
-        .host-box {
-            margin-top: 25px;
-
-            padding: 23px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            gap: 20px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(139, 92, 246, 0.09),
-                    rgba(18, 16, 27, 0.9)
-                );
-
-            border: 1px solid var(--border);
-
-            border-radius: 17px;
-        }
-
-        .host-box h3 {
-            font-size: 16px;
-        }
-
-        .host-box p {
-            margin-top: 5px;
-
-            color: var(--muted);
-
-            font-size: 12px;
-        }
-
-        .host-button {
-            padding: 12px 18px;
-
-            background: white;
-
-            border: none;
-            border-radius: 10px;
-
-            color: black;
-
-            font-weight: 900;
-        }
-
-        /* =========================
-           MODALS
-        ========================= */
-
-        .overlay {
-            position: fixed;
-
-            inset: 0;
-
-            z-index: 500;
-
-            display: none;
-            align-items: center;
-            justify-content: center;
-
-            padding: 20px;
-
-            background: rgba(0, 0, 0, 0.72);
-
-            backdrop-filter: blur(10px);
-        }
-
-        .overlay.active {
-            display: flex;
-        }
-
-        .modal {
-            width: min(520px, 100%);
-
-            padding: 27px;
-
-            background: #12101a;
-
-            border: 1px solid var(--border);
-
-            border-radius: 20px;
-
-            box-shadow:
-                0 30px 100px rgba(0, 0, 0, 0.55);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            margin-bottom: 23px;
-        }
-
-        .modal-header h2 {
-            font-size: 21px;
-        }
-
-        .close-button {
-            width: 34px;
-            height: 34px;
-
-            border: 1px solid var(--border);
-            border-radius: 9px;
-
-            background: transparent;
-
-            color: var(--muted);
-
-            font-size: 20px;
-        }
-
-        .close-button:hover {
-            color: white;
-            background: var(--panel-hover);
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-group label {
-            display: block;
-
-            margin-bottom: 7px;
-
-            color: #aaa3b5;
-
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-
-            padding: 12px 13px;
-
-            outline: none;
-
-            background: #0a090e;
-
-            border: 1px solid var(--border);
-
-            border-radius: 10px;
-
-            color: white;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            border-color: var(--purple);
-        }
-
-        .cost-preview {
-            padding: 14px;
-
-            background: #0c0b11;
-
-            border: 1px solid var(--border);
-
-            border-radius: 11px;
-
-            color: var(--muted);
-
-            font-size: 12px;
-        }
-
-        .cost-preview strong {
-            color: var(--orange);
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 10px;
-
-            margin-top: 22px;
-        }
-
-        .modal-actions button {
-            flex: 1;
-
-            padding: 12px;
-
-            border-radius: 10px;
-        }
-
-        .cancel-button {
-            background: transparent;
-
-            border: 1px solid var(--border);
-
-            color: white;
-        }
-
-        .create-submit {
-            background: var(--purple);
-
-            border: 1px solid var(--purple);
-
-            color: white;
-
-            font-weight: 900;
-        }
-
-        /* =========================
-           PROFILE
-        ========================= */
-
-        .profile-panel {
-            position: fixed;
-
-            z-index: 450;
-
-            top: 0;
-            right: -420px;
-
-            width: 400px;
-            max-width: 92vw;
-
-            height: 100vh;
-
-            padding: 30px;
-
-            background: #100e16;
-
-            border-left: 1px solid var(--border);
-
-            transition: right 0.25s ease;
-
-            box-shadow:
-                -20px 0 80px rgba(0, 0, 0, 0.35);
-        }
-
-        .profile-panel.active {
-            right: 0;
-        }
-
-        .profile-top {
-            display: flex;
-            align-items: center;
-
-            gap: 14px;
-
-            margin-top: 25px;
-            margin-bottom: 25px;
-        }
-
-        .large-avatar {
-            width: 58px;
-            height: 58px;
-
-            display: grid;
-            place-items: center;
-
-            border-radius: 50%;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--purple),
-                    #4f46e5
-                );
-
-            font-weight: 900;
-            font-size: 20px;
-        }
-
-        .profile-name {
-            font-size: 18px;
-            font-weight: 900;
-        }
-
-        .verified {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-
-            margin-top: 5px;
-
-            color: var(--green);
-
-            font-size: 11px;
-            font-weight: 800;
-        }
-
-        .profile-coin-box {
-            padding: 17px;
-
-            background: var(--panel);
-
-            border: 1px solid var(--border);
-
-            border-radius: 13px;
-
-            margin-bottom: 22px;
-        }
-
-        .profile-coin-label {
-            color: var(--muted);
-            font-size: 11px;
-        }
-
-        .profile-coin-value {
-            margin-top: 5px;
-
-            color: var(--orange);
-
-            font-size: 24px;
-            font-weight: 900;
-        }
-
-        .settings-title {
-            margin-bottom: 10px;
-
-            color: var(--muted);
-
-            font-size: 11px;
-            font-weight: 900;
-
-            text-transform: uppercase;
-        }
-
-        .setting-button {
-            width: 100%;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            margin-bottom: 8px;
-
-            padding: 14px;
-
-            background: var(--panel);
-
-            border: 1px solid var(--border);
-
-            border-radius: 11px;
-
-            color: white;
-
-            text-align: left;
-        }
-
-        .setting-button:hover {
-            border-color: var(--purple);
-        }
-
-        .setting-description {
-            display: block;
-
-            margin-top: 3px;
-
-            color: var(--muted);
-
-            font-size: 10px;
-        }
-
-        /* =========================
-           GOOGLE AUTH
-        ========================= */
-
-        .google-box {
-            margin-top: 25px;
-
-            padding-top: 20px;
-
-            border-top: 1px solid var(--border);
-        }
-
-        .google-box p {
-            margin-bottom: 12px;
-
-            color: var(--muted);
-
-            font-size: 11px;
-            line-height: 1.5;
-        }
-
-        #googleButton {
-            min-height: 44px;
-        }
-
-        /* =========================
-           SETTINGS CODE MODAL
-        ========================= */
-
-        .code-display {
-            padding: 18px;
-
-            background: #09080d;
-
-            border: 1px dashed #3a3347;
-
-            border-radius: 12px;
-
-            text-align: center;
-        }
-
-        .code-display span {
-            color: var(--purple-light);
-
-            font-size: 24px;
-            font-weight: 900;
-
-            letter-spacing: 4px;
-        }
-
-        /* =========================
-           TOAST
-        ========================= */
-
-        .toast {
-            position: fixed;
-
-            z-index: 1000;
-
-            left: 50%;
-            bottom: 25px;
-
-            transform:
-                translate(-50%, 100px);
-
-            padding: 13px 18px;
-
-            background: #181520;
-
-            border: 1px solid var(--border);
-
-            border-radius: 11px;
-
-            color: white;
-
-            font-size: 13px;
-            font-weight: 700;
-
-            opacity: 0;
-
-            transition: 0.25s ease;
-        }
-
-        .toast.show {
-            transform:
-                translate(-50%, 0);
-
-            opacity: 1;
-        }
-
-        /* =========================
-           MOBILE
-        ========================= */
-
-        @media (max-width: 1050px) {
-
-            .sidebar {
-                width: 270px;
-            }
-
-            .content {
-                width: calc(100% - 270px);
-                margin-left: 270px;
-                padding: 25px;
-            }
-
-            .giveaway-grid {
-                grid-template-columns:
-                    repeat(2, minmax(0, 1fr));
-            }
-
-        }
-
-        @media (max-width: 800px) {
-
-            .sidebar {
-                position: static;
-
-                width: 100%;
-
-                border-right: none;
-                border-bottom: 1px solid var(--border);
-
-                max-height: 300px;
-            }
-
-            .page {
-                display: block;
-            }
-
-            .content {
-                width: 100%;
-                margin-left: 0;
-            }
-
-            .sidebar-list {
-                display: grid;
-                grid-template-columns:
-                    repeat(2, minmax(0, 1fr));
-            }
-
-            .featured-bottom {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .timer-box {
-                text-align: left;
-            }
-
-        }
-
-        @media (max-width: 600px) {
-
-            .navbar {
-                padding: 0 14px;
-            }
-
-            .brand-name {
-                font-size: 17px;
-            }
-
-            .coin-display {
-                display: none;
-            }
-
-            .content {
-                padding: 20px 14px 50px;
-            }
-
-            .welcome h1 {
-                font-size: 27px;
-            }
-
-            .featured {
-                padding: 27px;
-            }
-
-            .featured-title {
-                font-size: 45px;
-                letter-spacing: -2px;
-            }
-
-            .featured-stats {
-                flex-direction: column;
-            }
-
-            .featured-stat {
-                width: 100%;
-            }
-
-            .giveaway-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .sidebar-list {
-                grid-template-columns: 1fr;
-            }
-
-            .host-box {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .host-button {
-                width: 100%;
-            }
-
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>ArcherGiveaways</title>
+
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Inter, Arial, sans-serif;
+    }
+
+    body {
+      background: #09090d;
+      color: white;
+      min-height: 100vh;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    /* NAVBAR */
+
+    .navbar {
+      height: 72px;
+      background: #111116;
+      border-bottom: 1px solid #24242d;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 23px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span {
+      color: #8b5cf6;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .coins {
+      background: #19191f;
+      border: 1px solid #292932;
+      padding: 9px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    .coin-symbol {
+      color: #facc15;
+      margin-right: 5px;
+    }
+
+    .profile-button {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      background: #19191f;
+      border: 1px solid #292932;
+      color: white;
+      padding: 6px 11px 6px 6px;
+      border-radius: 12px;
+    }
+
+    .profile-button img,
+    .profile-letter {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .profile-letter {
+      background: #8b5cf6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 800;
+    }
+
+    /* LAYOUT */
+
+    .page {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      min-height: calc(100vh - 72px);
+    }
+
+    /* SIDEBAR */
+
+    .sidebar {
+      background: #121218;
+      border-right: 1px solid #24242d;
+      padding: 22px;
+      min-height: calc(100vh - 72px);
+    }
+
+    .sidebar-title {
+      font-size: 15px;
+      color: #aaaab7;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .empty-events {
+      background: #19191f;
+      border: 1px dashed #363642;
+      border-radius: 15px;
+      padding: 22px 16px;
+      text-align: center;
+      color: #858591;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .event-mini {
+      background: #19191f;
+      border: 1px solid #292932;
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 10px;
+    }
+
+    .event-mini-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .event-type {
+      color: #a78bfa;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .event-time {
+      color: #8d8d99;
+      font-size: 11px;
+    }
+
+    .event-mini h3 {
+      margin-top: 8px;
+      font-size: 15px;
+    }
+
+    .event-mini p {
+      margin-top: 5px;
+      color: #9a9aa5;
+      font-size: 12px;
+    }
+
+    /* MAIN */
+
+    .main {
+      padding: 28px;
+      max-width: 1100px;
+      width: 100%;
+      margin: auto;
+    }
+
+    .hero {
+      background: #0e0e13;
+      border: 1px solid #292932;
+      border-radius: 22px;
+      min-height: 390px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 45px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: #7c3aed;
+      opacity: .08;
+      filter: blur(100px);
+      right: -120px;
+      top: -150px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #251c38;
+      border: 1px solid #4c3574;
+      color: #b99aff;
+      padding: 7px 11px;
+      border-radius: 9px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 17px;
+    }
+
+    .hero h1 {
+      font-size: clamp(30px, 5vw, 48px);
+      margin-bottom: 12px;
+    }
+
+    .hero-description {
+      color: #9c9ca8;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    .hero-info {
+      display: flex;
+      gap: 30px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    .info-box span {
+      display: block;
+      color: #777782;
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+    .info-box strong {
+      font-size: 18px;
+    }
+
+    .enter-button {
+      margin-top: 30px;
+      background: #8b5cf6;
+      color: white;
+      padding: 13px 22px;
+      border-radius: 11px;
+      font-weight: 800;
+      width: fit-content;
+      transition: .15s;
+    }
+
+    .enter-button:hover {
+      background: #7c3aed;
+      transform: translateY(-1px);
+    }
+
+    .no-featured {
+      text-align: center;
+      color: #777782;
+      font-size: 15px;
+    }
+
+    /* CREATE */
+
+    .create-section {
+      margin-top: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #121218;
+      border: 1px solid #24242d;
+      border-radius: 17px;
+      padding: 18px 20px;
+    }
+
+    .create-section h2 {
+      font-size: 17px;
+    }
+
+    .create-section p {
+      color: #777782;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .create-button {
+      background: #22222b;
+      color: white;
+      padding: 11px 17px;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+
+    .create-button:hover {
+      background: #2d2d38;
+    }
+
+    /* MODAL */
+
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.72);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .overlay.show {
+      display: flex;
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 520px;
+      background: #141419;
+      border: 1px solid #30303a;
+      border-radius: 19px;
+      padding: 25px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .close {
+      background: transparent;
+      color: #aaa;
+      font-size: 23px;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+      color: #aaaab5;
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      background: #0e0e13;
+      border: 1px solid #30303a;
+      color: white;
+      border-radius: 10px;
+      padding: 12px;
+      outline: none;
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: #8b5cf6;
+    }
+
+    .submit-event {
+      width: 100%;
+      background: #8b5cf6;
+      color: white;
+      padding: 13px;
+      border-radius: 10px;
+      font-weight: 800;
+      margin-top: 4px;
+    }
+
+    /* PROFILE */
+
+    .profile-panel {
+      position: fixed;
+      right: 20px;
+      top: 82px;
+      width: 320px;
+      background: #15151b;
+      border: 1px solid #30303a;
+      border-radius: 17px;
+      padding: 20px;
+      z-index: 300;
+      display: none;
+      box-shadow: 0 20px 70px rgba(0,0,0,.45);
+    }
+
+    .profile-panel.show {
+      display: block;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .profile-header img,
+    .profile-header .profile-letter {
+      width: 52px;
+      height: 52px;
+    }
+
+    .profile-name {
+      font-weight: 800;
+      font-size: 17px;
+    }
+
+    .profile-email {
+      color: #858591;
+      font-size: 12px;
+      margin-top: 3px;
+      word-break: break-all;
+    }
+
+    .profile-line {
+      height: 1px;
+      background: #292932;
+      margin: 18px 0;
+    }
+
+    .setting {
+      display: flex;
+      justify-content: space-between;
+      padding: 11px 0;
+      color: #b5b5c0;
+      font-size: 14px;
+    }
+
+    .coming {
+      color: #facc15;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .google-login-area {
+      margin-top: 12px;
+    }
+
+    .logout-button {
+      width: 100%;
+      background: #24242d;
+      color: white;
+      padding: 11px;
+      border-radius: 10px;
+      margin-top: 14px;
+    }
+
+    /* TOAST */
+
+    .toast {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: #1b1b22;
+      border: 1px solid #34343f;
+      padding: 13px 17px;
+      border-radius: 11px;
+      color: white;
+      opacity: 0;
+      transform: translateY(15px);
+      pointer-events: none;
+      transition: .2s;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media(max-width: 800px) {
+      .page {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        border-right: 0;
+        border-bottom: 1px solid #24242d;
+        min-height: auto;
+      }
+
+      .hero {
+        padding: 30px;
+      }
+
+      .create-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+      }
+
+      .profile-panel {
+        left: 15px;
+        right: 15px;
+        width: auto;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-    <!-- =========================
-         NAVBAR
-    ========================== -->
-
-    <header class="navbar">
-
-        <div class="brand">
-
-            <div class="brand-logo">
-                A
-            </div>
-
-            <div class="brand-name">
-                Archer<span>Giveaways</span>
-            </div>
-
-        </div>
-
-
-        <div class="nav-right">
-
-            <div class="coin-display">
-                <span class="coin-icon">🪙</span>
-                <span id="coinBalance">5,000,000</span>
-            </div>
-
-
-            <button
-                class="profile-button"
-                onclick="openProfile()">
-
-                <div class="avatar" id="navAvatar">
-                    A
-                </div>
-
-                <span id="navUsername">
-                    ArcDepths
-                </span>
-
-            </button>
-
-        </div>
-
-    </header>
-
-
-    <div class="page">
-
-        <!-- =========================
-             GIVEAWAY SIDEBAR
-        ========================== -->
-
-        <aside class="sidebar">
-
-            <div class="sidebar-title">
-
-                <h2>
-                    Active Giveaways
-                </h2>
-
-                <div class="live-label">
-                    <span class="live-dot"></span>
-                    Live
-                </div>
-
-            </div>
-
-
-            <div
-                class="sidebar-list"
-                id="sidebarGiveaways">
-
-                <!-- Generated by JavaScript -->
-
-            </div>
-
-        </aside>
-
-
-        <!-- =========================
-             MAIN CONTENT
-        ========================== -->
-
-        <main class="content">
-
-            <div class="welcome">
-
-                <h1>
-                    Welcome back, ArcDepths 👋
-                </h1>
-
-                <p>
-                    Enter giveaways, join rains, or use your coins to host your own.
-                </p>
-
-            </div>
-
-
-            <!-- FEATURED GIVEAWAY -->
-
-            <section
-                class="featured"
-                id="featuredGiveaway">
-
-                <div class="featured-glow"></div>
-
-
-                <div class="featured-content">
-
-                    <div>
-
-                        <div class="featured-badge">
-                            ★ Featured Event
-                        </div>
-
-
-                        <h2 class="featured-title">
-
-                            <span id="featuredPrize">
-                                5,000,000
-                            </span>
-
-                            <span class="purple">
-                                Coins
-                            </span>
-
-                            <br>
-
-                            <span id="featuredEventName">
-                                Mega Giveaway
-                            </span>
-
-                        </h2>
-
-
-                        <p class="featured-description">
-
-                            The Archer event with the highest
-                            maximum number of winners currently active.
-                            Enter before the countdown reaches zero.
-
-                        </p>
-
-
-                        <div class="featured-host">
-
-                            Hosted by
-                            <strong id="featuredHost">
-                                Archer Staff
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="featured-bottom">
-
-                        <div class="featured-stats">
-
-                            <div class="featured-stat">
-
-                                <div class="featured-stat-label">
-                                    Winners
-                                </div>
-
-                                <div
-                                    class="featured-stat-value"
-                                    id="featuredWinners">
-
-                                    500
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="featured-stat">
-
-                                <div class="featured-stat-label">
-                                    Participants
-                                </div>
-
-                                <div
-                                    class="featured-stat-value"
-                                    id="featuredParticipants">
-
-                                    284 / 500
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="featured-stat">
-
-                                <div class="featured-stat-label">
-                                    Prize Pool
-                                </div>
-
-                                <div
-                                    class="featured-stat-value orange">
-
-                                    🪙
-                                    <span id="featuredPool">
-                                        5,000,000
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="timer-box">
-
-                            <div class="timer-label">
-                                Ends in
-                            </div>
-
-                            <div
-                                class="timer"
-                                id="featuredTimer">
-
-                                02:14:37
-
-                            </div>
-
-
-                            <button
-                                class="enter-button"
-                                onclick="enterGiveaway(featuredGiveaway)">
-
-                                ENTER GIVEAWAY
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- OTHER EVENTS -->
-
-            <div class="section-heading">
-
-                <h2>
-                    More Giveaways & Rains
-                </h2>
-
-                <span>
-                    Recently active
-                </span>
-
-            </div>
-
-
-            <section
-                class="giveaway-grid"
-                id="eventGrid">
-
-                <!-- Generated by JavaScript -->
-
-            </section>
-
-
-            <!-- HOST -->
-
-            <section class="host-box">
-
-                <div>
-
-                    <h3>
-                        Want to host your own event?
-                    </h3>
-
-                    <p>
-                        Spend your Archer coins to create a giveaway or rain.
-                    </p>
-
-                </div>
-
-
-                <button
-                    class="host-button"
-                    onclick="openCreateModal()">
-
-                    + Host Giveaway
-
-                </button>
-
-            </section>
-
-        </main>
-
+  <!-- NAVBAR -->
+  <nav class="navbar">
+
+    <div class="logo">
+      Archer<span>Giveaways</span>
     </div>
 
+    <div class="nav-right">
 
-    <!-- =========================
-         CREATE GIVEAWAY MODAL
-    ========================== -->
+      <div class="coins">
+        <span class="coin-symbol">◈</span>
+        <span id="coinBalance">0</span>
+      </div>
 
-    <div
-        class="overlay"
-        id="createModal">
-
-        <div class="modal">
-
-            <div class="modal-header">
-
-                <h2>
-                    Host an Event
-                </h2>
-
-                <button
-                    class="close-button"
-                    onclick="closeCreateModal()">
-
-                    ×
-
-                </button>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    Event type
-                </label>
-
-                <select id="eventType">
-
-                    <option value="Giveaway">
-                        🎁 Giveaway
-                    </option>
-
-                    <option value="Rain">
-                        🌧️ Coin Rain
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    Event name
-                </label>
-
-                <input
-                    id="eventName"
-                    type="text"
-                    placeholder="Example: Weekend Coin Rain">
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    Coin prize
-                </label>
-
-                <input
-                    id="eventCoins"
-                    type="number"
-                    min="1"
-                    placeholder="500000">
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    Maximum winners
-                </label>
-
-                <input
-                    id="eventWinners"
-                    type="number"
-                    min="1"
-                    placeholder="100">
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    Duration
-                </label>
-
-                <select id="eventDuration">
-
-                    <option value="1800">
-                        30 minutes
-                    </option>
-
-                    <option value="3600">
-                        1 hour
-                    </option>
-
-                    <option value="7200">
-                        2 hours
-                    </option>
-
-                    <option value="21600">
-                        6 hours
-                    </option>
-
-                    <option value="43200">
-                        12 hours
-                    </option>
-
-                    <option value="86400">
-                        24 hours
-                    </option>
-
-                    <option value="259200">
-                        3 days
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <div class="cost-preview">
-
-                Hosting this event will reserve
-
-                <strong id="costPreview">
-                    0 coins
-                </strong>
-
-                from your balance.
-
-            </div>
-
-
-            <div class="modal-actions">
-
-                <button
-                    class="cancel-button"
-                    onclick="closeCreateModal()">
-
-                    Cancel
-
-                </button>
-
-
-                <button
-                    class="create-submit"
-                    onclick="createEvent()">
-
-                    Create Event
-
-                </button>
-
-            </div>
-
-        </div>
+      <button class="profile-button" onclick="toggleProfile()">
+        <div id="navAvatar" class="profile-letter">?</div>
+        <span id="navName">Sign in</span>
+      </button>
 
     </div>
+  </nav>
 
 
-    <!-- =========================
-         PROFILE PANEL
-    ========================== -->
+  <div class="page">
 
-    <aside
-        class="profile-panel"
-        id="profilePanel">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
 
-        <button
-            class="close-button"
-            onclick="closeProfile()"
-            style="position:absolute;right:25px;top:25px;">
+      <div class="sidebar-title">
+        ACTIVE GIVEAWAYS & RAINS
+      </div>
 
-            ×
+      <div id="eventList">
 
-        </button>
+        <!-- IMPORTANT:
+             No fake giveaways are placed here.
+             Real events appear here after being created.
+        -->
 
-
-        <div class="profile-top">
-
-            <div
-                class="large-avatar"
-                id="largeAvatar">
-
-                A
-
-            </div>
-
-
-            <div>
-
-                <div
-                    class="profile-name"
-                    id="profileName">
-
-                    ArcDepths
-
-                </div>
-
-                <div class="verified">
-                    ✓ Verified
-                </div>
-
-            </div>
-
+        <div class="empty-events" id="emptyEvents">
+          There are currently no active giveaways or rains.
         </div>
 
-
-        <div class="profile-coin-box">
-
-            <div class="profile-coin-label">
-                Archer Coins
-            </div>
-
-            <div class="profile-coin-value">
-
-                🪙
-                <span id="profileCoins">
-                    5,000,000
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <div class="settings-title">
-            Account
-        </div>
-
-
-        <button
-            class="setting-button"
-            onclick="showToast('Profile settings coming soon.')">
-
-            <div>
-                ⚙️ Account Settings
-
-                <span class="setting-description">
-                    Manage your Archer account
-                </span>
-            </div>
-
-            <span>›</span>
-
-        </button>
-
-
-        <button
-            class="setting-button"
-            onclick="openCodes()">
-
-            <div>
-                🔑 Settings Codes
-
-                <span class="setting-description">
-                    Manage your account codes
-                </span>
-            </div>
-
-            <span>›</span>
-
-        </button>
-
-
-        <button
-            class="setting-button"
-            onclick="showToast('Giveaway history coming soon.')">
-
-            <div>
-                🎁 My Giveaways
-
-                <span class="setting-description">
-                    Events you've hosted
-                </span>
-            </div>
-
-            <span>›</span>
-
-        </button>
-
-
-        <button
-            class="setting-button"
-            onclick="showToast('Entry history coming soon.')">
-
-            <div>
-                🎟️ My Entries
-
-                <span class="setting-description">
-                    Giveaways you've entered
-                </span>
-            </div>
-
-            <span>›</span>
-
-        </button>
-
-
-        <div class="google-box">
-
-            <p>
-                Google verification will be connected
-                to the Archer account system.
-            </p>
-
-            <div id="googleButton"></div>
-
-        </div>
+      </div>
 
     </aside>
 
 
-    <!-- =========================
-         SETTINGS CODE MODAL
-    ========================== -->
+    <!-- MAIN -->
+    <main class="main">
 
-    <div
-        class="overlay"
-        id="codeModal">
+      <section class="hero" id="featured">
 
-        <div class="modal">
+        <div class="no-featured" id="noFeatured">
+          No active giveaway yet.<br><br>
+          Create the first one using the button below.
+        </div>
 
-            <div class="modal-header">
+        <div class="hero-content" id="featuredContent" style="display:none;">
 
-                <h2>
-                    Settings Codes
-                </h2>
+          <div class="badge" id="featuredType">
+            GIVEAWAY
+          </div>
 
-                <button
-                    class="close-button"
-                    onclick="closeCodes()">
+          <h1 id="featuredTitle">
+            Giveaway
+          </h1>
 
-                    ×
+          <p class="hero-description" id="featuredDescription">
+          </p>
 
-                </button>
+          <div class="hero-info">
 
+            <div class="info-box">
+              <span>PRIZE</span>
+              <strong id="featuredPrize">0 coins</strong>
             </div>
 
-
-            <p
-                style="
-                    color:var(--muted);
-                    font-size:13px;
-                    line-height:1.6;
-                    margin-bottom:18px;
-                ">
-
-                Your settings code can later be used
-                for account management and recovery.
-                This demo currently displays a temporary code.
-
-            </p>
-
-
-            <div class="code-display">
-
-                <span id="settingsCode">
-                    ARCHER-7K29
-
-                </span>
-
+            <div class="info-box">
+              <span>WINNERS</span>
+              <strong id="featuredWinners">0</strong>
             </div>
 
-
-            <div class="modal-actions">
-
-                <button
-                    class="create-submit"
-                    onclick="generateCode()">
-
-                    Generate New Code
-
-                </button>
-
+            <div class="info-box">
+              <span>PARTICIPANTS</span>
+              <strong id="featuredParticipants">0</strong>
             </div>
+
+            <div class="info-box">
+              <span>ENDS</span>
+              <strong id="featuredTime">--:--:--</strong>
+            </div>
+
+          </div>
+
+          <button class="enter-button" onclick="enterFeatured()">
+            ENTER GIVEAWAY
+          </button>
 
         </div>
 
+      </section>
+
+
+      <!-- CREATE EVENT -->
+      <section class="create-section">
+
+        <div>
+          <h2>Host your own event</h2>
+          <p>Use your Archer coins to create a giveaway or rain.</p>
+        </div>
+
+        <button class="create-button" onclick="openCreateModal()">
+          + Create event
+        </button>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <!-- PROFILE PANEL -->
+
+  <div class="profile-panel" id="profilePanel">
+
+    <div class="profile-header">
+
+      <div id="profileAvatar" class="profile-letter">
+        ?
+      </div>
+
+      <div>
+        <div class="profile-name" id="profileName">
+          Not signed in
+        </div>
+
+        <div class="profile-email" id="profileEmail">
+          Sign in with Google
+        </div>
+      </div>
+
     </div>
 
+    <div class="profile-line"></div>
 
-    <!-- =========================
-         TOAST
-    ========================== -->
+    <div class="setting">
+      <span>Settings codes</span>
+      <span>••••••</span>
+    </div>
 
-    <div
-        class="toast"
-        id="toast">
+    <div class="setting">
+      <span>Verify account</span>
+      <span class="coming">Coming soon</span>
+    </div>
+
+    <div class="setting">
+      <span>Giveaway history</span>
+      <span>›</span>
+    </div>
+
+    <div class="setting">
+      <span>Entries</span>
+      <span>›</span>
+    </div>
+
+    <div class="google-login-area">
+
+      <div
+        id="g_id_onload"
+        data-client_id="263646768191-7854avn92k94rq8pbit809o0erq48grq.apps.googleusercontent.com"
+        data-callback="handleGoogleLogin"
+        data-auto_prompt="false">
+      </div>
+
+      <div
+        class="g_id_signin"
+        data-type="standard"
+        data-size="large"
+        data-theme="filled_black"
+        data-text="signin_with"
+        data-shape="rectangular"
+        data-logo_alignment="left">
+      </div>
 
     </div>
 
+    <button class="logout-button" onclick="logout()">
+      Sign out
+    </button>
 
-    <script>
+  </div>
 
-        /* ==================================================
-           ARCHER GIVEAWAYS
-           ================================================== */
 
-        const GOOGLE_CLIENT_ID =
-            "263646768191-7854avn92k94rq8pbit809o0erq48grq.apps.googleusercontent.com";
+  <!-- CREATE MODAL -->
 
+  <div class="overlay" id="createOverlay">
 
-        /* ==================================================
-           USER
-           ================================================== */
+    <div class="modal">
 
-        let user = {
+      <div class="modal-header">
+        <h2>Create event</h2>
+        <button class="close" onclick="closeCreateModal()">×</button>
+      </div>
 
-            username: "ArcDepths",
+      <div class="field">
 
-            coins: 5000000,
+        <label>Event type</label>
 
-            avatar: "A",
+        <select id="eventType">
+          <option value="giveaway">Giveaway</option>
+          <option value="rain">Rain</option>
+        </select>
 
-            verified: true
+      </div>
 
-        };
+      <div class="field">
 
+        <label>Event name</label>
 
-        /* ==================================================
-           FEATURED GIVEAWAY
-           ================================================== */
-
-        let featuredGiveaway = {
-
-            id: "featured",
-
-            type: "Giveaway",
-
-            name: "Mega Giveaway",
+        <input
+          id="eventName"
+          type="text"
+          placeholder="Example: Friday Coin Giveaway"
+          maxlength="80"
+        />
 
-            host: "Archer Staff",
-
-            coins: 5000000,
+      </div>
 
-            winners: 500,
+      <div class="field">
 
-            participants: 284,
+        <label>Coin prize</label>
 
-            endsAt:
-                Date.now() +
-                (
-                    2 * 60 * 60 * 1000
-                ) +
-                (
-                    14 * 60 * 1000
-                ) +
-                (
-                    37 * 1000
-                )
+        <input
+          id="eventPrize"
+          type="number"
+          min="1"
+          placeholder="5000"
+        />
 
-        };
+      </div>
 
+      <div class="field">
 
-        /* ==================================================
-           ACTIVE EVENTS
-           ================================================== */
+        <label>Maximum winners</label>
 
-        let events = [
+        <input
+          id="eventWinners"
+          type="number"
+          min="1"
+          value="1"
+        />
 
-            {
-                id: 1,
-                type: "Giveaway",
-                name: "Starter Giveaway",
-                host: "ArcherUser",
-                coins: 500000,
-                winners: 100,
-                participants: 64,
-                endsAt: Date.now() + 45 * 60 * 1000
-            },
+      </div>
 
-            {
-                id: 2,
-                type: "Rain",
-                name: "Friday Coin Rain",
-                host: "NightArcher",
-                coins: 250000,
-                winners: 75,
-                participants: 43,
-                endsAt: Date.now() + 70 * 60 * 1000
-            },
+      <div class="field">
 
-            {
-                id: 3,
-                type: "Giveaway",
-                name: "Archer Weekend Drop",
-                host: "ArcherTeam",
-                coins: 1000000,
-                winners: 200,
-                participants: 119,
-                endsAt: Date.now() + 2 * 60 * 60 * 1000
-            },
+        <label>Duration in minutes</label>
 
-            {
-                id: 4,
-                type: "Rain",
-                name: "Small Coin Rain",
-                host: "PixelArcher",
-                coins: 75000,
-                winners: 50,
-                participants: 31,
-                endsAt: Date.now() + 30 * 60 * 1000
-            },
+        <input
+          id="eventDuration"
+          type="number"
+          min="1"
+          value="30"
+        />
 
-            {
-                id: 5,
-                type: "Giveaway",
-                name: "Night Giveaway",
-                host: "ShadowArcher",
-                coins: 150000,
-                winners: 30,
-                participants: 18,
-                endsAt: Date.now() + 90 * 60 * 1000
-            },
+      </div>
 
-            {
-                id: 6,
-                type: "Rain",
-                name: "Community Rain",
-                host: "ArcherCommunity",
-                coins: 100000,
-                winners: 125,
-                participants: 87,
-                endsAt: Date.now() + 120 * 60 * 1000
-            }
+      <div class="field">
 
-        ];
+        <label>Description</label>
 
+        <textarea
+          id="eventDescription"
+          placeholder="Tell players about your event..."
+        ></textarea>
 
-        /* ==================================================
-           MONEY DISPLAY
-           ================================================== */
+      </div>
 
-        function updateUserDisplay() {
+      <button class="submit-event" onclick="createEvent()">
+        CREATE EVENT
+      </button>
 
-            const formatted =
-                user.coins.toLocaleString();
+    </div>
 
+  </div>
 
-            document.getElementById(
-                "coinBalance"
-            ).textContent = formatted;
 
+  <div class="toast" id="toast"></div>
 
-            document.getElementById(
-                "profileCoins"
-            ).textContent = formatted;
 
+<script>
 
-            document.getElementById(
-                "navUsername"
-            ).textContent = user.username;
+/*
+=========================================================
+ ARCHER GIVEAWAYS
+ FRONTEND
+=========================================================
 
+IMPORTANT:
 
-            document.getElementById(
-                "profileName"
-            ).textContent = user.username;
+This frontend uses the Google account as the identity.
 
-        }
+For REAL persistent coins you need a backend/database.
 
+Do NOT put a Google OAuth client secret in this file.
 
-        /* ==================================================
-           FORMAT COINS
-           ================================================== */
+The Google ID token should be sent to your backend,
+where the backend verifies it and uses Google's "sub"
+as the player's permanent account ID.
 
-        function formatCoins(amount) {
+Example backend account:
 
-            return Number(amount)
-                .toLocaleString();
+{
+  googleId: "...",
+  email: "...",
+  name: "...",
+  avatar: "...",
+  coins: 50000
+}
 
-        }
+=========================================================
+*/
 
 
-        /* ==================================================
-           TIME FORMAT
-           ================================================== */
+const GOOGLE_CLIENT_ID =
+"263646768191-7854avn92k94rq8pbit809o0erq48grq.apps.googleusercontent.com";
 
-        function formatTime(milliseconds) {
 
-            if (milliseconds <= 0) {
-                return "ENDED";
-            }
+/*
+---------------------------------------------------------
+ LOCAL UI STATE
+---------------------------------------------------------
 
+This is ONLY temporary frontend state.
 
-            const totalSeconds =
-                Math.floor(
-                    milliseconds / 1000
-                );
+Once the backend is connected, replace these functions
+with API requests.
 
+No fake giveaways are loaded.
+*/
 
-            const hours =
-                Math.floor(
-                    totalSeconds / 3600
-                );
+let currentUser = null;
+let events = [];
 
 
-            const minutes =
-                Math.floor(
-                    (
-                        totalSeconds % 3600
-                    ) / 60
-                );
+/*
+---------------------------------------------------------
+ GOOGLE LOGIN
+---------------------------------------------------------
+*/
 
+function handleGoogleLogin(response) {
 
-            const seconds =
-                totalSeconds % 60;
+  if (!response || !response.credential) {
+    showToast("Google sign-in failed.");
+    return;
+  }
 
+  /*
+   Decode the Google ID token for displaying the profile.
 
-            if (hours > 0) {
+   IMPORTANT:
+   This is fine for UI display.
 
-                return (
-                    String(hours).padStart(2, "0")
-                    + ":"
-                    +
-                    String(minutes).padStart(2, "0")
-                    + ":"
-                    +
-                    String(seconds).padStart(2, "0")
-                );
+   Your backend must independently verify the token before
+   trusting the account or changing coins.
+  */
 
-            }
+  const payload = decodeJwt(response.credential);
 
+  if (!payload) {
+    showToast("Could not read Google account.");
+    return;
+  }
 
-            return (
-                String(minutes).padStart(2, "0")
-                + ":"
-                +
-                String(seconds).padStart(2, "0")
-            );
+  currentUser = {
+    googleId: payload.sub,
+    name: payload.name || "Google User",
+    email: payload.email || "",
+    avatar: payload.picture || "",
+    verified: false,
 
-        }
+    /*
+      This value is ONLY a temporary display value.
 
+      Real coins MUST come from your backend.
+    */
+    coins: 0,
 
-        /* ==================================================
-           SIDEBAR
-           ================================================== */
+    idToken: response.credential
+  };
 
-        function renderSidebar() {
+  updateProfile();
 
-            const container =
-                document.getElementById(
-                    "sidebarGiveaways"
-                );
+  /*
+   Send the Google token to your backend here.
 
+   Example:
 
-            container.innerHTML = "";
+   fetch("/api/auth/google", {
+     method: "POST",
+     headers: {
+       "Content-Type": "application/json"
+     },
+     body: JSON.stringify({
+       credential: response.credential
+     })
+   });
 
+  */
 
-            events.forEach(event => {
+  showToast("Signed in as " + currentUser.name);
 
-                const percentage =
-                    Math.min(
-                        100,
-                        (
-                            event.participants /
-                            event.winners
-                        ) * 100
-                    );
+}
 
 
-                const card =
-                    document.createElement("div");
+/*
+---------------------------------------------------------
+ JWT DECODER
+---------------------------------------------------------
+*/
 
+function decodeJwt(token) {
 
-                card.className =
-                    "side-giveaway";
+  try {
 
+    const parts = token.split(".");
 
-                card.innerHTML = `
+    if (parts.length !== 3) {
+      return null;
+    }
 
-                    <div class="side-top">
+    const base64 = parts[1]
+      .replace(/-/g, "+")
+      .replace(/_/g, "/");
 
-                        <div>
+    const json = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map(function(c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
 
-                            <div class="side-type">
-                                ${event.type}
-                            </div>
+    return JSON.parse(json);
 
-                            <div class="side-name">
-                                ${escapeHTML(event.name)}
-                            </div>
+  } catch (error) {
 
-                            <div class="side-host">
-                                Hosted by ${escapeHTML(event.host)}
-                            </div>
+    console.error(error);
+    return null;
 
-                        </div>
+  }
 
-                        <div class="side-prize">
-                            🪙 ${formatCoins(event.coins)}
-                        </div>
+}
 
-                    </div>
 
+/*
+---------------------------------------------------------
+ PROFILE
+---------------------------------------------------------
+*/
 
-                    <div class="side-progress">
+function updateProfile() {
 
-                        <div
-                            class="side-progress-bar"
-                            style="width:${percentage}%">
-                        </div>
+  if (!currentUser) {
 
-                    </div>
+    document.getElementById("navName").textContent = "Sign in";
 
+    document.getElementById("coinBalance").textContent = "0";
 
-                    <div class="side-info">
+    return;
+  }
 
-                        <span>
-                            ${event.participants}/${event.winners}
-                        </span>
 
-                        <span>
-                            ${formatTime(
-                                event.endsAt -
-                                Date.now()
-                            )}
-                        </span>
+  document.getElementById("navName").textContent =
+    currentUser.name;
 
-                    </div>
 
-                `;
+  document.getElementById("profileName").textContent =
+    currentUser.name;
 
 
-                card.onclick =
-                    () => enterGiveaway(event);
+  document.getElementById("profileEmail").textContent =
+    currentUser.email;
 
 
-                container.appendChild(card);
+  document.getElementById("coinBalance").textContent =
+    formatNumber(currentUser.coins);
 
-            });
 
-        }
+  setAvatar(
+    document.getElementById("navAvatar"),
+    currentUser.avatar,
+    currentUser.name
+  );
 
 
-        /* ==================================================
-           EVENT GRID
-           ================================================== */
+  setAvatar(
+    document.getElementById("profileAvatar"),
+    currentUser.avatar,
+    currentUser.name
+  );
 
-        function renderEventGrid() {
+}
 
-            const container =
-                document.getElementById(
-                    "eventGrid"
-                );
 
+function setAvatar(element, image, name) {
 
-            container.innerHTML = "";
+  if (image) {
 
+    if (element.tagName.toLowerCase() === "img") {
+      element.src = image;
+      return;
+    }
 
-            events.forEach(event => {
+    const img = document.createElement("img");
 
-                const card =
-                    document.createElement("article");
+    img.src = image;
+    img.alt = name || "Profile";
 
+    img.className = element.className;
 
-                card.className =
-                    "event-card";
+    element.replaceWith(img);
 
+  } else {
 
-                card.innerHTML = `
+    element.textContent =
+      (name || "?").charAt(0).toUpperCase();
 
-                    <div class="event-card-top">
+  }
 
-                        <div>
+}
 
-                            <div class="event-type">
-                                ${event.type}
-                            </div>
 
-                            <h3>
-                                ${escapeHTML(event.name)}
-                            </h3>
+/*
+---------------------------------------------------------
+ PROFILE PANEL
+---------------------------------------------------------
+*/
 
-                        </div>
+function toggleProfile() {
 
-                        <div class="event-prize">
-                            🪙 ${formatCoins(event.coins)}
-                        </div>
+  const panel =
+    document.getElementById("profilePanel");
 
-                    </div>
+  panel.classList.toggle("show");
 
+}
 
-                    <div class="event-meta">
 
-                        <span>
-                            👥 ${event.participants}/${event.winners}
-                        </span>
+/*
+---------------------------------------------------------
+ CREATE EVENT MODAL
+---------------------------------------------------------
+*/
 
-                        <span>
-                            ${formatTime(
-                                event.endsAt -
-                                Date.now()
-                            )}
-                        </span>
+function openCreateModal() {
 
-                    </div>
+  if (!currentUser) {
 
+    showToast("Sign in with Google first.");
 
-                    <button
-                        class="event-button">
+    toggleProfile();
 
-                        ENTER
+    return;
+  }
 
-                    </button>
+  document
+    .getElementById("createOverlay")
+    .classList.add("show");
 
-                `;
+}
 
 
-                card
-                    .querySelector("button")
-                    .onclick =
-                    () => enterGiveaway(event);
+function closeCreateModal() {
 
+  document
+    .getElementById("createOverlay")
+    .classList.remove("show");
 
-                container.appendChild(card);
+}
 
-            });
 
-        }
+/*
+---------------------------------------------------------
+ CREATE EVENT
+---------------------------------------------------------
 
+Frontend version.
 
-        /* ==================================================
-           FEATURED DISPLAY
-        ================================================== */
+REAL VERSION:
 
-        function renderFeatured() {
+Your backend should perform the coin deduction.
 
-            document.getElementById(
-                "featuredPrize"
-            ).textContent =
-                formatCoins(
-                    featuredGiveaway.coins
-                );
+Never trust a client-side coin balance.
 
+The server should:
 
-            document.getElementById(
-                "featuredEventName"
-            ).textContent =
-                featuredGiveaway.name;
+1. Verify Google ID token
+2. Find player using Google "sub"
+3. Check coin balance
+4. Reserve/deduct coins
+5. Create event
+6. Return event
+---------------------------------------------------------
+*/
 
+async function createEvent() {
 
-            document.getElementById(
-                "featuredHost"
-            ).textContent =
-                featuredGiveaway.host;
+  if (!currentUser) {
 
+    showToast("Sign in first.");
 
-            document.getElementById(
-                "featuredWinners"
-            ).textContent =
-                formatCoins(
-                    featuredGiveaway.winners
-                );
+    return;
 
+  }
 
-            document.getElementById(
-                "featuredParticipants"
-            ).textContent =
-                `${featuredGiveaway.participants} / ${featuredGiveaway.winners}`;
 
+  const type =
+    document.getElementById("eventType").value;
 
-            document.getElementById(
-                "featuredPool"
-            ).textContent =
-                formatCoins(
-                    featuredGiveaway.coins
-                );
+  const name =
+    document.getElementById("eventName").value.trim();
 
-        }
+  const prize =
+    Number(document.getElementById("eventPrize").value);
 
+  const winners =
+    Number(document.getElementById("eventWinners").value);
 
-        /* ==================================================
-           FEATURED TIMER
-        ================================================== */
+  const duration =
+    Number(document.getElementById("eventDuration").value);
 
-        function updateFeaturedTimer() {
+  const description =
+    document.getElementById("eventDescription").value.trim();
 
-            const remaining =
-                featuredGiveaway.endsAt -
-                Date.now();
 
+  if (!name) {
 
-            document.getElementById(
-                "featuredTimer"
-            ).textContent =
-                formatTime(remaining);
+    showToast("Enter an event name.");
 
-        }
+    return;
 
+  }
 
-        /* ==================================================
-           CREATE EVENT
-        ================================================== */
 
-        function openCreateModal() {
+  if (!Number.isFinite(prize) || prize <= 0) {
 
-            document
-                .getElementById("createModal")
-                .classList.add("active");
+    showToast("Enter a valid coin prize.");
 
-        }
+    return;
 
+  }
 
-        function closeCreateModal() {
 
-            document
-                .getElementById("createModal")
-                .classList.remove("active");
+  if (!Number.isInteger(winners) || winners <= 0) {
 
-        }
+    showToast("Enter a valid winner amount.");
 
+    return;
 
-        /* ==================================================
-           COST PREVIEW
-        ================================================== */
+  }
 
-        document
-            .getElementById("eventCoins")
-            .addEventListener(
-                "input",
-                updateCostPreview
-            );
 
+  if (!Number.isInteger(duration) || duration <= 0) {
 
-        function updateCostPreview() {
+    showToast("Enter a valid duration.");
 
-            const amount =
-                Number(
-                    document.getElementById(
-                        "eventCoins"
-                    ).value
-                );
+    return;
 
+  }
 
-            document.getElementById(
-                "costPreview"
-            ).textContent =
-                `${formatCoins(
-                    amount || 0
-                )} coins`;
 
-        }
+  /*
+   TEMPORARY FRONTEND CHECK
 
+   Replace this with a server request.
 
-        /* ==================================================
-           CREATE EVENT
-        ================================================== */
+   This prevents the UI from pretending the player has
+   coins they don't have, but it is NOT secure.
+  */
 
-        function createEvent() {
+  if (prize > currentUser.coins) {
 
-            const type =
-                document.getElementById(
-                    "eventType"
-                ).value;
+    showToast("You don't have enough coins.");
 
+    return;
 
-            const name =
-                document.getElementById(
-                    "eventName"
-                ).value.trim();
+  }
 
 
-            const coins =
-                Number(
-                    document.getElementById(
-                        "eventCoins"
-                    ).value
-                );
+  const event = {
 
+    id:
+      crypto.randomUUID(),
 
-            const winners =
-                Number(
-                    document.getElementById(
-                        "eventWinners"
-                    ).value
-                );
+    type,
 
+    name,
 
-            const duration =
-                Number(
-                    document.getElementById(
-                        "eventDuration"
-                    ).value
-                );
+    prize,
 
+    winners,
 
-            if (!name) {
+    participants: 0,
 
-                showToast(
-                    "Please enter an event name."
-                );
+    description,
 
-                return;
+    host: {
 
-            }
+      googleId: currentUser.googleId,
 
+      name: currentUser.name,
 
-            if (
-                !Number.isFinite(coins) ||
-                coins <= 0
-            ) {
+      avatar: currentUser.avatar
 
-                showToast(
-                    "Enter a valid coin amount."
-                );
+    },
 
-                return;
+    createdAt:
+      Date.now(),
 
-            }
+    endsAt:
+      Date.now() + duration * 60 * 1000
 
+  };
 
-            if (
-                !Number.isFinite(winners) ||
-                winners <= 0
-            ) {
 
-                showToast(
-                    "Enter a valid winner limit."
-                );
+  /*
+   TEMPORARY LOCAL UI UPDATE
 
-                return;
+   The real server should do this transaction atomically.
+  */
 
-            }
+  currentUser.coins -= prize;
 
+  events.push(event);
 
-            /*
-             * IMPORTANT:
-             *
-             * Normal users pay using their
-             * own Archer coins.
-             *
-             * Staff accounts will later be
-             * able to bypass this cost through
-             * the backend permission system.
-             */
 
+  updateProfile();
 
-            if (coins > user.coins) {
+  renderEvents();
 
-                showToast(
-                    "You don't have enough Archer coins."
-                );
+  closeCreateModal();
 
-                return;
+  clearCreateForm();
 
-            }
+  showToast("Event created.");
 
+}
 
-            user.coins -= coins;
 
+/*
+---------------------------------------------------------
+ CLEAR FORM
+---------------------------------------------------------
+*/
 
-            const event = {
+function clearCreateForm() {
 
-                id:
-                    Date.now(),
+  document.getElementById("eventName").value = "";
 
-                type,
+  document.getElementById("eventPrize").value = "";
 
-                name,
+  document.getElementById("eventWinners").value = "1";
 
-                host:
-                    user.username,
+  document.getElementById("eventDuration").value = "30";
 
-                coins,
+  document.getElementById("eventDescription").value = "";
 
-                winners,
+}
 
-                participants:
-                    0,
 
-                endsAt:
-                    Date.now() +
-                    duration * 1000
+/*
+---------------------------------------------------------
+ RENDER EVENTS
+---------------------------------------------------------
+*/
 
-            };
+function renderEvents() {
 
+  const list =
+    document.getElementById("eventList");
 
-            events.unshift(event);
+  const empty =
+    document.getElementById("emptyEvents");
 
 
-            updateUserDisplay();
+  list
+    .querySelectorAll(".event-mini")
+    .forEach(el => el.remove());
 
-            renderSidebar();
 
-            renderEventGrid();
+  const activeEvents =
+    events.filter(event => event.endsAt > Date.now());
 
-            closeCreateModal();
 
+  if (activeEvents.length === 0) {
 
-            document.getElementById(
-                "eventName"
-            ).value = "";
+    empty.style.display = "block";
 
+    renderFeatured(null);
 
-            document.getElementById(
-                "eventCoins"
-            ).value = "";
+    return;
 
+  }
 
-            document.getElementById(
-                "eventWinners"
-            ).value = "";
 
+  empty.style.display = "none";
 
-            updateCostPreview();
 
+  /*
+   The biggest event becomes featured.
 
-            showToast(
-                `${type} created successfully!`
-            );
+   Here we use maximum winners as the primary ranking,
+   then prize as a secondary ranking.
+  */
 
-        }
+  const sorted =
+    [...activeEvents].sort((a, b) => {
 
+      if (b.winners !== a.winners) {
+        return b.winners - a.winners;
+      }
 
-        /* ==================================================
-           ENTER GIVEAWAY
-        ================================================== */
+      return b.prize - a.prize;
 
-        function enterGiveaway(event) {
+    });
 
-            if (!event) {
-                return;
-            }
 
+  const featured =
+    sorted[0];
 
-            if (
-                event.participants >=
-                event.winners
-            ) {
 
-                showToast(
-                    "This event has reached its participant limit."
-                );
+  renderFeatured(featured);
 
-                return;
 
-            }
+  /*
+   Everything else goes into the sidebar.
+  */
 
+  sorted
+    .slice(1)
+    .forEach(event => {
 
-            event.participants++;
+      const card =
+        document.createElement("div");
 
+      card.className = "event-mini";
 
-            if (
-                event.id ===
-                featuredGiveaway.id
-            ) {
+      card.innerHTML = `
 
-                featuredGiveaway.participants++;
+        <div class="event-mini-top">
 
-            }
+          <span class="event-type">
+            ${escapeHtml(event.type.toUpperCase())}
+          </span>
 
+          <span
+            class="event-time"
+            data-time-id="${event.id}">
+            ${formatRemaining(event.endsAt)}
+          </span>
 
-            renderSidebar();
+        </div>
 
-            renderEventGrid();
+        <h3>
+          ${escapeHtml(event.name)}
+        </h3>
 
-            renderFeatured();
+        <p>
+          ${formatNumber(event.prize)}
+          coins · ${event.participants}
+          participants
+        </p>
 
+      `;
 
-            showToast(
-                `You're entered in ${event.name}!`
-            );
+      list.appendChild(card);
 
-        }
+    });
 
+}
 
-        /* ==================================================
-           PROFILE
-        ================================================== */
 
-        function openProfile() {
+/*
+---------------------------------------------------------
+ FEATURED EVENT
+---------------------------------------------------------
+*/
 
-            document
-                .getElementById("profilePanel")
-                .classList.add("active");
+function renderFeatured(event) {
 
-        }
+  const empty =
+    document.getElementById("noFeatured");
 
+  const content =
+    document.getElementById("featuredContent");
 
-        function closeProfile() {
 
-            document
-                .getElementById("profilePanel")
-                .classList.remove("active");
+  if (!event) {
 
-        }
+    empty.style.display = "block";
 
+    content.style.display = "none";
 
-        /* ==================================================
-           SETTINGS CODES
-        ================================================== */
+    return;
 
-        function openCodes() {
+  }
 
-            document
-                .getElementById("codeModal")
-                .classList.add("active");
 
-        }
+  empty.style.display = "none";
 
+  content.style.display = "block";
 
-        function closeCodes() {
 
-            document
-                .getElementById("codeModal")
-                .classList.remove("active");
+  document.getElementById("featuredType")
+    .textContent =
+      event.type.toUpperCase();
 
-        }
 
+  document.getElementById("featuredTitle")
+    .textContent =
+      event.name;
 
-        function generateCode() {
 
-            const characters =
-                "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  document.getElementById("featuredDescription")
+    .textContent =
+      event.description ||
+      "Join this ArcherGiveaways event.";
 
 
-            let code = "";
+  document.getElementById("featuredPrize")
+    .textContent =
+      formatNumber(event.prize) + " coins";
 
 
-            for (
-                let i = 0;
-                i < 8;
-                i++
-            ) {
+  document.getElementById("featuredWinners")
+    .textContent =
+      event.winners;
 
-                code +=
-                    characters[
-                        Math.floor(
-                            Math.random() *
-                            characters.length
-                        )
-                    ];
 
-            }
+  document.getElementById("featuredParticipants")
+    .textContent =
+      event.participants;
 
 
-            document.getElementById(
-                "settingsCode"
-            ).textContent =
-                "ARCHER-" + code;
+  document.getElementById("featuredTime")
+    .textContent =
+      formatRemaining(event.endsAt);
 
 
-            showToast(
-                "New settings code generated."
-            );
+}
 
-        }
 
+/*
+---------------------------------------------------------
+ ENTER FEATURED
+---------------------------------------------------------
+*/
 
-        /* ==================================================
-           GOOGLE SIGN-IN
-           ================================================== */
+function enterFeatured() {
 
-        function initializeGoogle() {
+  const activeEvents =
+    events.filter(event => event.endsAt > Date.now());
 
-            if (
-                !window.google ||
-                !window.google.accounts
-            ) {
 
-                setTimeout(
-                    initializeGoogle,
-                    500
-                );
+  if (!activeEvents.length) {
 
-                return;
+    showToast("There is no active giveaway.");
 
-            }
+    return;
 
+  }
 
-            google.accounts.id.initialize({
 
-                client_id:
-                    GOOGLE_CLIENT_ID,
+  const featured =
+    [...activeEvents].sort((a, b) => {
 
-                callback:
-                    handleGoogleLogin
+      if (b.winners !== a.winners) {
+        return b.winners - a.winners;
+      }
 
-            });
+      return b.prize - a.prize;
 
+    })[0];
 
-            google.accounts.id.renderButton(
 
-                document.getElementById(
-                    "googleButton"
-                ),
+  if (!currentUser) {
 
-                {
+    showToast("Sign in with Google to enter.");
 
-                    theme: "outline",
+    return;
 
-                    size: "large",
+  }
 
-                    shape: "rectangular",
 
-                    text: "signin_with",
+  if (featured.participants >= featured.winners) {
 
-                    width: 300
+    showToast("This event is full.");
 
-                }
+    return;
 
-            );
+  }
 
-        }
 
+  /*
+   REAL VERSION:
 
-        function handleGoogleLogin(response) {
+   Send the Google account ID token to the backend.
 
-            /*
-             * Frontend demo only.
-             *
-             * The real Archer backend should
-             * verify the Google credential before
-             * trusting the account.
-             */
+   The backend should verify the token and create an
+   entry using the Google "sub".
 
-            if (!response || !response.credential) {
+   Never trust googleId sent directly by the browser.
+  */
 
-                showToast(
-                    "Google sign-in failed."
-                );
+  featured.participants++;
 
-                return;
+  renderEvents();
 
-            }
+  showToast("You entered the giveaway.");
 
+}
 
-            showToast(
-                "Google account connected."
-            );
 
-        }
+/*
+---------------------------------------------------------
+ NUMBER FORMAT
+---------------------------------------------------------
+*/
 
+function formatNumber(number) {
 
-        /* ==================================================
-           TOAST
-        ================================================== */
+  return Number(number || 0)
+    .toLocaleString();
 
-        let toastTimeout;
+}
 
 
-        function showToast(message) {
+/*
+---------------------------------------------------------
+ TIME
+---------------------------------------------------------
+*/
 
-            const toast =
-                document.getElementById(
-                    "toast"
-                );
+function formatRemaining(endTime) {
 
+  const remaining =
+    Math.max(0, endTime - Date.now());
 
-            toast.textContent =
-                message;
 
+  const totalSeconds =
+    Math.floor(remaining / 1000);
 
-            toast.classList.add(
-                "show"
-            );
 
+  const hours =
+    Math.floor(totalSeconds / 3600);
 
-            clearTimeout(
-                toastTimeout
-            );
 
+  const minutes =
+    Math.floor((totalSeconds % 3600) / 60);
 
-            toastTimeout =
-                setTimeout(
-                    () => {
 
-                        toast.classList.remove(
-                            "show"
-                        );
+  const seconds =
+    totalSeconds % 60;
 
-                    },
-                    3000
-                );
 
-        }
+  return (
+    String(hours).padStart(2, "0") +
+    ":" +
+    String(minutes).padStart(2, "0") +
+    ":" +
+    String(seconds).padStart(2, "0")
+  );
 
+}
 
-        /* ==================================================
-           HTML ESCAPING
-        ================================================== */
 
-        function escapeHTML(value) {
+/*
+---------------------------------------------------------
+ UPDATE TIMERS
+---------------------------------------------------------
+*/
 
-            return String(value)
+setInterval(() => {
 
-                .replaceAll(
-                    "&",
-                    "&amp;"
-                )
+  renderEvents();
 
-                .replaceAll(
-                    "<",
-                    "&lt;"
-                )
+}, 1000);
 
-                .replaceAll(
-                    ">",
-                    "&gt;"
-                )
 
-                .replaceAll(
-                    '"',
-                    "&quot;"
-                )
+/*
+---------------------------------------------------------
+ ESCAPE HTML
+---------------------------------------------------------
+*/
 
-                .replaceAll(
-                    "'",
-                    "&#039;"
-                );
+function escapeHtml(value) {
 
-        }
+  return String(value)
 
+    .replace(/&/g, "&amp;")
 
-        /* ==================================================
-           ESC KEY
-        ================================================== */
+    .replace(/</g, "&lt;")
 
-        document.addEventListener(
-            "keydown",
-            event => {
+    .replace(/>/g, "&gt;")
 
-                if (
-                    event.key ===
-                    "Escape"
-                ) {
+    .replace(/"/g, "&quot;")
 
-                    closeCreateModal();
+    .replace(/'/g, "&#039;");
 
-                    closeCodes();
+}
 
-                    closeProfile();
 
-                }
+/*
+---------------------------------------------------------
+ LOGOUT
+---------------------------------------------------------
+*/
 
-            }
-        );
+function logout() {
 
+  currentUser = null;
 
-        /* ==================================================
-           INITIALIZE
-        ================================================== */
+  document.getElementById("navName")
+    .textContent = "Sign in";
 
-        updateUserDisplay();
+  document.getElementById("coinBalance")
+    .textContent = "0";
 
-        renderFeatured();
 
-        renderSidebar();
+  document.getElementById("profileName")
+    .textContent = "Not signed in";
 
-        renderEventGrid();
 
-        updateCostPreview();
+  document.getElementById("profileEmail")
+    .textContent = "Sign in with Google";
 
 
-        setInterval(
-            () => {
+  document.getElementById("profilePanel")
+    .classList.remove("show");
 
-                updateFeaturedTimer();
 
-                renderSidebar();
+  showToast("Signed out.");
 
-                renderEventGrid();
+}
 
-            },
-            1000
-        );
 
+/*
+---------------------------------------------------------
+ TOAST
+---------------------------------------------------------
+*/
 
-        /*
-         * Google can load asynchronously,
-         * so initialize after the page has loaded.
-         */
+let toastTimeout;
 
-        window.addEventListener(
-            "load",
-            initializeGoogle
-        );
+function showToast(message) {
 
-    </script>
+  const toast =
+    document.getElementById("toast");
+
+
+  toast.textContent = message;
+
+  toast.classList.add("show");
+
+
+  clearTimeout(toastTimeout);
+
+
+  toastTimeout =
+    setTimeout(() => {
+
+      toast.classList.remove("show");
+
+    }, 3000);
+
+}
+
+
+/*
+---------------------------------------------------------
+ CLOSE MODAL WHEN CLICKING OUTSIDE
+---------------------------------------------------------
+*/
+
+document
+  .getElementById("createOverlay")
+  .addEventListener("click", function(event) {
+
+    if (event.target === this) {
+      closeCreateModal();
+    }
+
+  });
+
+
+/*
+---------------------------------------------------------
+ INITIAL RENDER
+
+ Starts with ZERO giveaways.
+---------------------------------------------------------
+*/
+
+renderEvents();
+
+</script>
 
 </body>
 </html>
