@@ -3,53 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Archer Giveaways</title>
-
     <link rel="icon" href="favicon.ico">
 
     <script>
-        function getGoogleUser() {
-            const token = localStorage.getItem("google_credential");
+        (function () {
+            const loggedIn = localStorage.getItem("archer_google_logged_in");
 
-            if (!token) {
-                return null;
+            if (loggedIn === "true") {
+                window.location.replace("home");
+            } else {
+                window.location.replace("login");
             }
-
-            try {
-                const payload = JSON.parse(
-                    atob(token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/"))
-                );
-
-                // Check token expiration
-                if (payload.exp && Date.now() >= payload.exp * 1000) {
-                    localStorage.removeItem("google_credential");
-                    localStorage.removeItem("google_user");
-                    return null;
-                }
-
-                return payload;
-            } catch (error) {
-                console.error("Invalid Google credential:", error);
-
-                localStorage.removeItem("google_credential");
-                localStorage.removeItem("google_user");
-
-                return null;
-            }
-        }
-
-        const user = getGoogleUser();
-
-        if (user) {
-            window.location.replace("home.html");
-        } else {
-            window.location.replace("login.html");
-        }
+        })();
     </script>
 </head>
 
 <body>
-    <p>Loading...</p>
+    <p>Loading Archer Giveaways...</p>
 </body>
 </html>
