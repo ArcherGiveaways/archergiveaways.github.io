@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archer Giveaways - Owner Dashboard</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --accent: #6366f1;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --danger: #ef4444;
+      --success: #22c55e;
+    }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 24px;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    h1, h2 {
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    @media (min-width: 768px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+    }
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid #334155;
+    }
+    .form-group {
+      margin-bottom: 12px;
+    }
+    label {
+      display: block;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #334155;
+      background: #0f172a;
+      color: var(--text);
+      box-sizing: border-box;
+    }
+    button {
+      background: var(--accent);
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      margin-top: 8px;
+    }
+    button:hover { opacity: 0.9; }
+    button.danger { background: var(--danger); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px;
+      border-bottom: 1px solid #334155;
+      font-size: 0.875rem;
+    }
+    th { color: var(--text-muted); }
+    .status {
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: bold;
+    }
+    .status.active { background: #15803d; color: #dcfce7; }
+    .status.ended { background: #b91c1c; color: #fee2e2; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Owner Control Panel</h1>
+
+  <div class="grid">
+    <!-- CREATE EVENT FORM -->
+    <div class="card">
+      <h2>Create Giveaway</h2>
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" id="eventTitle" placeholder="e.g. 1,000 V-Bucks Giveaway">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <input type="text" id="eventDesc" placeholder="Requirements or details">
+      </div>
+      <div class="form-group">
+        <label>Cost (Coins)</label>
+        <input type="number" id="eventCost" value="0">
+      </div>
+      <button onclick="createEvent()">Publish Giveaway</button>
+    </div>
+
+    <!-- EVENT MANAGER -->
+    <div class="card">
+      <h2>Active Giveaways</h2>
+      <div id="eventsList">Loading...</div>
+      <button class="danger" onclick="clearAllEvents()" style="margin-top: 16px;">Clear All Giveaways</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const WORKER_URL = "https://archer.arcdepths.workers.dev";
+
+  async function loadEvents() {
+    const listEl = document.getElementById("eventsList");
+    try {
+      const res = await fetch(`${WORKER_URL}/events`);
+      const data = await res.json();
+
+      if (!data.events || data.events.length === 0) {
+        listEl.innerHTML = "<p style='color:var(--text-muted)'>No active giveaways.</p>";
+        return;
+      }
+
+      listEl.innerHTML = data.events.map((evt, idx) => `
+        <div style="border-bottom: 1px solid #334155; padding: 8px 0; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <strong>${evt.title}</strong><br>
+            <small style="color:var(--text-muted)">Cost: ${evt.cost} coins</small>
+          </div>
+          <button class="danger" style="width: auto; padding: 6px 12px;" onclick="removeEvent(${idx})">Delete</button>
+        </div>
+      `).join("");
+    } catch (err) {
+      listEl.innerHTML = "<p style='color:var(--danger)'>Failed to load events.</p>";
+    }
+  }
+
+  async function createEvent() {
+    const title = document.getElementById("eventTitle").value.trim();
+    const description = document.getElementById("eventDesc").value.trim();
+    const cost = parseInt(document.getElementById("eventCost").value) || 0;
+
+    if (!title) return alert("Please provide a title");
+
+    const res = await fetch(`${WORKER_URL}/events`);
+    const data = await res.json();
+    const currentEvents = data.events || [];
+
+    const newEvent = {
+      id: "evt_" + Date.now(),
+      title,
+      description,
+      cost,
+      createdAt: Date.now()
+    };
+
+    currentEvents.push(newEvent);
+
+    await fetch(`${WORKER_URL}/admin/events`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ events: currentEvents })
+    });
+
+    document.getElementById("eventTitle").value = "";
+    document.getElementById("eventDesc").value = "";
+    document.getElementById("eventCost").value = "0";
+    loadEvents();
+  }
+
+  async function removeEvent(index) {
+    const res = await fetch(`${WORKER_URL}/events`);
+    const data = await res.json();
+    let currentEvents = data.events || [];
+
+    currentEvents.splice(index, 1);
+
+    await fetch(`${WORKER_URL}/admin/events`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ events: currentEvents })
+    });
+
+    loadEvents();
+  }
+
+  async function clearAllEvents() {
+    if (!confirm("Are you sure you want to delete all active giveaways?")) return;
+
+    await fetch(`${WORKER_URL}/admin/events`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ events: [] })
+    });
+
+    loadEvents();
+  }
+
+  loadEvents();
+</script>
+
+</body>
+</html>
