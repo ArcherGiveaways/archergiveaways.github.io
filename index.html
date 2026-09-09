@@ -2,38 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Archer Giveaways - DonutSMP Rains</title>
-
-  <meta
-    name="description"
-    content="Archer Giveaways - DonutSMP coin rains and giveaways."
-  >
+  <meta name="description" content="Archer Giveaways - DonutSMP coin rains and giveaways.">
 
   <!-- Google Identity Services -->
-  <script
-    src="https://accounts.google.com/gsi/client"
-    async
-    defer
-  ></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 
   <!-- Font Awesome -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-  >
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
   <style>
-
     /* =========================================================
-       RESET
+       RESET & BASE
     ========================================================= */
-
     * {
       box-sizing: border-box;
       margin: 0;
@@ -46,34 +28,16 @@
 
     body {
       min-height: 100vh;
-      font-family:
-        Inter,
-        ui-sans-serif,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
-        radial-gradient(
-          circle at 20% 0%,
-          rgba(124, 58, 237, 0.18),
-          transparent 32%
-        ),
-        radial-gradient(
-          circle at 85% 10%,
-          rgba(168, 85, 247, 0.12),
-          transparent 28%
-        ),
+        radial-gradient(circle at 20% 0%, rgba(124, 58, 237, 0.18), transparent 32%),
+        radial-gradient(circle at 85% 10%, rgba(168, 85, 247, 0.12), transparent 28%),
         #07050c;
-
       color: #f8f7fb;
       overflow-x: hidden;
     }
 
-    button,
-    input {
+    button, input {
       font: inherit;
     }
 
@@ -87,11 +51,9 @@
       text-decoration: none;
     }
 
-
     /* =========================================================
        SCROLLBAR
     ========================================================= */
-
     ::-webkit-scrollbar {
       width: 8px;
     }
@@ -109,31 +71,21 @@
       background: #51306f;
     }
 
-
     /* =========================================================
        TOP BAR
     ========================================================= */
-
     .topbar {
       position: sticky;
       top: 0;
       z-index: 100;
-
       height: 72px;
-
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       padding: 0 28px;
-
-      background:
-        rgba(7, 5, 12, 0.88);
-
+      background: rgba(7, 5, 12, 0.88);
       backdrop-filter: blur(18px);
-
-      border-bottom:
-        1px solid rgba(255,255,255,0.07);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
     }
 
     .brand {
@@ -145,22 +97,11 @@
     .brand-icon {
       width: 40px;
       height: 40px;
-
       display: grid;
       place-items: center;
-
       border-radius: 12px;
-
-      background:
-        linear-gradient(
-          135deg,
-          #8b5cf6,
-          #6d28d9
-        );
-
-      box-shadow:
-        0 0 25px rgba(139,92,246,0.28);
-
+      background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+      box-shadow: 0 0 25px rgba(139,92,246,0.28);
       font-size: 18px;
     }
 
@@ -191,19 +132,13 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-
       padding: 10px 14px;
-
       border-radius: 10px;
-
       color: #dcd5ea;
       background: rgba(255,255,255,0.045);
-
       border: 1px solid rgba(255,255,255,0.07);
-
       font-size: 13px;
       font-weight: 700;
-
       transition: 0.2s ease;
     }
 
@@ -212,49 +147,24 @@
       border-color: rgba(139,92,246,0.3);
     }
 
-
-    /* =========================================================
-       LOGIN BUTTON
-    ========================================================= */
-
     .login-button {
       display: flex;
       align-items: center;
       gap: 8px;
-
       padding: 10px 16px;
-
       border-radius: 10px;
-
-      background:
-        linear-gradient(
-          135deg,
-          #8b5cf6,
-          #6d28d9
-        );
-
+      background: linear-gradient(135deg, #8b5cf6, #6d28d9);
       color: white;
-
       font-size: 13px;
       font-weight: 800;
-
-      box-shadow:
-        0 8px 25px rgba(109,40,217,0.22);
-
+      box-shadow: 0 8px 25px rgba(109,40,217,0.22);
       transition: 0.2s ease;
     }
 
     .login-button:hover {
       transform: translateY(-1px);
-
-      box-shadow:
-        0 12px 30px rgba(109,40,217,0.35);
+      box-shadow: 0 12px 30px rgba(109,40,217,0.35);
     }
-
-
-    /* =========================================================
-       ACCOUNT AREA
-    ========================================================= */
 
     .account-area {
       position: relative;
@@ -262,19 +172,12 @@
 
     .profile-button {
       display: none;
-
       align-items: center;
       gap: 9px;
-
       padding: 5px 8px 5px 5px;
-
       background: rgba(255,255,255,0.045);
-
-      border:
-        1px solid rgba(255,255,255,0.08);
-
+      border: 1px solid rgba(255,255,255,0.08);
       border-radius: 12px;
-
       color: white;
     }
 
@@ -285,9 +188,7 @@
     .profile-button img {
       width: 32px;
       height: 32px;
-
       border-radius: 9px;
-
       object-fit: cover;
     }
 
@@ -298,33 +199,18 @@
 
     .profile-menu {
       position: absolute;
-
       right: 0;
       top: calc(100% + 10px);
-
       width: 260px;
-
       padding: 10px;
-
       border-radius: 16px;
-
-      background:
-        rgba(17, 12, 27, 0.98);
-
-      border:
-        1px solid rgba(255,255,255,0.08);
-
-      box-shadow:
-        0 20px 60px rgba(0,0,0,0.45);
-
+      background: rgba(17, 12, 27, 0.98);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
       opacity: 0;
       visibility: hidden;
-
-      transform:
-        translateY(-6px);
-
+      transform: translateY(-6px);
       transition: 0.18s ease;
-
       z-index: 200;
     }
 
@@ -336,11 +222,8 @@
 
     .menu-user {
       padding: 12px;
-
       border-radius: 12px;
-
       background: rgba(255,255,255,0.04);
-
       margin-bottom: 8px;
     }
 
@@ -351,11 +234,8 @@
 
     .menu-email {
       margin-top: 3px;
-
       color: #817b91;
-
       font-size: 11px;
-
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -364,11 +244,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       padding: 11px 12px;
-
       color: #c8c1d4;
-
       font-size: 12px;
     }
 
@@ -386,18 +263,12 @@
 
     .logout-button {
       width: 100%;
-
       margin-top: 5px;
       padding: 10px 12px;
-
       border-radius: 10px;
-
       background: rgba(239,68,68,0.08);
-
       color: #fca5a5;
-
       text-align: left;
-
       font-size: 12px;
       font-weight: 700;
     }
@@ -406,69 +277,39 @@
       background: rgba(239,68,68,0.14);
     }
 
-
     /* =========================================================
-       PAGE
+       PAGE & LAYOUT
     ========================================================= */
-
     .page {
       width: min(1450px, calc(100% - 40px));
-
       margin: 0 auto;
-
       padding: 28px 0 60px;
     }
 
-
-    /* =========================================================
-       LAYOUT
-    ========================================================= */
-
     .layout {
       display: grid;
-
-      grid-template-columns:
-        270px
-        minmax(0, 1fr);
-
+      grid-template-columns: 270px minmax(0, 1fr);
       gap: 22px;
-
       align-items: start;
     }
-
-
-    /* =========================================================
-       SIDEBAR
-    ========================================================= */
 
     .sidebar {
       position: sticky;
       top: 94px;
-
       height: calc(100vh - 118px);
-
       display: flex;
       flex-direction: column;
-
       padding: 18px;
-
       border-radius: 18px;
-
-      background:
-        rgba(15, 10, 24, 0.86);
-
-      border:
-        1px solid rgba(255,255,255,0.07);
-
-      box-shadow:
-        0 20px 60px rgba(0,0,0,0.18);
+      background: rgba(15, 10, 24, 0.86);
+      border: 1px solid rgba(255,255,255,0.07);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.18);
     }
 
     .sidebar-heading {
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       margin-bottom: 14px;
     }
 
@@ -479,78 +320,51 @@
 
     .active-count {
       padding: 4px 8px;
-
       border-radius: 999px;
-
       background: rgba(74,222,128,0.08);
-
       color: #4ade80;
-
       font-size: 10px;
       font-weight: 800;
     }
 
     .active-events {
       min-height: 0;
-
       overflow-y: auto;
-
       padding-right: 3px;
     }
 
     .event-mini {
       position: relative;
-
       padding: 13px;
-
       margin-bottom: 9px;
-
       border-radius: 13px;
-
-      background:
-        rgba(255,255,255,0.035);
-
-      border:
-        1px solid rgba(255,255,255,0.055);
-
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.055);
       transition: 0.18s ease;
     }
 
     .event-mini:hover {
-      background:
-        rgba(139,92,246,0.08);
-
-      border-color:
-        rgba(139,92,246,0.18);
+      background: rgba(139,92,246,0.08);
+      border-color: rgba(139,92,246,0.18);
     }
 
     .event-type {
       display: inline-flex;
       align-items: center;
       gap: 5px;
-
       margin-bottom: 7px;
-
       font-size: 9px;
       font-weight: 900;
-
       text-transform: uppercase;
       letter-spacing: 0.08em;
     }
 
-    .event-type.rain {
-      color: #fb923c;
-    }
-
-    .event-type.giveaway {
-      color: #a78bfa;
-    }
+    .event-type.rain { color: #fb923c; }
+    .event-type.giveaway { color: #a78bfa; }
 
     .event-name {
       padding-right: 30px;
-
       color: #f1edf7;
-
       font-size: 12px;
       font-weight: 800;
       line-height: 1.35;
@@ -558,40 +372,28 @@
 
     .event-prize {
       margin-top: 5px;
-
       color: #b6adc5;
-
       font-size: 11px;
     }
 
     .event-time {
       margin-top: 5px;
-
       color: #71697f;
-
       font-size: 10px;
     }
 
     .tiny-enter {
       position: absolute;
-
       right: 10px;
       top: 50%;
-
       width: 28px;
       height: 28px;
-
       transform: translateY(-50%);
-
       display: grid;
       place-items: center;
-
       border-radius: 8px;
-
       background: rgba(139,92,246,0.1);
-
       color: #b99cfb;
-
       transition: 0.18s ease;
     }
 
@@ -599,11 +401,6 @@
       background: #8b5cf6;
       color: white;
     }
-
-
-    /* =========================================================
-       MAIN
-    ========================================================= */
 
     .main {
       min-width: 0;
@@ -617,94 +414,47 @@
       display: inline-flex;
       align-items: center;
       gap: 7px;
-
       margin-bottom: 8px;
-
       color: #a78bfa;
-
       font-size: 10px;
       font-weight: 900;
-
       letter-spacing: 0.12em;
       text-transform: uppercase;
     }
 
     .hero h1 {
-      font-size:
-        clamp(28px, 4vw, 46px);
-
+      font-size: clamp(28px, 4vw, 46px);
       line-height: 1.05;
-
       letter-spacing: -0.045em;
     }
 
     .hero p {
       max-width: 680px;
-
       margin-top: 9px;
-
       color: #837b91;
-
       font-size: 14px;
       line-height: 1.6;
     }
 
-
     /* =========================================================
-       FEATURED
+       FEATURED & EMPTY STATES
     ========================================================= */
-
     .featured {
       position: relative;
-
-      min-height: 245px;
-
+      min-height: 200px;
       margin-bottom: 22px;
-
       overflow: hidden;
-
       border-radius: 22px;
-
       background:
-        radial-gradient(
-          circle at 80% 10%,
-          rgba(139,92,246,0.28),
-          transparent 34%
-        ),
-        linear-gradient(
-          135deg,
-          #181027,
-          #0e0917
-        );
-
-      border:
-        1px solid rgba(139,92,246,0.18);
-
-      box-shadow:
-        0 25px 70px rgba(0,0,0,0.25);
-    }
-
-    .featured::before {
-      content: "";
-
-      position: absolute;
-
-      width: 260px;
-      height: 260px;
-
-      right: -100px;
-      bottom: -120px;
-
-      border-radius: 50%;
-
-      border:
-        1px solid rgba(167,139,250,0.12);
+        radial-gradient(circle at 80% 10%, rgba(139,92,246,0.28), transparent 34%),
+        linear-gradient(135deg, #181027, #0e0917);
+      border: 1px solid rgba(139,92,246,0.18);
+      box-shadow: 0 25px 70px rgba(0,0,0,0.25);
     }
 
     .featured-content {
       position: relative;
       z-index: 1;
-
       padding: 30px;
     }
 
@@ -712,32 +462,23 @@
       display: inline-flex;
       align-items: center;
       gap: 7px;
-
       color: #c4b5fd;
-
       font-size: 10px;
       font-weight: 900;
-
       text-transform: uppercase;
       letter-spacing: 0.1em;
     }
 
     .featured-title {
       margin-top: 15px;
-
-      font-size:
-        clamp(24px, 3vw, 38px);
-
+      font-size: clamp(24px, 3vw, 38px);
       font-weight: 900;
-
       letter-spacing: -0.035em;
     }
 
     .featured-prize {
       margin-top: 7px;
-
       color: #c4b5fd;
-
       font-size: 24px;
       font-weight: 900;
     }
@@ -746,9 +487,7 @@
       display: flex;
       align-items: center;
       gap: 9px;
-
       margin-top: 28px;
-
       flex-wrap: wrap;
     }
 
@@ -756,16 +495,10 @@
       display: inline-flex;
       align-items: center;
       gap: 7px;
-
       padding: 9px 11px;
-
       border-radius: 9px;
-
-      background:
-        rgba(255,255,255,0.05);
-
+      background: rgba(255,255,255,0.05);
       color: #a49aaf;
-
       font-size: 11px;
     }
 
@@ -773,20 +506,13 @@
       display: inline-flex;
       align-items: center;
       gap: 9px;
-
       margin-left: auto;
-
       padding: 11px 17px;
-
       border-radius: 10px;
-
       background: #8b5cf6;
-
       color: white;
-
       font-size: 12px;
       font-weight: 900;
-
       transition: 0.18s ease;
     }
 
@@ -795,44 +521,39 @@
       transform: translateY(-1px);
     }
 
+    .empty-state {
+      padding: 40px 20px;
+      text-align: center;
+      color: #71697f;
+      font-size: 13px;
+      font-weight: 600;
+      background: rgba(15,10,24,0.4);
+      border-radius: 16px;
+      border: 1px dashed rgba(255,255,255,0.07);
+    }
 
     /* =========================================================
        ACCOUNT GRID
     ========================================================= */
-
     .account-grid {
       display: grid;
-
-      grid-template-columns:
-        1.3fr
-        1fr
-        1fr;
-
+      grid-template-columns: 1.3fr 1fr;
       gap: 14px;
-
       margin-bottom: 22px;
     }
 
     .account-card {
       min-width: 0;
-
       padding: 18px;
-
       border-radius: 16px;
-
-      background:
-        rgba(15,10,24,0.86);
-
-      border:
-        1px solid rgba(255,255,255,0.07);
+      background: rgba(15,10,24,0.86);
+      border: 1px solid rgba(255,255,255,0.07);
     }
 
     .account-label {
       color: #71697f;
-
       font-size: 9px;
       font-weight: 900;
-
       letter-spacing: 0.1em;
       text-transform: uppercase;
     }
@@ -841,25 +562,20 @@
       display: flex;
       align-items: center;
       gap: 12px;
-
       margin-top: 12px;
     }
 
     .account-avatar {
       width: 46px;
       height: 46px;
-
       border-radius: 13px;
-
       object-fit: cover;
-
       background: #1a1227;
     }
 
     .account-name {
       font-size: 14px;
       font-weight: 900;
-
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -867,11 +583,8 @@
 
     .account-email {
       margin-top: 3px;
-
       color: #756e80;
-
       font-size: 10px;
-
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -879,55 +592,37 @@
 
     .coin-balance {
       margin-top: 12px;
-
       font-size: 26px;
       font-weight: 900;
-
       letter-spacing: -0.03em;
     }
 
     .coin-label {
       color: #766e81;
-
       font-size: 10px;
     }
 
     .progress-track {
       height: 7px;
-
       margin-top: 12px;
-
       overflow: hidden;
-
       border-radius: 999px;
-
       background: rgba(255,255,255,0.06);
     }
 
     .progress-fill {
       width: 0%;
       height: 100%;
-
       border-radius: inherit;
-
-      background:
-        linear-gradient(
-          90deg,
-          #7c3aed,
-          #a78bfa
-        );
-
+      background: linear-gradient(90deg, #7c3aed, #a78bfa);
       transition: width 0.4s ease;
     }
 
     .progress-row {
       display: flex;
       justify-content: space-between;
-
       margin-top: 7px;
-
       color: #766e81;
-
       font-size: 9px;
     }
 
@@ -935,27 +630,20 @@
       display: flex;
       align-items: center;
       gap: 9px;
-
       margin-top: 15px;
     }
 
     .verification-dot {
       width: 10px;
       height: 10px;
-
       border-radius: 50%;
-
       background: #ef4444;
-
-      box-shadow:
-        0 0 12px rgba(239,68,68,0.35);
+      box-shadow: 0 0 12px rgba(239,68,68,0.35);
     }
 
     .verification-status.verified .verification-dot {
       background: #4ade80;
-
-      box-shadow:
-        0 0 12px rgba(74,222,128,0.35);
+      box-shadow: 0 0 12px rgba(74,222,128,0.35);
     }
 
     .verification-text {
@@ -965,87 +653,26 @@
 
     .verify-button {
       width: 100%;
-
       margin-top: 15px;
       padding: 10px;
-
       border-radius: 10px;
-
-      background:
-        rgba(139,92,246,0.12);
-
+      background: rgba(139,92,246,0.12);
       color: #c4b5fd;
-
       font-size: 11px;
       font-weight: 900;
     }
 
     .verify-button:hover {
-      background:
-        rgba(139,92,246,0.2);
+      background: rgba(139,92,246,0.2);
     }
-
-    .invite-number {
-      margin-top: 13px;
-
-      font-size: 24px;
-      font-weight: 900;
-    }
-
-    .invite-number span {
-      color: #71697f;
-
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .invite-track {
-      height: 7px;
-
-      margin-top: 13px;
-
-      overflow: hidden;
-
-      border-radius: 999px;
-
-      background: rgba(255,255,255,0.06);
-    }
-
-    .invite-fill {
-      width: 0%;
-      height: 100%;
-
-      border-radius: inherit;
-
-      background:
-        linear-gradient(
-          90deg,
-          #22c55e,
-          #86efac
-        );
-
-      transition: width 0.4s ease;
-    }
-
-    .invite-progress-text {
-      margin-top: 7px;
-
-      color: #71697f;
-
-      font-size: 9px;
-      font-weight: 800;
-    }
-
 
     /* =========================================================
-       SECTION HEADER
+       EVENTS GRID
     ========================================================= */
-
     .section-header {
       display: flex;
       align-items: end;
       justify-content: space-between;
-
       margin-bottom: 12px;
     }
 
@@ -1056,110 +683,69 @@
 
     .section-subtitle {
       margin-top: 3px;
-
       color: #71697f;
-
       font-size: 10px;
     }
 
-
-    /* =========================================================
-       EVENTS GRID
-    ========================================================= */
-
     .events-grid {
       display: grid;
-
-      grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
     }
 
     .event-card {
       position: relative;
-
       min-width: 0;
-
       padding: 20px;
-
       min-height: 205px;
-
       display: flex;
       flex-direction: column;
-
       border-radius: 17px;
-
-      background:
-        rgba(15,10,24,0.86);
-
-      border:
-        1px solid rgba(255,255,255,0.07);
-
-      transition:
-        transform 0.18s ease,
-        border-color 0.18s ease,
-        background 0.18s ease;
+      background: rgba(15,10,24,0.86);
+      border: 1px solid rgba(255,255,255,0.07);
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
     }
 
     .event-card:hover {
       transform: translateY(-2px);
-
-      background:
-        rgba(20,13,31,0.94);
-
-      border-color:
-        rgba(139,92,246,0.2);
+      background: rgba(20,13,31,0.94);
+      border-color: rgba(139,92,246,0.2);
     }
 
     .event-card.featured-card {
-      border-color:
-        rgba(139,92,246,0.16);
+      border-color: rgba(139,92,246,0.16);
     }
 
     .card-event-type {
       display: inline-flex;
       align-items: center;
       gap: 7px;
-
       font-size: 9px;
       font-weight: 900;
-
       text-transform: uppercase;
       letter-spacing: 0.09em;
     }
 
-    .card-event-type.rain {
-      color: #fb923c;
-    }
-
-    .card-event-type.giveaway {
-      color: #a78bfa;
-    }
+    .card-event-type.rain { color: #fb923c; }
+    .card-event-type.giveaway { color: #a78bfa; }
 
     .card-title {
       margin-top: 13px;
-
       font-size: 17px;
       font-weight: 900;
-
       letter-spacing: -0.02em;
     }
 
     .card-prize {
       margin-top: 7px;
-
       color: #c4b5fd;
-
       font-size: 22px;
       font-weight: 900;
     }
 
     .card-description {
       margin-top: 7px;
-
       color: #776f81;
-
       font-size: 11px;
       line-height: 1.5;
     }
@@ -1168,31 +754,23 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       margin-top: auto;
       padding-top: 18px;
     }
 
     .card-time {
       color: #70697b;
-
       font-size: 10px;
     }
 
     .card-enter {
       width: 34px;
       height: 34px;
-
       display: grid;
       place-items: center;
-
       border-radius: 9px;
-
-      background:
-        rgba(139,92,246,0.1);
-
+      background: rgba(139,92,246,0.1);
       color: #bda6f7;
-
       transition: 0.18s ease;
     }
 
@@ -1201,32 +779,21 @@
       color: white;
     }
 
-
     /* =========================================================
-       MODAL
+       MODAL & TOAST
     ========================================================= */
-
     .overlay {
       position: fixed;
-
       inset: 0;
-
       z-index: 500;
-
       display: flex;
       align-items: center;
       justify-content: center;
-
       padding: 20px;
-
-      background:
-        rgba(0,0,0,0.68);
-
+      background: rgba(0,0,0,0.68);
       backdrop-filter: blur(8px);
-
       opacity: 0;
       visibility: hidden;
-
       transition: 0.2s ease;
     }
 
@@ -1237,146 +804,89 @@
 
     .modal {
       width: min(430px, 100%);
-
       padding: 25px;
-
       border-radius: 20px;
-
-      background:
-        linear-gradient(
-          145deg,
-          #171020,
-          #0e0915
-        );
-
-      border:
-        1px solid rgba(255,255,255,0.09);
-
-      box-shadow:
-        0 30px 90px rgba(0,0,0,0.55);
-
-      transform:
-        translateY(10px)
-        scale(0.98);
-
+      background: linear-gradient(145deg, #171020, #0e0915);
+      border: 1px solid rgba(255,255,255,0.09);
+      box-shadow: 0 30px 90px rgba(0,0,0,0.55);
+      transform: translateY(10px) scale(0.98);
       transition: 0.2s ease;
     }
 
     .overlay.open .modal {
-      transform:
-        translateY(0)
-        scale(1);
+      transform: translateY(0) scale(1);
     }
 
     .modal-icon {
       width: 46px;
       height: 46px;
-
       display: grid;
       place-items: center;
-
       margin-bottom: 15px;
-
       border-radius: 13px;
-
-      background:
-        rgba(139,92,246,0.12);
-
+      background: rgba(139,92,246,0.12);
       color: #c4b5fd;
-
       font-size: 20px;
     }
 
     .modal-title {
       font-size: 21px;
       font-weight: 900;
-
       letter-spacing: -0.025em;
     }
 
     .modal-text {
       margin-top: 9px;
-
       color: #898092;
-
       font-size: 12px;
       line-height: 1.65;
     }
 
     .link-code-box {
       display: none;
-
       margin-top: 16px;
-
       padding: 15px;
-
       border-radius: 12px;
-
-      background:
-        rgba(139,92,246,0.09);
-
-      border:
-        1px dashed rgba(167,139,250,0.3);
-
+      background: rgba(139,92,246,0.09);
+      border: 1px dashed rgba(167,139,250,0.3);
       color: #d8c9ff;
-
       text-align: center;
-
-      font-family:
-        ui-monospace,
-        SFMono-Regular,
-        Menlo,
-        Monaco,
-        Consolas,
-        monospace;
-
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       font-size: 19px;
       font-weight: 900;
-
       letter-spacing: 0.08em;
-
       cursor: pointer;
     }
 
     .link-code-box:hover {
-      background:
-        rgba(139,92,246,0.14);
+      background: rgba(139,92,246,0.14);
     }
 
     .modal-actions {
       display: flex;
       gap: 9px;
-
       margin-top: 20px;
     }
 
-    .modal-secondary,
-    .modal-primary {
+    .modal-secondary, .modal-primary {
       flex: 1;
-
       padding: 11px;
-
       border-radius: 10px;
-
       font-size: 11px;
       font-weight: 900;
     }
 
     .modal-secondary {
-      background:
-        rgba(255,255,255,0.05);
-
+      background: rgba(255,255,255,0.05);
       color: #a49bab;
     }
 
     .modal-secondary:hover {
-      background:
-        rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.08);
     }
 
     .modal-primary {
       background: #8b5cf6;
-
       color: white;
     }
 
@@ -1384,73 +894,42 @@
       background: #9d72f7;
     }
 
-
-    /* =========================================================
-       TOAST
-    ========================================================= */
-
     .toast {
       position: fixed;
-
       left: 50%;
       bottom: 25px;
-
       z-index: 800;
-
-      transform:
-        translate(-50%, 20px);
-
+      transform: translate(-50%, 20px);
       padding: 12px 17px;
-
       border-radius: 11px;
-
-      background:
-        rgba(20,14,29,0.97);
-
-      border:
-        1px solid rgba(255,255,255,0.1);
-
+      background: rgba(20,14,29,0.97);
+      border: 1px solid rgba(255,255,255,0.1);
       color: #f4effa;
-
       font-size: 11px;
       font-weight: 800;
-
-      box-shadow:
-        0 15px 45px rgba(0,0,0,0.4);
-
+      box-shadow: 0 15px 45px rgba(0,0,0,0.4);
       opacity: 0;
       visibility: hidden;
-
       transition: 0.22s ease;
     }
 
     .toast.show {
       opacity: 1;
       visibility: visible;
-
-      transform:
-        translate(-50%, 0);
+      transform: translate(-50%, 0);
     }
-
 
     /* =========================================================
        FOOTER
     ========================================================= */
-
     .footer {
       margin-top: 35px;
-
       padding-top: 20px;
-
-      border-top:
-        1px solid rgba(255,255,255,0.06);
-
+      border-top: 1px solid rgba(255,255,255,0.06);
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       color: #5f5869;
-
       font-size: 10px;
     }
 
@@ -1458,2718 +937,751 @@
       color: #81798d;
     }
 
-
     /* =========================================================
        RESPONSIVE
     ========================================================= */
-
     @media (max-width: 1050px) {
-
-      .layout {
-        grid-template-columns: 220px minmax(0,1fr);
-      }
-
-      .account-grid {
-        grid-template-columns:
-          repeat(2, minmax(0,1fr));
-      }
-
-      .account-card:first-child {
-        grid-column: 1 / -1;
-      }
-
+      .layout { grid-template-columns: 220px minmax(0,1fr); }
+      .account-grid { grid-template-columns: 1fr; }
     }
-
 
     @media (max-width: 780px) {
-
-      .topbar {
-        padding: 0 16px;
-      }
-
-      .discord-top {
-        display: none;
-      }
-
-      .page {
-        width: min(100% - 24px, 700px);
-        padding-top: 20px;
-      }
-
-      .layout {
-        display: block;
-      }
-
-      .sidebar {
-        position: static;
-
-        height: auto;
-
-        margin-bottom: 18px;
-      }
-
-      .active-events {
-        display: grid;
-
-        grid-template-columns:
-          repeat(2, minmax(0,1fr));
-
-        gap: 8px;
-      }
-
-      .event-mini {
-        margin-bottom: 0;
-      }
-
-      .events-grid {
-        grid-template-columns: 1fr;
-      }
-
+      .topbar { padding: 0 16px; }
+      .discord-top { display: none; }
+      .page { width: min(100% - 24px, 700px); padding-top: 20px; }
+      .layout { display: block; }
+      .sidebar { position: static; height: auto; margin-bottom: 18px; }
+      .active-events { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; }
+      .event-mini { margin-bottom: 0; }
+      .events-grid { grid-template-columns: 1fr; }
     }
-
 
     @media (max-width: 560px) {
-
-      .brand-subtitle {
-        display: none;
-      }
-
-      .brand-title {
-        font-size: 14px;
-      }
-
-      .profile-button span {
-        display: none;
-      }
-
-      .account-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .account-card:first-child {
-        grid-column: auto;
-      }
-
-      .active-events {
-        grid-template-columns: 1fr;
-      }
-
-      .featured-content {
-        padding: 22px;
-      }
-
-      .featured-enter {
-        width: 100%;
-        justify-content: center;
-        margin-left: 0;
-      }
-
-      .footer {
-        flex-direction: column;
-        gap: 7px;
-        text-align: center;
-      }
-
+      .brand-subtitle { display: none; }
+      .brand-title { font-size: 14px; }
+      .profile-button span { display: none; }
+      .active-events { grid-template-columns: 1fr; }
+      .featured-content { padding: 22px; }
+      .featured-enter { width: 100%; justify-content: center; margin-left: 0; }
+      .footer { flex-direction: column; gap: 7px; text-align: center; }
     }
-
   </style>
 </head>
 
-
 <body>
 
-
-  <!-- =======================================================
-       TOP BAR
-  ======================================================== -->
-
+  <!-- TOP BAR -->
   <header class="topbar">
-
-    <a
-      href="#"
-      class="brand"
-      onclick="return false;"
-    >
-
+    <a href="#" class="brand" onclick="return false;">
       <div class="brand-icon">
         <i class="fa-solid fa-bow-arrow"></i>
       </div>
-
       <div class="brand-text">
-
-        <div class="brand-title">
-          Archer Giveaways
-        </div>
-
-        <div class="brand-subtitle">
-          DonutSMP Rains
-        </div>
-
+        <div class="brand-title">Archer Giveaways</div>
+        <div class="brand-subtitle">DonutSMP Rains</div>
       </div>
-
     </a>
 
-
     <div class="topbar-right">
-
-      <a
-        class="discord-top"
-        href="https://discord.gg/p4k77YM92n"
-        target="_blank"
-        rel="noopener"
-      >
-        <i class="fa-brands fa-discord"></i>
-        Discord
+      <a class="discord-top" href="https://discord.gg/p4k77YM92n" target="_blank" rel="noopener">
+        <i class="fa-brands fa-discord"></i> Discord
       </a>
 
-
-      <button
-        id="loginButton"
-        class="login-button"
-        onclick="startGoogleLogin()"
-      >
-
-        <i class="fa-brands fa-google"></i>
-
-        Sign in
-
+      <button id="loginButton" class="login-button" onclick="startGoogleLogin()">
+        <i class="fa-brands fa-google"></i> Sign in
       </button>
 
-
       <div class="account-area">
-
-        <button
-          id="profileButton"
-          class="profile-button"
-          onclick="toggleProfile()"
-        >
-
-          <img
-            id="headerAvatar"
-            src="https://ui-avatars.com/api/?name=Guest"
-            alt="Account"
-          >
-
-          <span id="headerName">
-            Account
-          </span>
-
+        <button id="profileButton" class="profile-button" onclick="toggleProfile()">
+          <img id="headerAvatar" src="https://ui-avatars.com/api/?name=Guest" alt="Account">
+          <span id="headerName">Account</span>
           <i class="fa-solid fa-chevron-down"></i>
-
         </button>
 
-
-        <div
-          id="profileMenu"
-          class="profile-menu"
-        >
-
+        <div id="profileMenu" class="profile-menu">
           <div class="menu-user">
-
-            <div
-              id="menuName"
-              class="menu-name"
-            >
-              User
-            </div>
-
-            <div
-              id="menuEmail"
-              class="menu-email"
-            >
-              user@example.com
-            </div>
-
+            <div id="menuName" class="menu-name">User</div>
+            <div id="menuEmail" class="menu-email">user@example.com</div>
           </div>
-
 
           <div class="menu-row">
-
-            <span>
-              Coins
-            </span>
-
-            <strong id="menuCoins">
-              0
-            </strong>
-
+            <span>Coins</span>
+            <strong id="menuCoins">0</strong>
           </div>
-
 
           <div class="menu-row">
-
-            <span>
-              Discord
-            </span>
-
-            <strong
-              id="menuVerification"
-              class="menu-status"
-            >
-              Not verified
-            </strong>
-
+            <span>Discord</span>
+            <strong id="menuVerification" class="menu-status">Not verified</strong>
           </div>
 
-
-          <button
-            class="logout-button"
-            onclick="logout()"
-          >
-
-            <i class="fa-solid fa-right-from-bracket"></i>
-
-            &nbsp; Sign out
-
+          <button class="logout-button" onclick="logout()">
+            <i class="fa-solid fa-right-from-bracket"></i> &nbsp; Sign out
           </button>
-
         </div>
-
       </div>
-
     </div>
-
   </header>
 
-
-  <!-- =======================================================
-       PAGE
-  ======================================================== -->
-
+  <!-- PAGE -->
   <div class="page">
-
     <div class="layout">
 
-
-      <!-- ===================================================
-           SIDEBAR
-      ==================================================== -->
-
+      <!-- SIDEBAR -->
       <aside class="sidebar">
-
         <div class="sidebar-heading">
-
-          <h2>
-            Active events
-          </h2>
-
-          <span class="active-count">
-            LIVE
-          </span>
-
+          <h2>Active events</h2>
+          <span class="active-count">LIVE</span>
         </div>
-
-
-        <!-- THIS WAS THE MISSING ELEMENT -->
-        <div
-          id="activeEvents"
-          class="active-events"
-        ></div>
-
-
+        <div id="activeEvents" class="active-events"></div>
       </aside>
 
-
-      <!-- ===================================================
-           MAIN
-      ==================================================== -->
-
+      <!-- MAIN -->
       <main class="main">
 
-
         <!-- HERO -->
-
         <section class="hero">
-
           <div class="eyebrow">
-
-            <i class="fa-solid fa-bolt"></i>
-
-            DonutSMP Community
-
+            <i class="fa-solid fa-bolt"></i> DonutSMP Community
           </div>
-
-
-          <h1>
-            Rains & Giveaways
-          </h1>
-
-
-          <p>
-            Enter active community events, earn rewards,
-            and compete for huge DonutSMP coin prizes.
-          </p>
-
+          <h1>Rains & Giveaways</h1>
+          <p>Enter active community events, earn rewards, and compete for huge DonutSMP coin prizes.</p>
         </section>
-
 
         <!-- FEATURED -->
-
-        <section
-          id="featured"
-          class="featured"
-        ></section>
-
+        <section id="featured" class="featured"></section>
 
         <!-- ACCOUNT -->
-
         <section class="account-grid">
-
-
           <!-- ACCOUNT CARD -->
-
           <div class="account-card">
-
-            <div class="account-label">
-              Your account
-            </div>
-
-
+            <div class="account-label">Your account</div>
             <div class="account-user">
-
-              <img
-                id="accountAvatar"
-                class="account-avatar"
-                src="https://ui-avatars.com/api/?name=Guest"
-                alt="Account avatar"
-              >
-
-
+              <img id="accountAvatar" class="account-avatar" src="https://ui-avatars.com/api/?name=Guest" alt="Account avatar">
               <div>
-
-                <div
-                  id="accountName"
-                  class="account-name"
-                >
-                  Not signed in
-                </div>
-
-                <div
-                  id="accountEmail"
-                  class="account-email"
-                >
-                  Sign in to access giveaways
-                </div>
-
+                <div id="accountName" class="account-name">Not signed in</div>
+                <div id="accountEmail" class="account-email">Sign in to access giveaways</div>
               </div>
-
             </div>
 
-
-            <div
-              id="coinBalance"
-              class="coin-balance"
-            >
-              0
-            </div>
-
-            <div class="coin-label">
-              Coins
-            </div>
-
+            <div id="coinBalance" class="coin-balance">0</div>
+            <div class="coin-label">Coins</div>
 
             <div class="progress-track">
-
-              <div
-                id="accountProgress"
-                class="progress-fill"
-              ></div>
-
+              <div id="accountProgress" class="progress-fill"></div>
             </div>
-
 
             <div class="progress-row">
-
-              <span>
-                Account balance
-              </span>
-
-              <span id="accountProgressText">
-                0%
-              </span>
-
+              <span>Account balance</span>
+              <span id="accountProgressText">0%</span>
             </div>
-
           </div>
-
 
           <!-- DISCORD CARD -->
-
           <div class="account-card">
-
-            <div class="account-label">
-              Discord
-            </div>
-
-
-            <div
-              id="verificationStatus"
-              class="verification-status"
-            >
-
+            <div class="account-label">Discord</div>
+            <div id="verificationStatus" class="verification-status">
               <div class="verification-dot"></div>
-
-              <div
-                id="verificationText"
-                class="verification-text"
-              >
-                Not verified
-              </div>
-
+              <div id="verificationText" class="verification-text">Not verified</div>
             </div>
 
-
-            <button
-              id="verifyButton"
-              class="verify-button"
-              onclick="verifyDiscord()"
-            >
-              Verify
-            </button>
-
+            <button id="verifyButton" class="verify-button" onclick="verifyDiscord()">Verify</button>
           </div>
-
-
-          <!-- INVITE CARD -->
-
-          <div class="account-card">
-
-            <div class="account-label">
-              Invite qualification
-            </div>
-
-
-            <div class="invite-number">
-
-              <span id="inviteCount">
-                0
-              </span>
-
-              <span>
-                / 2
-              </span>
-
-            </div>
-
-
-            <div class="invite-track">
-
-              <div
-                id="inviteBar"
-                class="invite-fill"
-              ></div>
-
-            </div>
-
-
-            <div
-              id="inviteText"
-              class="invite-progress-text"
-            >
-              0 / 2
-            </div>
-
-          </div>
-
-
         </section>
-
 
         <!-- EVENTS -->
-
         <section>
-
           <div class="section-header">
-
             <div>
-
-              <div class="section-title">
-                Active events
-              </div>
-
-              <div class="section-subtitle">
-                Everyone gets an equal share in rains.
-                Giveaways have one winner.
-              </div>
-
+              <div class="section-title">Active events</div>
+              <div class="section-subtitle">Everyone gets an equal share in rains. Giveaways have one winner.</div>
             </div>
-
           </div>
 
-
-          <!-- THIS WAS ALSO EXPECTED BY renderGrid() -->
-          <div
-            id="eventsGrid"
-            class="events-grid"
-          ></div>
-
-
+          <div id="eventsGrid" class="events-grid"></div>
         </section>
 
-
         <!-- FOOTER -->
-
         <footer class="footer">
-
-          <div>
-            Archer Giveaways
-            <strong>•</strong>
-            DonutSMP
-          </div>
-
-          <div>
-            Server:
-            <strong>
-              donut-smp.net
-            </strong>
-          </div>
-
+          <div>Archer Giveaways <strong>•</strong> DonutSMP</div>
+          <div>Server: <strong>donut-smp.net</strong></div>
         </footer>
 
-
       </main>
-
     </div>
-
   </div>
 
-
-  <!-- =======================================================
-       MODAL
-  ======================================================== -->
-
-  <div
-    id="overlay"
-    class="overlay"
-    onclick="
-      if(event.target === this) closeModal();
-    "
-  >
-
+  <!-- MODAL -->
+  <div id="overlay" class="overlay" onclick="if(event.target === this) closeModal();">
     <div class="modal">
-
-
-      <div
-        id="modalIcon"
-        class="modal-icon"
-      >
-        <i class="fa-solid fa-lock"></i>
-      </div>
-
-
-      <div
-        id="modalTitle"
-        class="modal-title"
-      >
-        Sign in required
-      </div>
-
-
-      <div
-        id="modalText"
-        class="modal-text"
-      >
-        You need to sign in with Google before entering
-        an event.
-      </div>
-
-
-      <div
-        id="linkCodeBox"
-        class="link-code-box"
-        onclick="copyLinkCode()"
-        title="Click to copy"
-      ></div>
-
-
+      <div id="modalIcon" class="modal-icon"><i class="fa-solid fa-lock"></i></div>
+      <div id="modalTitle" class="modal-title">Sign in required</div>
+      <div id="modalText" class="modal-text">You need to sign in with Google before entering an event.</div>
+      <div id="linkCodeBox" class="link-code-box" onclick="copyLinkCode()" title="Click to copy"></div>
       <div class="modal-actions">
-
-        <button
-          class="modal-secondary"
-          onclick="closeModal()"
-        >
-          Cancel
-        </button>
-
-
-        <button
-          id="modalPrimary"
-          class="modal-primary"
-          onclick="modalPrimaryAction()"
-        >
-          Sign in
-        </button>
-
+        <button class="modal-secondary" onclick="closeModal()">Cancel</button>
+        <button id="modalPrimary" class="modal-primary" onclick="modalPrimaryAction()">Sign in</button>
       </div>
-
     </div>
-
   </div>
 
+  <!-- TOAST -->
+  <div id="toast" class="toast"></div>
 
-  <!-- =======================================================
-       TOAST
-  ======================================================== -->
-
-  <div
-    id="toast"
-    class="toast"
-  ></div>
-
-
-  <!-- =======================================================
-       JAVASCRIPT
-  ======================================================== -->
-
+  <!-- JAVASCRIPT -->
   <script>
+    /* CONFIG */
+    const GOOGLE_CLIENT_ID = "263646768191-7854avn92k94rq8pbit809o0erq48grq.apps.googleusercontent.com";
+    const API_URL = "https://archer.arcdepths.workers.dev";
+    const DISCORD_INVITE = "https://discord.gg/p4k77YM92n";
 
-    /* =========================================================
-       CONFIG
-    ========================================================= */
-
-    const GOOGLE_CLIENT_ID =
-      "263646768191-7854avn92k94rq8pbit809o0erq48grq.apps.googleusercontent.com";
-
-    const API_URL =
-      "https://archer.arcdepths.workers.dev";
-
-    const DISCORD_INVITE =
-      "https://discord.gg/p4k77YM92n";
-
-
-    /* =========================================================
-       EVENTS
-    ========================================================= */
-
-    const EVENTS = [
-
-      {
-        id: "rain-weekend",
-        type: "rain",
-        title: "Weekend Coin Rain",
-        prize: 5000000,
-        description: "Everyone receives an equal share.",
-        time: "Ends in 42m"
-      },
-
-      {
-        id: "giveaway-5m",
-        type: "giveaway",
-        title: "5M Coin Giveaway",
-        prize: 5000000,
-        description: "One winner receives the full prize.",
-        time: "Ends in 1h 12m"
-      },
-
-      {
-        id: "giveaway-millionaire",
-        type: "giveaway",
-        title: "Millionaire Drop",
-        prize: 2500000,
-        description: "One lucky winner receives the prize.",
-        time: "Ends in 2h"
-      },
-
-      {
-        id: "rain-community",
-        type: "rain",
-        title: "Community Rain",
-        prize: 1000000,
-        description: "The prize is divided evenly.",
-        time: "Ends in 3h"
-      },
-
-      {
-        id: "giveaway-starter",
-        type: "giveaway",
-        title: "Starter Giveaway",
-        prize: 500000,
-        description: "A community giveaway.",
-        time: "Ends in 4h"
-      }
-
-    ];
-
-
-    /* =========================================================
-       STATE
-    ========================================================= */
-
+    /* STATE */
+    let EVENTS = []; // Starts completely empty
     let currentUser = null;
     let selectedEvent = null;
     let modalAction = null;
 
-
-    /* =========================================================
-       LOCAL STORAGE
-    ========================================================= */
-
+    /* LOCAL STORAGE */
     function userKey(id) {
-
       return "archer_user_" + id;
-
     }
-
 
     function loadLocalUser(user) {
-
       let saved = null;
-
       try {
-
-        saved =
-          JSON.parse(
-            localStorage.getItem(
-              userKey(user.googleId)
-            ) || "null"
-          );
-
+        saved = JSON.parse(localStorage.getItem(userKey(user.googleId)) || "null");
       } catch {
-
         saved = null;
-
       }
-
 
       return {
-
         ...user,
-
-        coins:
-          saved?.coins ?? 0,
-
-        discordVerified:
-          saved?.discordVerified ?? false,
-
-        discordId:
-          saved?.discordId ?? null,
-
-        linkCode:
-          saved?.linkCode ?? null,
-
-        invites:
-          saved?.invites ?? 0,
-
-        enteredEvents:
-          Array.isArray(saved?.enteredEvents)
-            ? saved.enteredEvents
-            : []
-
+        coins: saved?.coins ?? 0,
+        discordVerified: saved?.discordVerified ?? false,
+        discordId: saved?.discordId ?? null,
+        linkCode: saved?.linkCode ?? null,
+        enteredEvents: Array.isArray(saved?.enteredEvents) ? saved.enteredEvents : []
       };
-
     }
-
 
     function saveLocalUser() {
-
-      if (!currentUser)
-        return;
-
-
+      if (!currentUser) return;
       localStorage.setItem(
-
-        userKey(
-          currentUser.googleId
-        ),
-
+        userKey(currentUser.googleId),
         JSON.stringify({
-
-          coins:
-            currentUser.coins,
-
-          discordVerified:
-            currentUser.discordVerified,
-
-          discordId:
-            currentUser.discordId,
-
-          linkCode:
-            currentUser.linkCode,
-
-          invites:
-            currentUser.invites,
-
-          enteredEvents:
-            currentUser.enteredEvents
-
+          coins: currentUser.coins,
+          discordVerified: currentUser.discordVerified,
+          discordId: currentUser.discordId,
+          linkCode: currentUser.linkCode,
+          enteredEvents: currentUser.enteredEvents
         })
-
       );
-
     }
 
-
-    /* =========================================================
-       API
-    ========================================================= */
-
-    async function api(
-      path,
-      method = "GET",
-      data = null
-    ) {
-
-      const url =
-        API_URL + path;
-
-
-      const options = {
-
-        method,
-
-        headers: {}
-
-      };
-
+    /* API CALLS */
+    async function api(path, method = "GET", data = null) {
+      const url = API_URL + path;
+      const options = { method, headers: {} };
 
       if (data !== null) {
-
-        options.headers[
-          "Content-Type"
-        ] =
-          "application/json";
-
-
-        options.body =
-          JSON.stringify(data);
-
+        options.headers["Content-Type"] = "application/json";
+        options.body = JSON.stringify(data);
       }
 
-
-      const response =
-        await fetch(
-          url,
-          options
-        );
-
-
+      const response = await fetch(url, options);
       let result = {};
 
-
       try {
-
-        result =
-          await response.json();
-
+        result = await response.json();
       } catch {
-
         result = {};
-
       }
-
 
       if (!response.ok) {
-
-        throw new Error(
-
-          result.error ||
-          "Worker returned HTTP " +
-          response.status
-
-        );
-
+        throw new Error(result.error || "Worker returned HTTP " + response.status);
       }
-
 
       return result;
-
     }
 
-
-    /* =========================================================
-       GOOGLE
-    ========================================================= */
-
-    function initializeGoogle() {
-
-      if (
-
-        !window.google ||
-        !window.google.accounts ||
-        !window.google.accounts.id
-
-      ) {
-
-        setTimeout(
-          initializeGoogle,
-          200
-        );
-
-        return;
-
+    /* FETCH EVENTS (POLLED EVERY SECOND) */
+    async function fetchEvents() {
+      try {
+        const data = await api("/events");
+        if (Array.isArray(data.events)) {
+          EVENTS = data.events;
+          renderEvents();
+        }
+      } catch (e) {
+        // Silent catch during periodic polling
       }
+    }
 
+    /* GOOGLE SIGN IN */
+    function initializeGoogle() {
+      if (!window.google || !window.google.accounts || !window.google.accounts.id) {
+        setTimeout(initializeGoogle, 200);
+        return;
+      }
 
       google.accounts.id.initialize({
-
-        client_id:
-          GOOGLE_CLIENT_ID,
-
-        callback:
-          handleGoogleCredential,
-
-        auto_select:
-          false
-
+        client_id: GOOGLE_CLIENT_ID,
+        callback: handleGoogleCredential,
+        auto_select: false
       });
-
     }
-
 
     function startGoogleLogin() {
-
-      if (
-
-        !window.google ||
-        !window.google.accounts
-
-      ) {
-
-        showToast(
-          "Google Sign-In is still loading."
-        );
-
+      if (!window.google || !window.google.accounts) {
+        showToast("Google Sign-In is still loading.");
         return;
-
       }
-
-
       google.accounts.id.prompt();
-
     }
 
-
-    async function handleGoogleCredential(
-      response
-    ) {
-
+    async function handleGoogleCredential(response) {
       try {
-
-        const payload =
-          parseJwt(
-            response.credential
-          );
-
-
-        currentUser =
-          loadLocalUser({
-
-            googleId:
-              payload.sub,
-
-            name:
-              payload.name ||
-              payload.given_name ||
-              "Google User",
-
-            email:
-              payload.email ||
-              "",
-
-            picture:
-              payload.picture ||
-              "https://ui-avatars.com/api/?name=User"
-
-          });
-
+        const payload = parseJwt(response.credential);
+        currentUser = loadLocalUser({
+          googleId: payload.sub,
+          name: payload.name || payload.given_name || "Google User",
+          email: payload.email || "",
+          picture: payload.picture || "https://ui-avatars.com/api/?name=User"
+        });
 
         if (!currentUser.linkCode) {
-
-          currentUser.linkCode =
-            generateLinkCode();
-
+          currentUser.linkCode = generateLinkCode();
         }
 
-
         saveLocalUser();
-
         updateUI();
-
         closeModal();
-
-        showToast(
-          "Signed in successfully."
-        );
-
+        showToast("Signed in successfully.");
 
         await registerAccount();
-
         await refreshAccount();
-
-
       } catch (error) {
-
-        console.error(
-          "Google login error:",
-          error
-        );
-
-        showToast(
-          "Google sign-in failed."
-        );
-
+        console.error("Google login error:", error);
+        showToast("Google sign-in failed.");
       }
-
     }
 
-
-    /* =========================================================
-       ACCOUNT REGISTRATION
-    ========================================================= */
-
+    /* ACCOUNT SYNC */
     async function registerAccount() {
-
-      if (!currentUser)
-        return;
-
-
-      if (!currentUser.linkCode) {
-
-        currentUser.linkCode =
-          generateLinkCode();
-
-      }
-
+      if (!currentUser) return;
+      if (!currentUser.linkCode) currentUser.linkCode = generateLinkCode();
 
       try {
+        const result = await api("/register", "POST", {
+          code: currentUser.linkCode,
+          googleId: currentUser.googleId,
+          name: currentUser.name,
+          email: currentUser.email,
+          picture: currentUser.picture
+        });
 
-        const result =
-          await api(
-            "/register",
-            "POST",
-            {
-
-              code:
-                currentUser.linkCode,
-
-              googleId:
-                currentUser.googleId,
-
-              name:
-                currentUser.name,
-
-              email:
-                currentUser.email,
-
-              picture:
-                currentUser.picture
-
-            }
-          );
-
-
-        if (result.account) {
-
-          applyServerAccount(
-            result.account
-          );
-
-        }
-
-
+        if (result.account) applyServerAccount(result.account);
         saveLocalUser();
-
         updateUI();
-
-
       } catch (error) {
-
-        console.error(
-          "Account registration failed:",
-          error
-        );
-
-        showToast(
-          "Could not connect to the Archer server."
-        );
-
+        console.error("Account registration failed:", error);
+        showToast("Could not connect to the Archer server.");
       }
-
     }
 
-
-    /* =========================================================
-       SERVER ACCOUNT
-    ========================================================= */
-
-    function applyServerAccount(
-      account
-    ) {
-
-      if (
-        !currentUser ||
-        !account
-      )
-        return;
-
-
-      if (
-        account.name
-      ) {
-
-        currentUser.name =
-          account.name;
-
-      }
-
-
-      if (
-        account.email !== undefined
-      ) {
-
-        currentUser.email =
-          account.email;
-
-      }
-
-
-      if (
-        account.picture !== undefined
-      ) {
-
-        currentUser.picture =
-          account.picture;
-
-      }
-
-
-      if (
-        account.coins !== undefined
-      ) {
-
-        currentUser.coins =
-          Number(account.coins) || 0;
-
-      }
-
-
-      if (
-        account.discordVerified !== undefined
-      ) {
-
-        currentUser.discordVerified =
-          Boolean(
-            account.discordVerified
-          );
-
-      }
-
-
-      if (
-        account.discordId !== undefined
-      ) {
-
-        currentUser.discordId =
-          account.discordId;
-
-      }
-
-
-      if (
-        account.invites !== undefined
-      ) {
-
-        currentUser.invites =
-          Number(account.invites) || 0;
-
-      }
-
-
-      if (
-        account.linkCode !== undefined
-      ) {
-
-        currentUser.linkCode =
-          account.linkCode;
-
-      }
-
-
-      if (
-        Array.isArray(
-          account.enteredEvents
-        )
-      ) {
-
-        currentUser.enteredEvents =
-          account.enteredEvents;
-
-      }
-
+    function applyServerAccount(account) {
+      if (!currentUser || !account) return;
+      if (account.name) currentUser.name = account.name;
+      if (account.email !== undefined) currentUser.email = account.email;
+      if (account.picture !== undefined) currentUser.picture = account.picture;
+      if (account.coins !== undefined) currentUser.coins = Number(account.coins) || 0;
+      if (account.discordVerified !== undefined) currentUser.discordVerified = Boolean(account.discordVerified);
+      if (account.discordId !== undefined) currentUser.discordId = account.discordId;
+      if (account.linkCode !== undefined) currentUser.linkCode = account.linkCode;
+      if (Array.isArray(account.enteredEvents)) currentUser.enteredEvents = account.enteredEvents;
     }
-
-
-    /* =========================================================
-       REFRESH ACCOUNT
-    ========================================================= */
 
     async function refreshAccount() {
-
-      if (!currentUser)
-        return;
-
-
+      if (!currentUser) return;
       try {
-
-        const result =
-          await api(
-
-            "/account?googleId=" +
-            encodeURIComponent(
-              currentUser.googleId
-            )
-
-          );
-
-
-        if (
-          result.account
-        ) {
-
-          applyServerAccount(
-            result.account
-          );
-
-
+        const result = await api("/account?googleId=" + encodeURIComponent(currentUser.googleId));
+        if (result.account) {
+          applyServerAccount(result.account);
           saveLocalUser();
-
           updateUI();
-
         }
-
-
       } catch (error) {
-
-        console.warn(
-          "Account refresh failed:",
-          error
-        );
-
+        console.warn("Account refresh failed:", error);
       }
-
     }
 
-
-    /* =========================================================
-       COINS
-    ========================================================= */
-
-    async function refreshCoins() {
-
-      if (!currentUser)
-        return;
-
-
-      try {
-
-        const result =
-          await api(
-
-            "/coins?googleId=" +
-            encodeURIComponent(
-              currentUser.googleId
-            )
-
-          );
-
-
-        if (
-          result.coins !== undefined
-        ) {
-
-          currentUser.coins =
-            Number(result.coins) || 0;
-
-
-          saveLocalUser();
-
-          updateUI();
-
-        }
-
-
-      } catch (error) {
-
-        console.warn(
-          "Coin refresh failed:",
-          error
-        );
-
-      }
-
-    }
-
-
-    /* =========================================================
-       DISCORD VERIFICATION
-    ========================================================= */
-
+    /* DISCORD VERIFICATION */
     async function verifyDiscord() {
-
       if (!currentUser) {
-
         openLoginModal();
-
         return;
-
       }
-
 
       await refreshAccount();
 
-
-      if (
-        currentUser.discordVerified
-      ) {
-
-        showToast(
-          "Your Discord is already verified."
-        );
-
+      if (currentUser.discordVerified) {
+        showToast("Your Discord is already verified.");
         return;
-
       }
 
-
-      if (!currentUser.linkCode) {
-
-        currentUser.linkCode =
-          generateLinkCode();
-
-      }
-
-
+      if (!currentUser.linkCode) currentUser.linkCode = generateLinkCode();
       await registerAccount();
-
       showLinkModal();
-
     }
-
 
     function showLinkModal() {
+      document.getElementById("modalIcon").innerHTML = '<i class="fa-brands fa-discord"></i>';
+      document.getElementById("modalTitle").textContent = "Verify your Discord";
+      document.getElementById("modalText").innerHTML =
+        `Join the Archer Discord, then use <strong>/link YOUR-CODE</strong>. After running the command, come back here and click <strong>Check verification</strong>.`;
 
-      document.getElementById(
-        "modalIcon"
-      ).innerHTML =
-        '<i class="fa-brands fa-discord"></i>';
+      const codeBox = document.getElementById("linkCodeBox");
+      codeBox.style.display = "block";
+      codeBox.textContent = currentUser.linkCode;
 
-
-      document.getElementById(
-        "modalTitle"
-      ).textContent =
-        "Verify your Discord";
-
-
-      document.getElementById(
-        "modalText"
-      ).innerHTML =
-
-        `Join the Archer Discord, then use
-        <strong>/link YOUR-CODE</strong>.
-        After running the command, come back here
-        and click <strong>Check verification</strong>.`;
-
-
-      const codeBox =
-        document.getElementById(
-          "linkCodeBox"
-        );
-
-
-      codeBox.style.display =
-        "block";
-
-
-      codeBox.textContent =
-        currentUser.linkCode;
-
-
-      document.getElementById(
-        "modalPrimary"
-      ).textContent =
-        "Check verification";
-
-
-      modalAction =
-        async () => {
-
-          await checkVerification();
-
-        };
-
-
-      document.getElementById(
-        "overlay"
-      ).classList.add(
-        "open"
-      );
-
+      document.getElementById("modalPrimary").textContent = "Check verification";
+      modalAction = async () => { await checkVerification(); };
+      document.getElementById("overlay").classList.add("open");
     }
-
 
     async function checkVerification() {
-
-      if (!currentUser)
-        return;
-
-
+      if (!currentUser) return;
       try {
-
-        const result =
-          await api(
-
-            "/account?googleId=" +
-            encodeURIComponent(
-              currentUser.googleId
-            )
-
-          );
-
-
-        if (
-          result.account
-        ) {
-
-          applyServerAccount(
-            result.account
-          );
-
-        }
-
+        const result = await api("/account?googleId=" + encodeURIComponent(currentUser.googleId));
+        if (result.account) applyServerAccount(result.account);
 
         saveLocalUser();
-
         updateUI();
 
-
-        if (
-          currentUser.discordVerified
-        ) {
-
+        if (currentUser.discordVerified) {
           closeModal();
-
-          showToast(
-            "Discord verified successfully! ✓"
-          );
-
+          showToast("Discord verified successfully! ✓");
           return;
-
         }
 
-
-        showToast(
-          "Discord is not verified yet. Run /link first."
-        );
-
-
+        showToast("Discord is not verified yet. Run /link first.");
       } catch (error) {
-
-        console.error(
-          "Verification check failed:",
-          error
-        );
-
-        showToast(
-          "Could not check verification."
-        );
-
+        console.error("Verification check failed:", error);
+        showToast("Could not check verification.");
       }
-
     }
-
 
     async function copyLinkCode() {
-
-      if (
-        !currentUser ||
-        !currentUser.linkCode
-      )
-        return;
-
-
+      if (!currentUser || !currentUser.linkCode) return;
       try {
-
-        await navigator.clipboard.writeText(
-          currentUser.linkCode
-        );
-
-
-        showToast(
-          "Verification code copied!"
-        );
-
-
+        await navigator.clipboard.writeText(currentUser.linkCode);
+        showToast("Verification code copied!");
       } catch {
-
-        showToast(
-          "Click and copy the code manually."
-        );
-
+        showToast("Click and copy the code manually.");
       }
-
     }
 
-
-    /* =========================================================
-       ENTER EVENT
-    ========================================================= */
-
-    function enterEvent(
-      eventId
-    ) {
-
-      selectedEvent =
-        EVENTS.find(
-          event =>
-            event.id === eventId
-        );
-
+    /* ENTER EVENT */
+    function enterEvent(eventId) {
+      selectedEvent = EVENTS.find(event => event.id === eventId);
 
       if (!selectedEvent) {
-
-        showToast(
-          "Event not found."
-        );
-
+        showToast("Event not found.");
         return;
-
       }
-
 
       if (!currentUser) {
-
         openLoginModal();
-
         return;
-
       }
 
-
-      if (
-        !currentUser.discordVerified
-      ) {
-
+      if (!currentUser.discordVerified) {
         showLinkModal();
-
         return;
-
       }
 
-
-      if (
-        Number(
-          currentUser.invites || 0
-        ) < 2
-      ) {
-
-        openInviteRequirement();
-
+      if (currentUser.enteredEvents.includes(selectedEvent.id)) {
+        showToast("You're already entered in this event.");
         return;
-
       }
 
-
-      if (
-        currentUser.enteredEvents.includes(
-          selectedEvent.id
-        )
-      ) {
-
-        showToast(
-          "You're already entered in this event."
-        );
-
-        return;
-
-      }
-
-
-      currentUser.enteredEvents.push(
-        selectedEvent.id
-      );
-
-
+      currentUser.enteredEvents.push(selectedEvent.id);
       saveLocalUser();
-
-
-      showToast(
-        "You're entered in " +
-        selectedEvent.title +
-        "!"
-      );
-
+      showToast("You're entered in " + selectedEvent.title + "!");
     }
 
-
-    /* =========================================================
-       INVITE REQUIREMENT
-    ========================================================= */
-
-    function openInviteRequirement() {
-
-      document.getElementById(
-        "modalIcon"
-      ).innerHTML =
-        '<i class="fa-solid fa-user-group"></i>';
-
-
-      document.getElementById(
-        "modalTitle"
-      ).textContent =
-        "Not qualified yet";
-
-
-      document.getElementById(
-        "modalText"
-      ).textContent =
-        "You need 2 successful Discord invites before you can enter giveaways and rains.";
-
-
-      document.getElementById(
-        "linkCodeBox"
-      ).style.display =
-        "none";
-
-
-      document.getElementById(
-        "modalPrimary"
-      ).textContent =
-        "View progress";
-
-
-      modalAction =
-        () => {
-
-          closeModal();
-
-
-          const account =
-            document.querySelector(
-              ".account-grid"
-            );
-
-
-          if (account) {
-
-            account.scrollIntoView({
-              behavior: "smooth"
-            });
-
-          }
-
-        };
-
-
-      document.getElementById(
-        "overlay"
-      ).classList.add(
-        "open"
-      );
-
-    }
-
-
-    /* =========================================================
-       LOGIN MODAL
-    ========================================================= */
-
+    /* LOGIN MODAL */
     function openLoginModal() {
+      document.getElementById("modalIcon").innerHTML = '<i class="fa-solid fa-lock"></i>';
+      document.getElementById("modalTitle").textContent = "Sign in required";
+      document.getElementById("modalText").textContent = "You need to sign in with Google before entering an event.";
+      document.getElementById("linkCodeBox").style.display = "none";
+      document.getElementById("modalPrimary").textContent = "Sign in";
 
-      document.getElementById(
-        "modalIcon"
-      ).innerHTML =
-        '<i class="fa-solid fa-lock"></i>';
+      modalAction = () => {
+        closeModal();
+        setTimeout(startGoogleLogin, 150);
+      };
 
-
-      document.getElementById(
-        "modalTitle"
-      ).textContent =
-        "Sign in required";
-
-
-      document.getElementById(
-        "modalText"
-      ).textContent =
-        "You need to sign in with Google before entering an event.";
-
-
-      document.getElementById(
-        "linkCodeBox"
-      ).style.display =
-        "none";
-
-
-      document.getElementById(
-        "modalPrimary"
-      ).textContent =
-        "Sign in";
-
-
-      modalAction =
-        () => {
-
-          closeModal();
-
-
-          setTimeout(
-            startGoogleLogin,
-            150
-          );
-
-        };
-
-
-      document.getElementById(
-        "overlay"
-      ).classList.add(
-        "open"
-      );
-
+      document.getElementById("overlay").classList.add("open");
     }
-
 
     function modalPrimaryAction() {
-
-      if (modalAction) {
-
-        modalAction();
-
-      }
-
+      if (modalAction) modalAction();
     }
-
 
     function closeModal() {
-
-      document.getElementById(
-        "overlay"
-      ).classList.remove(
-        "open"
-      );
-
-
+      document.getElementById("overlay").classList.remove("open");
       modalAction = null;
-
     }
 
-
-    /* =========================================================
-       UI
-    ========================================================= */
-
+    /* UI UPDATE */
     function updateUI() {
-
-      const login =
-        document.getElementById(
-          "loginButton"
-        );
-
-
-      const profile =
-        document.getElementById(
-          "profileButton"
-        );
-
+      const login = document.getElementById("loginButton");
+      const profile = document.getElementById("profileButton");
 
       if (!currentUser) {
-
-        login.style.display =
-          "flex";
-
-        profile.style.display =
-          "none";
-
-
-        document.getElementById(
-          "accountAvatar"
-        ).src =
-          "https://ui-avatars.com/api/?name=Guest";
-
-
-        document.getElementById(
-          "accountName"
-        ).textContent =
-          "Not signed in";
-
-
-        document.getElementById(
-          "accountEmail"
-        ).textContent =
-          "Sign in to access giveaways";
-
-
-        document.getElementById(
-          "coinBalance"
-        ).textContent =
-          "0";
-
-
-        document.getElementById(
-          "menuCoins"
-        ).textContent =
-          "0";
-
-
-        document.getElementById(
-          "accountProgress"
-        ).style.width =
-          "0%";
-
-
-        document.getElementById(
-          "accountProgressText"
-        ).textContent =
-          "0%";
-
-
+        login.style.display = "flex";
+        profile.style.display = "none";
+        document.getElementById("accountAvatar").src = "https://ui-avatars.com/api/?name=Guest";
+        document.getElementById("accountName").textContent = "Not signed in";
+        document.getElementById("accountEmail").textContent = "Sign in to access giveaways";
+        document.getElementById("coinBalance").textContent = "0";
+        document.getElementById("menuCoins").textContent = "0";
+        document.getElementById("accountProgress").style.width = "0%";
+        document.getElementById("accountProgressText").textContent = "0%";
         updateVerification(false);
-
-        updateInviteBar(0);
-
-        document.getElementById(
-          "inviteCount"
-        ).textContent =
-          "0";
-
-
         return;
-
       }
 
+      login.style.display = "none";
+      profile.style.display = "flex";
 
-      login.style.display =
-        "none";
+      document.getElementById("headerAvatar").src = currentUser.picture;
+      document.getElementById("headerName").textContent = currentUser.name.split(" ")[0];
+      document.getElementById("accountAvatar").src = currentUser.picture;
+      document.getElementById("accountName").textContent = currentUser.name;
+      document.getElementById("accountEmail").textContent = currentUser.email;
 
+      document.getElementById("coinBalance").textContent = formatNumber(currentUser.coins);
+      document.getElementById("menuCoins").textContent = formatNumber(currentUser.coins);
+      document.getElementById("menuName").textContent = currentUser.name;
+      document.getElementById("menuEmail").textContent = currentUser.email;
 
-      profile.style.display =
-        "flex";
+      updateVerification(currentUser.discordVerified);
 
-
-      document.getElementById(
-        "headerAvatar"
-      ).src =
-        currentUser.picture;
-
-
-      document.getElementById(
-        "headerName"
-      ).textContent =
-        currentUser.name.split(" ")[0];
-
-
-      document.getElementById(
-        "accountAvatar"
-      ).src =
-        currentUser.picture;
-
-
-      document.getElementById(
-        "accountName"
-      ).textContent =
-        currentUser.name;
-
-
-      document.getElementById(
-        "accountEmail"
-      ).textContent =
-        currentUser.email;
-
-
-      document.getElementById(
-        "coinBalance"
-      ).textContent =
-        formatNumber(
-          currentUser.coins
-        );
-
-
-      document.getElementById(
-        "menuCoins"
-      ).textContent =
-        formatNumber(
-          currentUser.coins
-        );
-
-
-      document.getElementById(
-        "menuName"
-      ).textContent =
-        currentUser.name;
-
-
-      document.getElementById(
-        "menuEmail"
-      ).textContent =
-        currentUser.email;
-
-
-      updateVerification(
-        currentUser.discordVerified
-      );
-
-
-      updateInviteBar(
-        currentUser.invites
-      );
-
-
-      document.getElementById(
-        "inviteCount"
-      ).textContent =
-        Math.min(
-          2,
-          Number(currentUser.invites || 0)
-        );
-
-
-      const progress =
-        Math.min(
-          100,
-          Math.round(
-            (
-              Number(
-                currentUser.coins || 0
-              ) / 5000000
-            ) * 100
-          )
-        );
-
-
-      document.getElementById(
-        "accountProgress"
-      ).style.width =
-        progress + "%";
-
-
-      document.getElementById(
-        "accountProgressText"
-      ).textContent =
-        progress + "%";
-
+      const progress = Math.min(100, Math.round((Number(currentUser.coins || 0) / 5000000) * 100));
+      document.getElementById("accountProgress").style.width = progress + "%";
+      document.getElementById("accountProgressText").textContent = progress + "%";
     }
 
-
-    /* =========================================================
-       VERIFICATION UI
-    ========================================================= */
-
-    function updateVerification(
-      verified
-    ) {
-
-      const status =
-        document.getElementById(
-          "verificationStatus"
-        );
-
-
-      const text =
-        document.getElementById(
-          "verificationText"
-        );
-
-
-      const button =
-        document.getElementById(
-          "verifyButton"
-        );
-
-
-      const menu =
-        document.getElementById(
-          "menuVerification"
-        );
-
+    function updateVerification(verified) {
+      const status = document.getElementById("verificationStatus");
+      const text = document.getElementById("verificationText");
+      const button = document.getElementById("verifyButton");
+      const menu = document.getElementById("menuVerification");
 
       if (verified) {
-
-        status.classList.add(
-          "verified"
-        );
-
-
-        text.textContent =
-          "Verified";
-
-
-        menu.textContent =
-          "Verified";
-
-
-        menu.classList.add(
-          "verified"
-        );
-
-
-        button.textContent =
-          "Verified";
-
-
+        status.classList.add("verified");
+        text.textContent = "Verified";
+        menu.textContent = "Verified";
+        menu.classList.add("verified");
+        button.textContent = "Verified";
       } else {
-
-        status.classList.remove(
-          "verified"
-        );
-
-
-        text.textContent =
-          "Not verified";
-
-
-        menu.textContent =
-          "Not verified";
-
-
-        menu.classList.remove(
-          "verified"
-        );
-
-
-        button.textContent =
-          "Verify";
-
+        status.classList.remove("verified");
+        text.textContent = "Not verified";
+        menu.textContent = "Not verified";
+        menu.classList.remove("verified");
+        button.textContent = "Verify";
       }
-
     }
 
-
-    /* =========================================================
-       INVITE BAR
-    ========================================================= */
-
-    function updateInviteBar(
-      invites
-    ) {
-
-      const amount =
-        Math.min(
-          2,
-          Math.max(
-            0,
-            Number(invites || 0)
-          )
-        );
-
-
-      const percentage =
-        (amount / 2) * 100;
-
-
-      document.getElementById(
-        "inviteBar"
-      ).style.width =
-        percentage + "%";
-
-
-      document.getElementById(
-        "inviteText"
-      ).textContent =
-        amount === 2
-          ? "2 / 2 QUALIFIED"
-          : amount + " / 2";
-
-    }
-
-
-    /* =========================================================
-       RENDER EVENTS
-    ========================================================= */
-
+    /* RENDER FUNCTIONS */
     function renderEvents() {
-
       renderSidebar();
-
       renderFeatured();
-
       renderGrid();
-
     }
-
 
     function renderSidebar() {
+      const container = document.getElementById("activeEvents");
+      if (!container) return;
+      container.innerHTML = "";
 
-      const container =
-        document.getElementById(
-          "activeEvents"
-        );
-
-
-      if (!container)
+      if (EVENTS.length === 0) {
+        container.innerHTML = `<div class="empty-state">No active events</div>`;
         return;
+      }
 
-
-      container.innerHTML =
-        "";
-
-
-      EVENTS.forEach(
-        event => {
-
-          const item =
-            document.createElement(
-              "div"
-            );
-
-
-          item.className =
-            "event-mini";
-
-
-          item.innerHTML = `
-
-            <div class="event-type ${event.type}">
-
-              <i class="fa-solid ${
-                event.type === "rain"
-                  ? "fa-cloud-rain"
-                  : "fa-gift"
-              }"></i>
-
-              ${
-                event.type === "rain"
-                  ? "Rain"
-                  : "Giveaway"
-              }
-
-            </div>
-
-
-            <div class="event-name">
-              ${escapeHtml(event.title)}
-            </div>
-
-
-            <div class="event-prize">
-              ${formatNumber(event.prize)} Coins
-            </div>
-
-
-            <div class="event-time">
-              ${escapeHtml(event.time)}
-            </div>
-
-
-            <button
-              class="tiny-enter"
-              onclick="enterEvent('${event.id}')"
-              title="Enter"
-            >
-
-              <i class="fa-solid fa-arrow-right"></i>
-
-            </button>
-
-          `;
-
-
-          container.appendChild(
-            item
-          );
-
-        }
-      );
-
+      EVENTS.forEach(event => {
+        const item = document.createElement("div");
+        item.className = "event-mini";
+        item.innerHTML = `
+          <div class="event-type ${event.type}">
+            <i class="fa-solid ${event.type === "rain" ? "fa-cloud-rain" : "fa-gift"}"></i>
+            ${event.type === "rain" ? "Rain" : "Giveaway"}
+          </div>
+          <div class="event-name">${escapeHtml(event.title)}</div>
+          <div class="event-prize">${formatNumber(event.prize)} Coins</div>
+          <div class="event-time">${escapeHtml(event.time)}</div>
+          <button class="tiny-enter" onclick="enterEvent('${event.id}')" title="Enter">
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        `;
+        container.appendChild(item);
+      });
     }
-
 
     function renderFeatured() {
+      const featured = document.getElementById("featured");
+      if (!featured) return;
 
-      const featured =
-        document.getElementById(
-          "featured"
-        );
-
-
-      if (!featured)
+      if (EVENTS.length === 0) {
+        featured.innerHTML = `
+          <div class="featured-content">
+            <div class="featured-label"><i class="fa-solid fa-clock"></i> Waiting for events</div>
+            <div class="featured-title">No Active Giveaways</div>
+            <div class="featured-prize">Check back soon!</div>
+          </div>
+        `;
         return;
+      }
 
-
-      const biggest =
-        [...EVENTS].sort(
-          (a, b) =>
-            b.prize - a.prize
-        )[0];
-
-
+      const biggest = [...EVENTS].sort((a, b) => b.prize - a.prize)[0];
       featured.innerHTML = `
-
         <div class="featured-content">
-
-
           <div class="featured-label">
-
             <i class="fa-solid fa-star"></i>
-
-            Biggest active ${
-              biggest.type === "rain"
-                ? "rain"
-                : "giveaway"
-            }
-
+            Biggest active ${biggest.type === "rain" ? "rain" : "giveaway"}
           </div>
-
-
-          <div class="featured-title">
-
-            ${escapeHtml(
-              biggest.title
-            )}
-
-          </div>
-
-
-          <div class="featured-prize">
-
-            ${formatNumber(
-              biggest.prize
-            )}
-            Coins
-
-          </div>
-
-
+          <div class="featured-title">${escapeHtml(biggest.title)}</div>
+          <div class="featured-prize">${formatNumber(biggest.prize)} Coins</div>
           <div class="featured-bottom">
-
-
             <div class="featured-pill">
-
-              <i class="fa-regular fa-clock"></i>
-
-              ${escapeHtml(
-                biggest.time
-              )}
-
+              <i class="fa-regular fa-clock"></i> ${escapeHtml(biggest.time)}
             </div>
-
-
             <div class="featured-pill">
-
-              ${
-                biggest.type === "rain"
-                  ? "Equal share"
-                  : "One winner"
-              }
-
+              ${biggest.type === "rain" ? "Equal share" : "One winner"}
             </div>
-
-
-            <button
-              class="featured-enter"
-              onclick="enterEvent('${biggest.id}')"
-            >
-
-              Enter
-
-              <i class="fa-solid fa-arrow-right"></i>
-
+            <button class="featured-enter" onclick="enterEvent('${biggest.id}')">
+              Enter <i class="fa-solid fa-arrow-right"></i>
             </button>
-
-
           </div>
-
         </div>
-
       `;
-
     }
-
 
     function renderGrid() {
+      const grid = document.getElementById("eventsGrid");
+      if (!grid) return;
+      grid.innerHTML = "";
 
-      const grid =
-        document.getElementById(
-          "eventsGrid"
-        );
-
-
-      if (!grid)
+      if (EVENTS.length === 0) {
+        grid.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;">No active giveaways or rains currently running.</div>`;
         return;
-
-
-      grid.innerHTML =
-        "";
-
-
-      EVENTS.forEach(
-        event => {
-
-          const card =
-            document.createElement(
-              "article"
-            );
-
-
-          card.className =
-            "event-card" +
-            (
-              event.prize >= 5000000
-                ? " featured-card"
-                : ""
-            );
-
-
-          card.innerHTML = `
-
-            <div class="card-event-type ${event.type}">
-
-              <i class="fa-solid ${
-                event.type === "rain"
-                  ? "fa-cloud-rain"
-                  : "fa-gift"
-              }"></i>
-
-              ${
-                event.type === "rain"
-                  ? "Rain"
-                  : "Giveaway"
-              }
-
-            </div>
-
-
-            <div class="card-title">
-
-              ${escapeHtml(
-                event.title
-              )}
-
-            </div>
-
-
-            <div class="card-prize">
-
-              ${formatNumber(
-                event.prize
-              )}
-
-            </div>
-
-
-            <div class="card-description">
-
-              ${escapeHtml(
-                event.description
-              )}
-
-            </div>
-
-
-            <div class="card-footer">
-
-
-              <div class="card-time">
-
-                ${escapeHtml(
-                  event.time
-                )}
-
-              </div>
-
-
-              <button
-                class="card-enter"
-                onclick="enterEvent('${event.id}')"
-              >
-
-                <i class="fa-solid fa-arrow-right"></i>
-
-              </button>
-
-
-            </div>
-
-          `;
-
-
-          grid.appendChild(
-            card
-          );
-
-        }
-      );
-
-    }
-
-
-    /* =========================================================
-       PROFILE
-    ========================================================= */
-
-    function toggleProfile() {
-
-      document
-        .getElementById(
-          "profileMenu"
-        )
-        .classList.toggle(
-          "open"
-        );
-
-    }
-
-
-    document.addEventListener(
-      "click",
-      event => {
-
-        const area =
-          document.querySelector(
-            ".account-area"
-          );
-
-
-        if (
-          area &&
-          !area.contains(
-            event.target
-          )
-        ) {
-
-          document
-            .getElementById(
-              "profileMenu"
-            )
-            .classList.remove(
-              "open"
-            );
-
-        }
-
       }
-    );
 
+      EVENTS.forEach(event => {
+        const card = document.createElement("article");
+        card.className = "event-card" + (event.prize >= 5000000 ? " featured-card" : "");
+        card.innerHTML = `
+          <div class="card-event-type ${event.type}">
+            <i class="fa-solid ${event.type === "rain" ? "fa-cloud-rain" : "fa-gift"}"></i>
+            ${event.type === "rain" ? "Rain" : "Giveaway"}
+          </div>
+          <div class="card-title">${escapeHtml(event.title)}</div>
+          <div class="card-prize">${formatNumber(event.prize)}</div>
+          <div class="card-description">${escapeHtml(event.description)}</div>
+          <div class="card-footer">
+            <div class="card-time">${escapeHtml(event.time)}</div>
+            <button class="card-enter" onclick="enterEvent('${event.id}')">
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    /* PROFILE & UTILS */
+    function toggleProfile() {
+      document.getElementById("profileMenu").classList.toggle("open");
+    }
+
+    document.addEventListener("click", event => {
+      const area = document.querySelector(".account-area");
+      if (area && !area.contains(event.target)) {
+        document.getElementById("profileMenu").classList.remove("open");
+      }
+    });
 
     function logout() {
-
       currentUser = null;
-
-
-      if (
-
-        window.google &&
-        google.accounts &&
-        google.accounts.id
-
-      ) {
-
+      if (window.google && google.accounts && google.accounts.id) {
         google.accounts.id.disableAutoSelect();
-
       }
-
-
-      document
-        .getElementById(
-          "profileMenu"
-        )
-        .classList.remove(
-          "open"
-        );
-
-
+      document.getElementById("profileMenu").classList.remove("open");
       updateUI();
-
-
-      showToast(
-        "Signed out."
-      );
-
+      showToast("Signed out.");
     }
-
-
-    /* =========================================================
-       HELPERS
-    ========================================================= */
 
     function generateLinkCode() {
-
-      const chars =
-        "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-
-
-      let code =
-        "ARCHER-";
-
-
-      for (
-        let i = 0;
-        i < 5;
-        i++
-      ) {
-
-        code +=
-          chars[
-            Math.floor(
-              Math.random() *
-              chars.length
-            )
-          ];
-
+      const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+      let code = "ARCHER-";
+      for (let i = 0; i < 5; i++) {
+        code += chars[Math.floor(Math.random() * chars.length)];
       }
-
-
       return code;
-
     }
-
 
     function parseJwt(token) {
-
-      const base64Url =
-        token.split(".")[1];
-
-
-      const base64 =
-        base64Url
-          .replace(/-/g, "+")
-          .replace(/_/g, "/");
-
-
-      const jsonPayload =
-        decodeURIComponent(
-
-          atob(base64)
-            .split("")
-            .map(
-              character =>
-                "%" +
-                (
-                  "00" +
-                  character
-                    .charCodeAt(0)
-                    .toString(16)
-                ).slice(-2)
-            )
-            .join("")
-
-        );
-
-
-      return JSON.parse(
-        jsonPayload
+      const base64Url = token.split(".")[1];
+      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      const jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split("")
+          .map(character => "%" + ("00" + character.charCodeAt(0).toString(16)).slice(-2))
+          .join("")
       );
-
+      return JSON.parse(jsonPayload);
     }
 
-
-    function formatNumber(
-      number
-    ) {
-
-      return Number(
-        number || 0
-      ).toLocaleString(
-        "en-US"
-      );
-
+    function formatNumber(number) {
+      return Number(number || 0).toLocaleString("en-US");
     }
 
-
-    function escapeHtml(
-      value
-    ) {
-
+    function escapeHtml(value) {
       return String(value)
-
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-
-        .replace(
-          /</g,
-          "&lt;"
-        )
-
-        .replace(
-          />/g,
-          "&gt;"
-        )
-
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-
-        .replace(
-          /'/g,
-          "&#039;"
-        );
-
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
     }
 
-
-    function showToast(
-      message
-    ) {
-
-      const toast =
-        document.getElementById(
-          "toast"
-        );
-
-
-      if (!toast)
-        return;
-
-
-      toast.textContent =
-        message;
-
-
-      toast.classList.add(
-        "show"
-      );
-
-
-      clearTimeout(
-        window.__toastTimer
-      );
-
-
-      window.__toastTimer =
-        setTimeout(
-          () => {
-
-            toast.classList.remove(
-              "show"
-            );
-
-          },
-          3500
-        );
-
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => { toast.classList.remove("show"); }, 3500);
     }
 
-
-    /* =========================================================
-       START
-    ========================================================= */
-
+    /* INITIALIZATION */
     renderEvents();
-
     updateUI();
-
     initializeGoogle();
 
+    // Initial event fetch
+    fetchEvents();
 
-    /* =========================================================
-       SERVER REFRESH
-    ========================================================= */
+    // Check for new giveaways every second (1000ms)
+    setInterval(fetchEvents, 1000);
 
-    setInterval(
-      () => {
-
-        if (currentUser) {
-
-          refreshAccount();
-
-        }
-
-      },
-      30000
-    );
-
+    // Refresh user account data every 30 seconds
+    setInterval(() => {
+      if (currentUser) refreshAccount();
+    }, 30000);
   </script>
-
 </body>
 </html>
