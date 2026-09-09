@@ -1,2198 +1,1404 @@
-<script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArcherGiveaways</title>
 
-  /* =========================================================
-     CONFIG
-  ========================================================= */
-
-  const GOOGLE_CLIENT_ID =
-    "263646768191-7854avn92k94rq8pbit809o0erq48grq.apps.googleusercontent.com";
-
-  const API_URL =
-    "https://archer.arcdepths.workers.dev";
-
-  const DISCORD_INVITE =
-    "https://discord.gg/p4k77YM92n";
-
-
-  /* =========================================================
-     STATE
-  ========================================================= */
-
-  let EVENTS = [];
-
-  let currentUser = null;
-
-  let selectedEvent = null;
-
-  let modalAction = null;
-
-
-  /* =========================================================
-     LOCAL STORAGE
-  ========================================================= */
-
-  function userKey(id) {
-
-    return "archer_user_" + id;
-
-  }
-
-
-  function loadLocalUser(
-    user
-  ) {
-
-    let saved = null;
-
-
-    try {
-
-      saved =
-        JSON.parse(
-          localStorage.getItem(
-            userKey(
-              user.googleId
-            )
-          ) || "null"
-        );
-
-    } catch {
-
-      saved = null;
-
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
     }
 
-
-    return {
-
-      ...user,
-
-      coins:
-        saved?.coins ?? 0,
-
-      discordVerified:
-        saved?.discordVerified ??
-        false,
-
-      discordId:
-        saved?.discordId ??
-        null,
-
-      linkCode:
-        saved?.linkCode ??
-        null,
-
-      enteredEvents:
-        Array.isArray(
-          saved?.enteredEvents
-        )
-          ? saved.enteredEvents
-          : []
-
-    };
-
-  }
-
-
-  function saveLocalUser() {
-
-    if (!currentUser)
-      return;
-
-
-    localStorage.setItem(
-
-      userKey(
-        currentUser.googleId
-      ),
-
-      JSON.stringify({
-
-        coins:
-          currentUser.coins,
-
-        discordVerified:
-          currentUser.discordVerified,
-
-        discordId:
-          currentUser.discordId,
-
-        linkCode:
-          currentUser.linkCode,
-
-        enteredEvents:
-          currentUser.enteredEvents
-
-      })
-
-    );
-
-  }
-
-
-  /* =========================================================
-     API
-  ========================================================= */
-
-  async function api(
-    path,
-    method = "GET",
-    data = null
-  ) {
-
-    const options = {
-
-      method,
-
-      headers: {}
-
-    };
-
-
-    if (data !== null) {
-
-      options.headers[
-        "Content-Type"
-      ] =
-        "application/json";
-
-
-      options.body =
-        JSON.stringify(
-          data
-        );
-
+    :root {
+        --bg: #08090c;
+        --panel: #101218;
+        --panel-2: #151821;
+        --border: #252936;
+        --text: #f5f7fb;
+        --muted: #8e95a5;
+        --accent: #7c5cff;
+        --accent-2: #9a82ff;
+        --green: #35d07f;
+        --red: #ff5c6c;
+        --gold: #ffc857;
     }
 
-
-    const response =
-      await fetch(
-        API_URL + path,
-        options
-      );
-
-
-    let result = {};
-
-
-    try {
-
-      result =
-        await response.json();
-
-    } catch {
-
-      result = {};
-
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background:
+            radial-gradient(circle at 50% -10%, rgba(124,92,255,.18), transparent 35%),
+            var(--bg);
+        color: var(--text);
+        min-height: 100vh;
     }
 
-
-    if (!response.ok) {
-
-      throw new Error(
-        result.error ||
-        "Worker returned HTTP " +
-        response.status
-      );
-
+    button,
+    input,
+    select {
+        font: inherit;
     }
 
-
-    return result;
-
-  }
-
-
-  /* =========================================================
-     GOOGLE
-  ========================================================= */
-
-  function initializeGoogle() {
-
-    if (
-
-      !window.google ||
-      !window.google.accounts ||
-      !window.google.accounts.id
-
-    ) {
-
-      setTimeout(
-        initializeGoogle,
-        200
-      );
-
-      return;
-
+    button {
+        cursor: pointer;
     }
 
+    /* NAVBAR */
 
-    google.accounts.id.initialize({
-
-      client_id:
-        GOOGLE_CLIENT_ID,
-
-      callback:
-        handleGoogleCredential,
-
-      auto_select:
-        false
-
-    });
-
-  }
-
-
-  function startGoogleLogin() {
-
-    if (
-
-      !window.google ||
-      !window.google.accounts
-
-    ) {
-
-      showToast(
-        "Google Sign-In is still loading."
-      );
-
-      return;
-
+    .navbar {
+        height: 72px;
+        border-bottom: 1px solid var(--border);
+        background: rgba(8,9,12,.88);
+        backdrop-filter: blur(15px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 35px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
     }
 
-
-    google.accounts.id.prompt();
-
-  }
-
-
-  async function handleGoogleCredential(
-    response
-  ) {
-
-    try {
-
-      const payload =
-        parseJwt(
-          response.credential
-        );
-
-
-      currentUser =
-        loadLocalUser({
-
-          googleId:
-            payload.sub,
-
-          name:
-            payload.name ||
-            payload.given_name ||
-            "Google User",
-
-          email:
-            payload.email ||
-            "",
-
-          picture:
-            payload.picture ||
-            "https://ui-avatars.com/api/?name=User"
-
-        });
-
-
-      if (
-        !currentUser.linkCode
-      ) {
-
-        currentUser.linkCode =
-          generateLinkCode();
-
-      }
-
-
-      saveLocalUser();
-
-      updateUI();
-
-      closeModal();
-
-
-      showToast(
-        "Signed in successfully."
-      );
-
-
-      await registerAccount();
-
-      await refreshAccount();
-
-
-    } catch (error) {
-
-      console.error(
-        "Google login error:",
-        error
-      );
-
-
-      showToast(
-        "Google sign-in failed."
-      );
-
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 22px;
+        font-weight: 800;
     }
 
-  }
-
-
-  /* =========================================================
-     REGISTER ACCOUNT
-  ========================================================= */
-
-  async function registerAccount() {
-
-    if (!currentUser)
-      return;
-
-
-    if (
-      !currentUser.linkCode
-    ) {
-
-      currentUser.linkCode =
-        generateLinkCode();
-
+    .brand-logo {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--accent), #4f37c9);
+        display: grid;
+        place-items: center;
+        font-size: 21px;
+        box-shadow: 0 8px 30px rgba(124,92,255,.3);
     }
 
-
-    try {
-
-      const result =
-        await api(
-          "/register",
-          "POST",
-          {
-
-            code:
-              currentUser.linkCode,
-
-            googleId:
-              currentUser.googleId,
-
-            name:
-              currentUser.name,
-
-            email:
-              currentUser.email,
-
-            picture:
-              currentUser.picture
-
-          }
-        );
-
-
-      /*
-        IMPORTANT:
-        Always use the code returned
-        by the Worker.
-      */
-
-      if (
-        result.code
-      ) {
-
-        currentUser.linkCode =
-          result.code;
-
-      }
-
-
-      if (
-        result.account
-      ) {
-
-        applyServerAccount(
-          result.account
-        );
-
-      }
-
-
-      saveLocalUser();
-
-      updateUI();
-
-
-    } catch (error) {
-
-      console.error(
-        "Account registration failed:",
-        error
-      );
-
-
-      showToast(
-        "Could not connect to the Archer server."
-      );
-
+    .brand span {
+        color: var(--accent-2);
     }
 
-  }
-
-
-  /* =========================================================
-     SERVER ACCOUNT
-  ========================================================= */
-
-  function applyServerAccount(
-    account
-  ) {
-
-    if (
-      !currentUser ||
-      !account
-    )
-      return;
-
-
-    if (
-      account.name
-    ) {
-
-      currentUser.name =
-        account.name;
-
+    .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
     }
 
-
-    if (
-      account.email !==
-      undefined
-    ) {
-
-      currentUser.email =
-        account.email;
-
+    .coins {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        padding: 10px 15px;
+        border-radius: 12px;
+        color: var(--gold);
+        font-weight: 700;
     }
 
-
-    if (
-      account.picture !==
-      undefined
-    ) {
-
-      currentUser.picture =
-        account.picture;
-
+    .profile-button {
+        border: 1px solid var(--border);
+        background: var(--panel);
+        color: white;
+        padding: 10px 15px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        gap: 9px;
     }
 
-
-    if (
-      account.coins !==
-      undefined
-    ) {
-
-      currentUser.coins =
-        Number(
-          account.coins
-        ) || 0;
-
+    .profile-button:hover {
+        border-color: var(--accent);
     }
 
-
-    if (
-      account.discordVerified !==
-      undefined
-    ) {
-
-      currentUser.discordVerified =
-        Boolean(
-          account.discordVerified
-        );
-
+    .avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: linear-gradient(135deg,#7c5cff,#37a7ff);
+        display: grid;
+        place-items: center;
+        font-size: 12px;
+        font-weight: bold;
     }
 
+    /* PAGE */
 
-    if (
-      account.discordId !==
-      undefined
-    ) {
-
-      currentUser.discordId =
-        account.discordId;
-
+    .container {
+        width: min(1450px, calc(100% - 40px));
+        margin: 35px auto 80px;
     }
 
-
-    if (
-      account.linkCode !==
-      undefined
-    ) {
-
-      currentUser.linkCode =
-        account.linkCode;
-
+    .page-heading {
+        margin-bottom: 25px;
     }
 
-
-    if (
-      Array.isArray(
-        account.enteredEvents
-      )
-    ) {
-
-      currentUser.enteredEvents =
-        account.enteredEvents;
-
+    .page-heading h1 {
+        font-size: 34px;
+        margin-bottom: 7px;
     }
 
-  }
-
-
-  /* =========================================================
-     ACCOUNT REFRESH
-  ========================================================= */
-
-  async function refreshAccount() {
-
-    if (!currentUser)
-      return;
-
-
-    try {
-
-      const result =
-        await api(
-
-          "/account?googleId=" +
-          encodeURIComponent(
-            currentUser.googleId
-          )
-
-        );
-
-
-      if (
-        result.account
-      ) {
-
-        applyServerAccount(
-          result.account
-        );
-
-
-        saveLocalUser();
-
-        updateUI();
-
-      }
-
-
-    } catch (error) {
-
-      console.warn(
-        "Account refresh failed:",
-        error
-      );
-
+    .page-heading p {
+        color: var(--muted);
     }
 
-  }
+    /* LAYOUT */
 
-
-  /* =========================================================
-     DISCORD VERIFICATION
-  ========================================================= */
-
-  async function verifyDiscord() {
-
-    if (!currentUser) {
-
-      openLoginModal();
-
-      return;
-
+    .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 370px;
+        gap: 25px;
     }
 
+    /* FEATURED */
 
-    await refreshAccount();
-
-
-    if (
-      currentUser.discordVerified
-    ) {
-
-      showToast(
-        "Your Discord is already verified."
-      );
-
-      return;
-
+    .featured {
+        min-height: 520px;
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        overflow: hidden;
+        position: relative;
+        background:
+            linear-gradient(135deg, rgba(124,92,255,.17), transparent 45%),
+            var(--panel);
     }
 
-
-    if (
-      !currentUser.linkCode
-    ) {
-
-      currentUser.linkCode =
-        generateLinkCode();
-
+    .featured::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(circle at 75% 25%, rgba(124,92,255,.25), transparent 25%),
+            radial-gradient(circle at 20% 90%, rgba(55,167,255,.12), transparent 25%);
+        pointer-events: none;
     }
 
-
-    await registerAccount();
-
-    showLinkModal();
-
-  }
-
-
-  function showLinkModal() {
-
-    document.getElementById(
-      "modalIcon"
-    ).innerHTML =
-      '<i class="fa-brands fa-discord"></i>';
-
-
-    document.getElementById(
-      "modalTitle"
-    ).textContent =
-      "Verify your Discord";
-
-
-    document.getElementById(
-      "modalText"
-    ).innerHTML =
-
-      `Join the Archer Discord, then use
-      <strong>/link ${escapeHtml(
-        currentUser.linkCode
-      )}</strong>.
-      After running the command, come back here
-      and click <strong>Check verification</strong>.`;
-
-
-    const codeBox =
-      document.getElementById(
-        "linkCodeBox"
-      );
-
-
-    codeBox.style.display =
-      "block";
-
-
-    codeBox.textContent =
-      currentUser.linkCode;
-
-
-    document.getElementById(
-      "modalPrimary"
-    ).textContent =
-      "Check verification";
-
-
-    modalAction =
-      async () => {
-
-        await checkVerification();
-
-      };
-
-
-    document.getElementById(
-      "overlay"
-    ).classList.add(
-      "open"
-    );
-
-  }
-
-
-  async function checkVerification() {
-
-    if (!currentUser)
-      return;
-
-
-    try {
-
-      const result =
-        await api(
-
-          "/account?googleId=" +
-          encodeURIComponent(
-            currentUser.googleId
-          )
-
-        );
-
-
-      if (
-        result.account
-      ) {
-
-        applyServerAccount(
-          result.account
-        );
-
-      }
-
-
-      saveLocalUser();
-
-      updateUI();
-
-
-      if (
-        currentUser.discordVerified
-      ) {
-
-        closeModal();
-
-
-        showToast(
-          "Discord verified successfully! ✓"
-        );
-
-
-        return;
-
-      }
-
-
-      showToast(
-        "Discord is not verified yet. Run /link first."
-      );
-
-
-    } catch (error) {
-
-      console.error(
-        "Verification check failed:",
-        error
-      );
-
-
-      showToast(
-        "Could not check verification."
-      );
-
+    .featured-content {
+        position: relative;
+        z-index: 1;
+        padding: 45px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
-  }
-
-
-  async function copyLinkCode() {
-
-    if (
-
-      !currentUser ||
-      !currentUser.linkCode
-
-    ) {
-
-      return;
-
+    .featured-label {
+        display: inline-flex;
+        width: fit-content;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(124,92,255,.15);
+        color: var(--accent-2);
+        border: 1px solid rgba(124,92,255,.3);
+        font-size: 13px;
+        font-weight: 700;
     }
 
-
-    try {
-
-      await navigator.clipboard.writeText(
-        currentUser.linkCode
-      );
-
-
-      showToast(
-        "Verification code copied!"
-      );
-
-
-    } catch {
-
-      showToast(
-        "Click and copy the code manually."
-      );
-
+    .featured h2 {
+        font-size: clamp(40px, 5vw, 70px);
+        margin-top: 22px;
+        max-width: 800px;
+        line-height: 1;
     }
 
-  }
-
-
-  /* =========================================================
-     EVENTS
-  ========================================================= */
-
-  async function fetchEvents() {
-
-    try {
-
-      const data =
-        await api(
-          "/events"
-        );
-
-
-      if (
-        !Array.isArray(
-          data.events
-        )
-      ) {
-
-        return;
-
-      }
-
-
-      EVENTS =
-        data.events
-          .map(
-            event => ({
-
-              ...event,
-
-              id:
-                String(
-                  event.id || ""
-                ).trim(),
-
-              type:
-                event.type === "rain"
-                  ? "rain"
-                  : "giveaway",
-
-              title:
-                String(
-                  event.title ||
-                  "Untitled event"
-                ),
-
-              description:
-                String(
-                  event.description ||
-                  ""
-                ),
-
-              prize:
-                Number(
-                  event.prize ||
-                  0
-                ),
-
-              endsAt:
-                event.endsAt
-                  ? Number(
-                      event.endsAt
-                    )
-                  : null
-
-            })
-          )
-          .filter(
-            event =>
-              event.id
-          );
-
-
-      renderEvents();
-
-
-    } catch (error) {
-
-      console.warn(
-        "Event fetch failed:",
-        error
-      );
-
+    .featured-description {
+        margin-top: 18px;
+        color: #aeb4c2;
+        max-width: 650px;
+        line-height: 1.6;
     }
 
-  }
-
-
-  function getEventTime(
-    event
-  ) {
-
-    if (
-      event.endsAt
-    ) {
-
-      const remaining =
-        Math.max(
-          0,
-          Number(
-            event.endsAt
-          ) -
-          Date.now()
-        );
-
-
-      if (
-        remaining <= 0
-      ) {
-
-        return "Ended";
-
-      }
-
-
-      const totalSeconds =
-        Math.floor(
-          remaining / 1000
-        );
-
-
-      const hours =
-        Math.floor(
-          totalSeconds / 3600
-        );
-
-
-      const minutes =
-        Math.floor(
-          (
-            totalSeconds %
-            3600
-          ) / 60
-        );
-
-
-      const seconds =
-        totalSeconds % 60;
-
-
-      if (
-        hours > 0
-      ) {
-
-        return (
-          `Ends in ${hours}h ${minutes}m`
-        );
-
-      }
-
-
-      if (
-        minutes > 0
-      ) {
-
-        return (
-          `Ends in ${minutes}m ${seconds}s`
-        );
-
-      }
-
-
-      return (
-        `Ends in ${seconds}s`
-      );
-
+    .featured-stats {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 28px;
     }
 
+    .stat {
+        background: rgba(8,9,12,.55);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 14px 18px;
+        min-width: 135px;
+    }
 
-    return event.time || "";
+    .stat-label {
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 6px;
+    }
 
-  }
+    .stat-value {
+        font-size: 20px;
+        font-weight: 800;
+    }
 
+    .featured-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin-top: 30px;
+    }
 
-  function updateEventTimes() {
+    .timer {
+        color: var(--gold);
+        font-size: 22px;
+        font-weight: 800;
+    }
 
-    document
-      .querySelectorAll(
-        "[data-event-id]"
-      )
-      .forEach(
-        element => {
+    .enter-button {
+        background: var(--accent);
+        color: white;
+        border: none;
+        border-radius: 13px;
+        padding: 14px 26px;
+        font-weight: 800;
+        transition: .2s;
+    }
 
-          const event =
-            EVENTS.find(
-              item =>
-                item.id ===
-                element.dataset.eventId
-            );
+    .enter-button:hover {
+        background: var(--accent-2);
+        transform: translateY(-2px);
+    }
 
+    /* SIDEBAR */
 
-          if (!event)
-            return;
+    .side-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+    }
 
+    .side-header h2 {
+        font-size: 18px;
+    }
 
-          element.textContent =
-            getEventTime(
-              event
-            );
+    .small-giveaways {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
 
+    .giveaway-card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 17px;
+        padding: 18px;
+        transition: .2s;
+    }
+
+    .giveaway-card:hover {
+        border-color: #393e4e;
+        transform: translateY(-2px);
+    }
+
+    .giveaway-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .giveaway-name {
+        font-weight: 800;
+        font-size: 16px;
+    }
+
+    .giveaway-host {
+        color: var(--muted);
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .coin-value {
+        color: var(--gold);
+        font-weight: 800;
+        white-space: nowrap;
+    }
+
+    .progress {
+        height: 6px;
+        background: #20232c;
+        border-radius: 99px;
+        margin: 16px 0 11px;
+        overflow: hidden;
+    }
+
+    .progress-bar {
+        height: 100%;
+        width: 45%;
+        background: var(--accent);
+        border-radius: inherit;
+    }
+
+    .card-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--muted);
+        font-size: 12px;
+    }
+
+    .join-small {
+        background: #1b1e28;
+        border: 1px solid var(--border);
+        color: white;
+        padding: 7px 11px;
+        border-radius: 8px;
+        font-size: 12px;
+    }
+
+    .join-small:hover {
+        background: var(--accent);
+        border-color: var(--accent);
+    }
+
+    /* CREATE */
+
+    .create-section {
+        margin-top: 25px;
+        border: 1px solid var(--border);
+        background: var(--panel);
+        border-radius: 18px;
+        padding: 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .create-section h3 {
+        margin-bottom: 5px;
+    }
+
+    .create-section p {
+        color: var(--muted);
+        font-size: 14px;
+    }
+
+    .create-button {
+        background: white;
+        color: black;
+        border: none;
+        padding: 13px 20px;
+        border-radius: 11px;
+        font-weight: 800;
+        white-space: nowrap;
+    }
+
+    /* MODAL */
+
+    .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,.7);
+        backdrop-filter: blur(8px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        z-index: 500;
+    }
+
+    .modal-overlay.active {
+        display: flex;
+    }
+
+    .modal {
+        width: min(500px, 100%);
+        background: #11131a;
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 27px;
+        box-shadow: 0 30px 100px rgba(0,0,0,.5);
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 22px;
+    }
+
+    .close {
+        background: transparent;
+        border: none;
+        color: var(--muted);
+        font-size: 25px;
+    }
+
+    .form-group {
+        margin-bottom: 17px;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 13px;
+        color: #b4bac7;
+        margin-bottom: 7px;
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 12px 13px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: #0b0d12;
+        color: white;
+        outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+        border-color: var(--accent);
+    }
+
+    .modal-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 22px;
+    }
+
+    .modal-actions button {
+        flex: 1;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+    }
+
+    .cancel {
+        background: transparent;
+        color: white;
+    }
+
+    .submit {
+        background: var(--accent);
+        color: white;
+        border: none !important;
+        font-weight: 800;
+    }
+
+    /* PROFILE */
+
+    .profile-panel {
+        position: fixed;
+        top: 0;
+        right: -390px;
+        width: 370px;
+        max-width: 90%;
+        height: 100vh;
+        background: #101218;
+        border-left: 1px solid var(--border);
+        z-index: 400;
+        transition: right .25s ease;
+        padding: 30px;
+    }
+
+    .profile-panel.active {
+        right: 0;
+    }
+
+    .profile-head {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 30px;
+    }
+
+    .large-avatar {
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        background: linear-gradient(135deg,#7c5cff,#37a7ff);
+        display: grid;
+        place-items: center;
+        font-weight: 900;
+    }
+
+    .profile-head small {
+        color: var(--muted);
+    }
+
+    .settings-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .setting {
+        background: #151821;
+        border: 1px solid var(--border);
+        padding: 15px;
+        border-radius: 12px;
+        color: white;
+        text-align: left;
+    }
+
+    .setting:hover {
+        border-color: var(--accent);
+    }
+
+    .panel-close {
+        position: absolute;
+        top: 25px;
+        right: 25px;
+        background: transparent;
+        color: var(--muted);
+        border: none;
+        font-size: 24px;
+    }
+
+    /* TOAST */
+
+    .toast {
+        position: fixed;
+        bottom: 25px;
+        left: 50%;
+        transform: translate(-50%, 100px);
+        background: #171a22;
+        border: 1px solid var(--border);
+        padding: 13px 18px;
+        border-radius: 12px;
+        opacity: 0;
+        transition: .3s;
+        z-index: 1000;
+    }
+
+    .toast.show {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+
+    /* MOBILE */
+
+    @media(max-width: 900px) {
+        .layout {
+            grid-template-columns: 1fr;
         }
-      );
 
-  }
-
-
-  /* =========================================================
-     EVENT BUTTON
-  ========================================================= */
-
-  function enterEvent(
-    eventId
-  ) {
-
-    selectedEvent =
-      EVENTS.find(
-        event =>
-          event.id ===
-          eventId
-      );
-
-
-    if (!selectedEvent) {
-
-      showToast(
-        "Event not found."
-      );
-
-      return;
-
+        .featured {
+            min-height: 470px;
+        }
     }
 
+    @media(max-width: 600px) {
+        .navbar {
+            padding: 0 15px;
+        }
 
-    if (!currentUser) {
+        .coins {
+            display: none;
+        }
 
-      openLoginModal();
+        .container {
+            width: min(100% - 24px, 1450px);
+            margin-top: 22px;
+        }
 
-      return;
+        .featured-content {
+            padding: 28px;
+        }
 
+        .featured h2 {
+            font-size: 42px;
+        }
+
+        .featured-bottom {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .create-section {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .create-button {
+            width: 100%;
+        }
     }
-
-
-    if (
-      !currentUser.discordVerified
-    ) {
-
-      showLinkModal();
-
-      return;
-
-    }
-
-
-    showToast(
-      "Google and Discord verified."
-    );
-
-  }
-
-
-  /* =========================================================
-     LOGIN MODAL
-  ========================================================= */
-
-  function openLoginModal() {
-
-    document.getElementById(
-      "modalIcon"
-    ).innerHTML =
-      '<i class="fa-solid fa-lock"></i>';
-
-
-    document.getElementById(
-      "modalTitle"
-    ).textContent =
-      "Sign in required";
-
-
-    document.getElementById(
-      "modalText"
-    ).textContent =
-      "You need to sign in with Google before entering an event.";
-
-
-    document.getElementById(
-      "linkCodeBox"
-    ).style.display =
-      "none";
-
-
-    document.getElementById(
-      "modalPrimary"
-    ).textContent =
-      "Sign in";
-
-
-    modalAction =
-      () => {
-
-        closeModal();
-
-
-        setTimeout(
-          startGoogleLogin,
-          150
-        );
-
-      };
-
-
-    document.getElementById(
-      "overlay"
-    ).classList.add(
-      "open"
-    );
-
-  }
-
-
-  function modalPrimaryAction() {
-
-    if (
-      modalAction
-    ) {
-
-      modalAction();
-
-    }
-
-  }
-
-
-  function closeModal() {
-
-    document.getElementById(
-      "overlay"
-    ).classList.remove(
-      "open"
-    );
-
-
-    modalAction =
-      null;
-
-  }
-
-
-  /* =========================================================
-     UI
-  ========================================================= */
-
-  function updateUI() {
-
-    const login =
-      document.getElementById(
-        "loginButton"
-      );
-
-
-    const profile =
-      document.getElementById(
-        "profileButton"
-      );
-
-
-    if (!currentUser) {
-
-      login.style.display =
-        "flex";
-
-
-      profile.style.display =
-        "none";
-
-
-      document.getElementById(
-        "accountAvatar"
-      ).src =
-        "https://ui-avatars.com/api/?name=Guest";
-
-
-      document.getElementById(
-        "accountName"
-      ).textContent =
-        "Not signed in";
-
-
-      document.getElementById(
-        "accountEmail"
-      ).textContent =
-        "Sign in to access giveaways";
-
-
-      document.getElementById(
-        "coinBalance"
-      ).textContent =
-        "0";
-
-
-      document.getElementById(
-        "menuCoins"
-      ).textContent =
-        "0";
-
-
-      document.getElementById(
-        "accountProgress"
-      ).style.width =
-        "0%";
-
-
-      document.getElementById(
-        "accountProgressText"
-      ).textContent =
-        "0%";
-
-
-      updateVerification(
-        false
-      );
-
-
-      return;
-
-    }
-
-
-    login.style.display =
-      "none";
-
-
-    profile.style.display =
-      "flex";
-
-
-    document.getElementById(
-      "headerAvatar"
-    ).src =
-      currentUser.picture;
-
-
-    document.getElementById(
-      "headerName"
-    ).textContent =
-      currentUser.name
-        .split(" ")[0];
-
-
-    document.getElementById(
-      "accountAvatar"
-    ).src =
-      currentUser.picture;
-
-
-    document.getElementById(
-      "accountName"
-    ).textContent =
-      currentUser.name;
-
-
-    document.getElementById(
-      "accountEmail"
-    ).textContent =
-      currentUser.email;
-
-
-    document.getElementById(
-      "coinBalance"
-    ).textContent =
-      formatNumber(
-        currentUser.coins
-      );
-
-
-    document.getElementById(
-      "menuCoins"
-    ).textContent =
-      formatNumber(
-        currentUser.coins
-      );
-
-
-    document.getElementById(
-      "menuName"
-    ).textContent =
-      currentUser.name;
-
-
-    document.getElementById(
-      "menuEmail"
-    ).textContent =
-      currentUser.email;
-
-
-    updateVerification(
-      currentUser.discordVerified
-    );
-
-
-    const progress =
-      Math.min(
-        100,
-
-        Math.round(
-
-          (
-            Number(
-              currentUser.coins ||
-              0
-            ) /
-            5000000
-          ) *
-          100
-
-        )
-      );
-
-
-    document.getElementById(
-      "accountProgress"
-    ).style.width =
-      progress + "%";
-
-
-    document.getElementById(
-      "accountProgressText"
-    ).textContent =
-      progress + "%";
-
-  }
-
-
-  /* =========================================================
-     VERIFICATION UI
-  ========================================================= */
-
-  function updateVerification(
-    verified
-  ) {
-
-    const status =
-      document.getElementById(
-        "verificationStatus"
-      );
-
-
-    const text =
-      document.getElementById(
-        "verificationText"
-      );
-
-
-    const button =
-      document.getElementById(
-        "verifyButton"
-      );
-
-
-    const menu =
-      document.getElementById(
-        "menuVerification"
-      );
-
-
-    if (verified) {
-
-      status.classList.add(
-        "verified"
-      );
-
-
-      text.textContent =
-        "Verified";
-
-
-      menu.textContent =
-        "Verified";
-
-
-      menu.classList.add(
-        "verified"
-      );
-
-
-      button.textContent =
-        "Verified";
-
-
-    } else {
-
-      status.classList.remove(
-        "verified"
-      );
-
-
-      text.textContent =
-        "Not verified";
-
-
-      menu.textContent =
-        "Not verified";
-
-
-      menu.classList.remove(
-        "verified"
-      );
-
-
-      button.textContent =
-        "Verify";
-
-    }
-
-  }
-
-
-  /* =========================================================
-     RENDER
-  ========================================================= */
-
-  function renderEvents() {
-
-    renderSidebar();
-
-    renderFeatured();
-
-    renderGrid();
-
-    updateEventTimes();
-
-  }
-
-
-  function renderSidebar() {
-
-    const container =
-      document.getElementById(
-        "activeEvents"
-      );
-
-
-    if (!container)
-      return;
-
-
-    container.innerHTML =
-      "";
-
-
-    if (
-      EVENTS.length === 0
-    ) {
-
-      container.innerHTML =
-
-        `<div class="empty-state">
-          No active events
-        </div>`;
-
-      return;
-
-    }
-
-
-    EVENTS.forEach(
-      event => {
-
-        const item =
-          document.createElement(
-            "div"
-          );
-
-
-        item.className =
-          "event-mini";
-
-
-        item.innerHTML = `
-
-          <div
-            class="event-type ${event.type}"
-          >
-
-            <i class="fa-solid ${
-              event.type === "rain"
-                ? "fa-cloud-rain"
-                : "fa-gift"
-            }"></i>
-
-            ${
-              event.type === "rain"
-                ? "Rain"
-                : "Giveaway"
-            }
-
-          </div>
-
-
-          <div class="event-name">
-
-            ${escapeHtml(
-              event.title
-            )}
-
-          </div>
-
-
-          <div class="event-prize">
-
-            ${formatNumber(
-              event.prize
-            )}
-            Coins
-
-          </div>
-
-
-          <div
-            class="event-time"
-            data-event-id="${escapeHtml(
-              event.id
-            )}"
-          >
-
-            ${escapeHtml(
-              getEventTime(
-                event
-              )
-            )}
-
-          </div>
-
-
-          <button
-            class="tiny-enter"
-            onclick="enterEvent('${escapeHtml(
-              event.id
-            )}')"
-            title="View"
-          >
-
-            <i class="fa-solid fa-arrow-right"></i>
-
-          </button>
-
-        `;
-
-
-        container.appendChild(
-          item
-        );
-
-      }
-    );
-
-  }
-
-
-  function renderFeatured() {
-
-    const featured =
-      document.getElementById(
-        "featured"
-      );
-
-
-    if (!featured)
-      return;
-
-
-    if (
-      EVENTS.length === 0
-    ) {
-
-      featured.innerHTML = `
-
-        <div class="featured-content">
-
-          <div class="featured-label">
-
-            <i class="fa-solid fa-clock"></i>
-
-            Waiting for events
-
-          </div>
-
-
-          <div class="featured-title">
-
-            No Active Events
-
-          </div>
-
-
-          <div class="featured-prize">
-
-            Check back soon!
-
-          </div>
-
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="brand">
+        <div class="brand-logo">A</div>
+        <div>Archer<span>Giveaways</span></div>
+    </div>
+
+    <div class="nav-right">
+        <div class="coins">
+            🪙 <span id="coinBalance">1,000</span>
         </div>
 
-      `;
+        <button class="profile-button" onclick="openProfile()">
+            <div class="avatar">A</div>
+            <span>Profile</span>
+        </button>
+    </div>
+</nav>
 
-      return;
 
-    }
+<main class="container">
 
+    <div class="page-heading">
+        <h1>Giveaways</h1>
+        <p>Enter giveaways, host your own, and win Archer coins.</p>
+    </div>
 
-    const biggest =
-      [...EVENTS].sort(
-        (a, b) =>
-          b.prize -
-          a.prize
-      )[0];
 
+    <div class="layout">
 
-    featured.innerHTML = `
+        <!-- FEATURED GIVEAWAY -->
+        <section>
 
-      <div class="featured-content">
+            <div class="featured">
 
-        <div class="featured-label">
+                <div class="featured-content">
 
-          <i class="fa-solid fa-star"></i>
+                    <div>
+                        <div class="featured-label">
+                            ★ FEATURED GIVEAWAY
+                        </div>
 
-          Biggest active ${
-            biggest.type === "rain"
-              ? "rain"
-              : "giveaway"
-          }
+                        <h2 id="featuredName">
+                            Archer Coin Rain
+                        </h2>
 
-        </div>
+                        <p class="featured-description">
+                            The biggest active giveaway on ArcherGiveaways.
+                            Enter before the timer reaches zero for your chance
+                            to win coins.
+                        </p>
 
+                        <div class="featured-stats">
 
-        <div class="featured-title">
+                            <div class="stat">
+                                <div class="stat-label">Prize pool</div>
+                                <div class="stat-value">
+                                    🪙 <span id="featuredPrize">25,000</span>
+                                </div>
+                            </div>
 
-          ${escapeHtml(
-            biggest.title
-          )}
+                            <div class="stat">
+                                <div class="stat-label">Possible winners</div>
+                                <div class="stat-value">
+                                    <span id="featuredWinners">500</span>
+                                </div>
+                            </div>
 
-        </div>
+                            <div class="stat">
+                                <div class="stat-label">Entries</div>
+                                <div class="stat-value">
+                                    <span id="featuredEntries">237</span>
+                                </div>
+                            </div>
 
+                        </div>
+                    </div>
 
-        <div class="featured-prize">
 
-          ${formatNumber(
-            biggest.prize
-          )}
+                    <div class="featured-bottom">
 
-          Coins
+                        <div>
+                            <div class="stat-label">Ends in</div>
+                            <div class="timer" id="featuredTimer">
+                                01:24:37
+                            </div>
+                        </div>
 
-        </div>
+                        <button class="enter-button"
+                                onclick="enterGiveaway('Archer Coin Rain')">
+                            Enter Giveaway
+                        </button>
 
+                    </div>
 
-        <div class="featured-bottom">
-
-
-          <div class="featured-pill">
-
-            <i class="fa-regular fa-clock"></i>
-
-            <span
-              data-event-id="${escapeHtml(
-                biggest.id
-              )}"
-            >
-
-              ${escapeHtml(
-                getEventTime(
-                  biggest
-                )
-              )}
-
-            </span>
-
-          </div>
-
-
-          <div class="featured-pill">
-
-            ${
-              biggest.type === "rain"
-                ? "Equal share"
-                : "Giveaway"
-            }
-
-          </div>
-
-
-          <button
-            class="featured-enter"
-            onclick="enterEvent('${escapeHtml(
-              biggest.id
-            )}')"
-          >
-
-            View
-
-            <i class="fa-solid fa-arrow-right"></i>
-
-          </button>
-
-
-        </div>
-
-      </div>
-
-    `;
-
-  }
-
-
-  function renderGrid() {
-
-    const grid =
-      document.getElementById(
-        "eventsGrid"
-      );
-
-
-    if (!grid)
-      return;
-
-
-    grid.innerHTML =
-      "";
-
-
-    if (
-      EVENTS.length === 0
-    ) {
-
-      grid.innerHTML = `
-
-        <div
-          class="empty-state"
-          style="grid-column:1 / -1;"
-        >
-
-          No active giveaways or rains currently running.
-
-        </div>
-
-      `;
-
-      return;
-
-    }
-
-
-    EVENTS.forEach(
-      event => {
-
-        const card =
-          document.createElement(
-            "article"
-          );
-
-
-        card.className =
-          "event-card" +
-
-          (
-            event.prize >=
-            5000000
-
-              ? " featured-card"
-
-              : ""
-
-          );
-
-
-        card.innerHTML = `
-
-          <div
-            class="card-event-type ${event.type}"
-          >
-
-            <i class="fa-solid ${
-              event.type === "rain"
-                ? "fa-cloud-rain"
-                : "fa-gift"
-            }"></i>
-
-            ${
-              event.type === "rain"
-                ? "Rain"
-                : "Giveaway"
-            }
-
-          </div>
-
-
-          <div class="card-title">
-
-            ${escapeHtml(
-              event.title
-            )}
-
-          </div>
-
-
-          <div class="card-prize">
-
-            ${formatNumber(
-              event.prize
-            )}
-
-          </div>
-
-
-          <div class="card-description">
-
-            ${escapeHtml(
-              event.description
-            )}
-
-          </div>
-
-
-          <div class="card-footer">
-
-            <div
-              class="card-time"
-              data-event-id="${escapeHtml(
-                event.id
-              )}"
-            >
-
-              ${escapeHtml(
-                getEventTime(
-                  event
-                )
-              )}
+                </div>
 
             </div>
 
 
-            <button
-              class="card-enter"
-              onclick="enterEvent('${escapeHtml(
-                event.id
-              )}')"
-            >
+            <!-- CREATE GIVEAWAY -->
+            <div class="create-section">
 
-              <i class="fa-solid fa-arrow-right"></i>
+                <div>
+                    <h3>Want to host a giveaway?</h3>
+                    <p>
+                        Spend your Archer coins to create your own giveaway.
+                    </p>
+                </div>
 
+                <button class="create-button" onclick="openCreateModal()">
+                    + Create Giveaway
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- SMALL GIVEAWAYS -->
+        <aside>
+
+            <div class="side-header">
+                <h2>Active Giveaways</h2>
+                <span style="color:var(--muted);font-size:13px;">
+                    Live
+                </span>
+            </div>
+
+            <div class="small-giveaways" id="giveawayList">
+
+                <div class="giveaway-card">
+
+                    <div class="giveaway-top">
+                        <div>
+                            <div class="giveaway-name">
+                                Starter Rain
+                            </div>
+                            <div class="giveaway-host">
+                                Hosted by ArcherUser
+                            </div>
+                        </div>
+
+                        <div class="coin-value">
+                            🪙 2,500
+                        </div>
+                    </div>
+
+                    <div class="progress">
+                        <div class="progress-bar" style="width:62%"></div>
+                    </div>
+
+                    <div class="card-bottom">
+                        <span>62 / 100 winners</span>
+                        <button class="join-small"
+                                onclick="enterGiveaway('Starter Rain')">
+                            Enter
+                        </button>
+                    </div>
+
+                </div>
+
+
+                <div class="giveaway-card">
+
+                    <div class="giveaway-top">
+                        <div>
+                            <div class="giveaway-name">
+                                Night Rain
+                            </div>
+                            <div class="giveaway-host">
+                                Hosted by NightArcher
+                            </div>
+                        </div>
+
+                        <div class="coin-value">
+                            🪙 5,000
+                        </div>
+                    </div>
+
+                    <div class="progress">
+                        <div class="progress-bar" style="width:28%"></div>
+                    </div>
+
+                    <div class="card-bottom">
+                        <span>28 / 100 winners</span>
+                        <button class="join-small"
+                                onclick="enterGiveaway('Night Rain')">
+                            Enter
+                        </button>
+                    </div>
+
+                </div>
+
+
+                <div class="giveaway-card">
+
+                    <div class="giveaway-top">
+                        <div>
+                            <div class="giveaway-name">
+                                Weekend Drop
+                            </div>
+                            <div class="giveaway-host">
+                                Hosted by ArcherTeam
+                            </div>
+                        </div>
+
+                        <div class="coin-value">
+                            🪙 10,000
+                        </div>
+                    </div>
+
+                    <div class="progress">
+                        <div class="progress-bar" style="width:81%"></div>
+                    </div>
+
+                    <div class="card-bottom">
+                        <span>81 / 150 winners</span>
+                        <button class="join-small"
+                                onclick="enterGiveaway('Weekend Drop')">
+                            Enter
+                        </button>
+                    </div>
+
+                </div>
+
+
+                <div class="giveaway-card">
+
+                    <div class="giveaway-top">
+                        <div>
+                            <div class="giveaway-name">
+                                Small Coin Rain
+                            </div>
+                            <div class="giveaway-host">
+                                Hosted by PixelArcher
+                            </div>
+                        </div>
+
+                        <div class="coin-value">
+                            🪙 750
+                        </div>
+                    </div>
+
+                    <div class="progress">
+                        <div class="progress-bar" style="width:43%"></div>
+                    </div>
+
+                    <div class="card-bottom">
+                        <span>43 / 50 winners</span>
+                        <button class="join-small"
+                                onclick="enterGiveaway('Small Coin Rain')">
+                            Enter
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</main>
+
+
+<!-- CREATE GIVEAWAY MODAL -->
+
+<div class="modal-overlay" id="createModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+            <h2>Create Giveaway</h2>
+
+            <button class="close" onclick="closeCreateModal()">
+                ×
+            </button>
+        </div>
+
+        <div class="form-group">
+            <label>Giveaway name</label>
+            <input id="giveawayNameInput"
+                   type="text"
+                   placeholder="Example: Friday Coin Rain">
+        </div>
+
+        <div class="form-group">
+            <label>Total coins</label>
+            <input id="giveawayCoinsInput"
+                   type="number"
+                   min="1"
+                   placeholder="1000">
+        </div>
+
+        <div class="form-group">
+            <label>Maximum winners</label>
+            <input id="giveawayWinnersInput"
+                   type="number"
+                   min="1"
+                   placeholder="100">
+        </div>
+
+        <div class="form-group">
+            <label>Duration</label>
+
+            <select id="giveawayDurationInput">
+                <option value="3600">1 hour</option>
+                <option value="7200">2 hours</option>
+                <option value="21600">6 hours</option>
+                <option value="43200">12 hours</option>
+                <option value="86400">24 hours</option>
+                <option value="259200">3 days</option>
+            </select>
+        </div>
+
+        <div class="modal-actions">
+
+            <button class="cancel"
+                    onclick="closeCreateModal()">
+                Cancel
             </button>
 
-          </div>
+            <button class="submit"
+                    onclick="createGiveaway()">
+                Create Giveaway
+            </button>
 
-        `;
+        </div>
 
+    </div>
 
-        grid.appendChild(
-          card
-        );
-
-      }
-    );
-
-  }
+</div>
 
 
-  /* =========================================================
-     PROFILE
-  ========================================================= */
+<!-- PROFILE PANEL -->
 
-  function toggleProfile() {
+<div class="profile-panel" id="profilePanel">
 
-    document
-      .getElementById(
-        "profileMenu"
-      )
-      .classList.toggle(
-        "open"
-      );
+    <button class="panel-close" onclick="closeProfile()">
+        ×
+    </button>
 
-  }
+    <div class="profile-head">
 
+        <div class="large-avatar">
+            A
+        </div>
 
-  document.addEventListener(
-    "click",
-    event => {
+        <div>
+            <h2>ArcherUser</h2>
+            <small>Archer member</small>
+        </div>
 
-      const area =
-        document.querySelector(
-          ".account-area"
-        );
+    </div>
 
 
-      if (
-        area &&
-        !area.contains(
-          event.target
-        )
-      ) {
+    <div class="settings-list">
 
+        <button class="setting" onclick="showToast('Settings coming soon')">
+            ⚙ Account Settings
+        </button>
+
+        <button class="setting" onclick="showToast('Settings codes coming soon')">
+            🔑 Settings Codes
+        </button>
+
+        <button class="setting" onclick="showToast('Your giveaway history will appear here')">
+            🎁 My Giveaways
+        </button>
+
+        <button class="setting" onclick="showToast('Your entries will appear here')">
+            🎟 My Entries
+        </button>
+
+        <button class="setting" onclick="showToast('Google verification will be connected later')">
+            ✓ Verification
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+
+    /* ==========================================
+       BASIC USER DATA
+       ========================================== */
+
+    let coins = 1000;
+
+    let giveaways = [];
+
+
+    /* ==========================================
+       MODAL
+       ========================================== */
+
+    function openCreateModal() {
         document
-          .getElementById(
-            "profileMenu"
-          )
-          .classList.remove(
-            "open"
-          );
-
-      }
-
+            .getElementById("createModal")
+            .classList.add("active");
     }
-  );
 
-
-  function logout() {
-
-    currentUser =
-      null;
-
-
-    if (
-      window.google &&
-      google.accounts &&
-      google.accounts.id
-    ) {
-
-      google.accounts.id
-        .disableAutoSelect();
-
+    function closeCreateModal() {
+        document
+            .getElementById("createModal")
+            .classList.remove("active");
     }
 
 
-    document
-      .getElementById(
-        "profileMenu"
-      )
-      .classList.remove(
-        "open"
-      );
+    /* ==========================================
+       PROFILE
+       ========================================== */
 
+    function openProfile() {
+        document
+            .getElementById("profilePanel")
+            .classList.add("active");
+    }
 
-    updateUI();
-
-
-    showToast(
-      "Signed out."
-    );
-
-  }
-
-
-  /* =========================================================
-     HELPERS
-  ========================================================= */
-
-  function generateLinkCode() {
-
-    const chars =
-      "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-
-
-    let code =
-      "ARCHER-";
-
-
-    for (
-      let i = 0;
-      i < 5;
-      i++
-    ) {
-
-      code +=
-        chars[
-          Math.floor(
-            Math.random() *
-            chars.length
-          )
-        ];
-
+    function closeProfile() {
+        document
+            .getElementById("profilePanel")
+            .classList.remove("active");
     }
 
 
-    return code;
+    /* ==========================================
+       TOAST
+       ========================================== */
 
-  }
+    function showToast(message) {
+
+        const toast =
+            document.getElementById("toast");
+
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        setTimeout(() => {
+            toast.classList.remove("show");
+        }, 3000);
+    }
 
 
-  function parseJwt(
-    token
-  ) {
+    /* ==========================================
+       ENTER GIVEAWAY
+       ========================================== */
 
-    const base64Url =
-      token.split(".")[1];
+    function enterGiveaway(name) {
 
-
-    const base64 =
-      base64Url
-        .replace(
-          /-/g,
-          "+"
-        )
-        .replace(
-          /_/g,
-          "/"
+        showToast(
+            "You entered " + name + "!"
         );
 
-
-    const jsonPayload =
-      decodeURIComponent(
-
-        atob(base64)
-          .split("")
-          .map(
-            character =>
-              "%" +
-              (
-                "00" +
-                character
-                  .charCodeAt(0)
-                  .toString(16)
-              ).slice(-2)
-          )
-          .join("")
-
-      );
+        // Backend will eventually handle:
+        // - authentication
+        // - database entry
+        // - duplicate entry prevention
+        // - winner selection
+    }
 
 
-    return JSON.parse(
-      jsonPayload
+    /* ==========================================
+       CREATE GIVEAWAY
+       ========================================== */
+
+    function createGiveaway() {
+
+        const name =
+            document.getElementById(
+                "giveawayNameInput"
+            ).value.trim();
+
+        const amount =
+            Number(
+                document.getElementById(
+                    "giveawayCoinsInput"
+                ).value
+            );
+
+        const winners =
+            Number(
+                document.getElementById(
+                    "giveawayWinnersInput"
+                ).value
+            );
+
+        const duration =
+            Number(
+                document.getElementById(
+                    "giveawayDurationInput"
+                ).value
+            );
+
+
+        if (!name) {
+            showToast("Enter a giveaway name.");
+            return;
+        }
+
+        if (!amount || amount <= 0) {
+            showToast("Enter a valid coin amount.");
+            return;
+        }
+
+        if (!winners || winners <= 0) {
+            showToast("Enter the number of winners.");
+            return;
+        }
+
+        if (amount > coins) {
+            showToast("You don't have enough coins.");
+            return;
+        }
+
+
+        coins -= amount;
+
+        updateCoinDisplay();
+
+
+        const giveaway = {
+
+            id: Date.now(),
+
+            name: name,
+
+            host: "ArcherUser",
+
+            coins: amount,
+
+            maxWinners: winners,
+
+            entries: 0,
+
+            endsAt:
+                Date.now() +
+                duration * 1000
+
+        };
+
+
+        giveaways.push(giveaway);
+
+        renderGiveaways();
+
+        closeCreateModal();
+
+
+        document.getElementById(
+            "giveawayNameInput"
+        ).value = "";
+
+        document.getElementById(
+            "giveawayCoinsInput"
+        ).value = "";
+
+        document.getElementById(
+            "giveawayWinnersInput"
+        ).value = "";
+
+
+        showToast(
+            "Giveaway created successfully!"
+        );
+    }
+
+
+    /* ==========================================
+       UPDATE COINS
+       ========================================== */
+
+    function updateCoinDisplay() {
+
+        document.getElementById(
+            "coinBalance"
+        ).textContent =
+            coins.toLocaleString();
+
+    }
+
+
+    /* ==========================================
+       RENDER USER GIVEAWAYS
+       ========================================== */
+
+    function renderGiveaways() {
+
+        const list =
+            document.getElementById(
+                "giveawayList"
+            );
+
+
+        giveaways.forEach(g => {
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "giveaway-card";
+
+            card.innerHTML = `
+
+                <div class="giveaway-top">
+
+                    <div>
+                        <div class="giveaway-name">
+                            ${escapeHtml(g.name)}
+                        </div>
+
+                        <div class="giveaway-host">
+                            Hosted by ${escapeHtml(g.host)}
+                        </div>
+                    </div>
+
+                    <div class="coin-value">
+                        🪙 ${g.coins.toLocaleString()}
+                    </div>
+
+                </div>
+
+                <div class="progress">
+                    <div
+                        class="progress-bar"
+                        style="width:0%">
+                    </div>
+                </div>
+
+                <div class="card-bottom">
+
+                    <span>
+                        0 / ${g.maxWinners} winners
+                    </span>
+
+                    <button
+                        class="join-small"
+                        onclick="enterGiveaway('${escapeJs(g.name)}')">
+                        Enter
+                    </button>
+
+                </div>
+            `;
+
+            list.prepend(card);
+
+        });
+
+    }
+
+
+    /* ==========================================
+       SECURITY HELPERS
+       ========================================== */
+
+    function escapeHtml(value) {
+
+        return value
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+
+    }
+
+    function escapeJs(value) {
+
+        return value
+            .replaceAll("\\", "\\\\")
+            .replaceAll("'", "\\'");
+
+    }
+
+
+    /* ==========================================
+       FEATURED GIVEAWAY TIMER
+       ========================================== */
+
+    let featuredSeconds = 5077;
+
+
+    function updateFeaturedTimer() {
+
+        if (featuredSeconds <= 0) {
+
+            document.getElementById(
+                "featuredTimer"
+            ).textContent = "ENDED";
+
+            return;
+
+        }
+
+
+        featuredSeconds--;
+
+
+        const hours =
+            Math.floor(
+                featuredSeconds / 3600
+            );
+
+        const minutes =
+            Math.floor(
+                (featuredSeconds % 3600) / 60
+            );
+
+        const seconds =
+            featuredSeconds % 60;
+
+
+        document.getElementById(
+            "featuredTimer"
+        ).textContent =
+
+            String(hours).padStart(2, "0")
+            + ":"
+            +
+            String(minutes).padStart(2, "0")
+            + ":"
+            +
+            String(seconds).padStart(2, "0");
+
+    }
+
+
+    setInterval(
+        updateFeaturedTimer,
+        1000
     );
 
-  }
 
+    /* ==========================================
+       CLOSE MODALS WITH ESC
+       ========================================== */
 
-  function formatNumber(
-    number
-  ) {
+    document.addEventListener(
+        "keydown",
+        function(event) {
 
-    return Number(
-      number || 0
-    ).toLocaleString(
-      "en-US"
-    );
+            if (event.key === "Escape") {
 
-  }
+                closeCreateModal();
+                closeProfile();
 
+            }
 
-  function escapeHtml(
-    value
-  ) {
-
-    return String(
-      value
-    )
-
-      .replace(
-        /&/g,
-        "&amp;"
-      )
-
-      .replace(
-        /</g,
-        "&lt;"
-      )
-
-      .replace(
-        />/g,
-        "&gt;"
-      )
-
-      .replace(
-        /"/g,
-        "&quot;"
-      )
-
-      .replace(
-        /'/g,
-        "&#039;"
-      );
-
-  }
-
-
-  function showToast(
-    message
-  ) {
-
-    const toast =
-      document.getElementById(
-        "toast"
-      );
-
-
-    if (!toast)
-      return;
-
-
-    toast.textContent =
-      message;
-
-
-    toast.classList.add(
-      "show"
+        }
     );
 
 
-    clearTimeout(
-      window.__toastTimer
-    );
+    /* ==========================================
+       START
+       ========================================== */
 
-
-    window.__toastTimer =
-      setTimeout(
-        () => {
-
-          toast.classList.remove(
-            "show"
-          );
-
-        },
-        3500
-      );
-
-  }
-
-
-  /* =========================================================
-     INITIALIZATION
-  ========================================================= */
-
-  renderEvents();
-
-  updateUI();
-
-  initializeGoogle();
-
-  fetchEvents();
-
-
-  /* =========================================================
-     LIVE EVENTS
-  ========================================================= */
-
-  setInterval(
-    fetchEvents,
-    1000
-  );
-
-
-  setInterval(
-    updateEventTimes,
-    1000
-  );
-
-
-  /* =========================================================
-     ACCOUNT REFRESH
-  ========================================================= */
-
-  setInterval(
-    () => {
-
-      if (currentUser) {
-
-        refreshAccount();
-
-      }
-
-    },
-    30000
-  );
+    updateCoinDisplay();
+    updateFeaturedTimer();
 
 </script>
+
+</body>
+</html>
