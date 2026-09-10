@@ -11,11 +11,11 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Archer Giveaways</title>
+    <title>Archer Giveaways - Owner</title>
 
     <link
         rel="icon"
-        href="favicon.ico"
+        href="../favicon.ico"
     >
 
     <script>
@@ -23,27 +23,27 @@
         (function () {
 
             /*
-             * Check whether the user is
-             * already signed in with Google.
+             * Check whether the owner has
+             * successfully authenticated.
              */
 
-            const loggedIn =
+            const ownerAuthenticated =
                 localStorage.getItem(
-                    "archer_google_logged_in"
+                    "archer_owner_authenticated"
                 );
 
 
             /*
-             * Already logged in:
-             * send them to the normal home page.
+             * Owner is authenticated.
+             * Send them to the owner home page.
              */
 
             if (
-                loggedIn === "true"
+                ownerAuthenticated === "true"
             ) {
 
                 window.location.replace(
-                    "home/"
+                    "../home/owner/"
                 );
 
                 return;
@@ -51,12 +51,12 @@
 
 
             /*
-             * Not logged in:
-             * send them to the normal login page.
+             * Owner is not authenticated.
+             * Send them to the owner login page.
              */
 
             window.location.replace(
-                "login/"
+                "../login/owner/"
             );
 
         })();
@@ -69,7 +69,7 @@
 <body>
 
     <p>
-        Loading Archer Giveaways...
+        Loading Archer Giveaways Owner...
     </p>
 
 </body>
