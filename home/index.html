@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,9 +23,7 @@
 
 
         body {
-
             margin: 0;
-
             min-height: 100vh;
 
             font-family:
@@ -33,9 +32,7 @@
                 sans-serif;
 
             background: #0f1117;
-
             color: white;
-
         }
 
 
@@ -44,13 +41,10 @@
         ================================= */
 
         .navbar {
-
             height: 70px;
 
             display: flex;
-
             align-items: center;
-
             justify-content: space-between;
 
             padding: 0 30px;
@@ -59,18 +53,17 @@
 
             border-bottom:
                 1px solid #292e3a;
-
         }
 
 
         /* ================================
-           ARCHER GIVEAWAYS
+           BRAND
         ================================= */
 
         .brand {
+            position: relative;
 
             font-size: 20px;
-
             font-weight: bold;
 
             color: white;
@@ -82,16 +75,12 @@
             transition:
                 opacity 0.2s ease,
                 transform 0.2s ease;
-
         }
 
 
         .brand:hover {
-
-            opacity: 0.8;
-
+            opacity: 0.85;
             transform: translateY(-1px);
-
         }
 
 
@@ -100,20 +89,15 @@
         ================================= */
 
         .user-area {
-
             display: flex;
-
             align-items: center;
 
             gap: 12px;
-
         }
 
 
         .user-image {
-
             width: 38px;
-
             height: 38px;
 
             border-radius: 50%;
@@ -122,14 +106,11 @@
 
             border:
                 2px solid #3b82f6;
-
         }
 
 
         .user-name {
-
             font-size: 14px;
-
         }
 
 
@@ -138,7 +119,6 @@
         ================================= */
 
         .logout {
-
             margin-left: 10px;
 
             padding:
@@ -159,17 +139,14 @@
             transition:
                 background 0.2s ease,
                 transform 0.2s ease;
-
         }
 
 
         .logout:hover {
-
             background: #dc2626;
 
             transform:
                 translateY(-1px);
-
         }
 
 
@@ -178,28 +155,24 @@
         ================================= */
 
         .content {
-
             min-height:
                 calc(100vh - 70px);
 
             display: flex;
 
             align-items: center;
-
             justify-content: center;
 
             padding:
                 50px 30px;
-
         }
 
 
         /* ================================
-           FIVE CARDS
+           CARDS CONTAINER
         ================================= */
 
         .cards {
-
             width: 100%;
 
             max-width: 1250px;
@@ -209,8 +182,9 @@
             grid-template-columns:
                 repeat(5, 1fr);
 
-            gap: 20px;
+            gap: 22px;
 
+            align-items: center;
         }
 
 
@@ -219,12 +193,11 @@
         ================================= */
 
         .card {
+            position: relative;
 
             width: 100%;
 
             aspect-ratio: 4 / 6;
-
-            position: relative;
 
             background: #181b24;
 
@@ -233,91 +206,145 @@
 
             border-radius: 16px;
 
+            overflow: visible;
+
+            isolation: isolate;
+
             transition:
                 transform 0.3s ease,
                 box-shadow 0.3s ease;
-
-            overflow: visible;
-
         }
 
 
-        /* ================================
-           FIRE RING
-        ================================= */
+        /*
+            Inner layer.
+            This keeps the center completely clean
+            while the fire stays around the outside.
+        */
 
         .card::before {
-
             content: "";
 
             position: absolute;
 
-            inset: -3px;
+            inset: -4px;
 
-            border-radius: 19px;
+            border-radius: 20px;
 
             background:
                 conic-gradient(
                     from 0deg,
+
                     transparent 0deg,
-                    transparent 35deg,
-                    #ff1e00 70deg,
-                    #ff5e00 100deg,
-                    #ffb300 130deg,
-                    transparent 165deg,
+                    transparent 20deg,
+
+                    #ff0000 45deg,
+                    #ff3b00 70deg,
+                    #ff7a00 95deg,
+                    #ffb300 115deg,
+                    #ff5a00 135deg,
+                    #ff1200 160deg,
+
+                    transparent 190deg,
+
                     transparent 360deg
                 );
 
-            z-index: -1;
+            /*
+                Cut out the center so only
+                the ring remains.
+            */
+
+            padding: 4px;
+
+            -webkit-mask:
+                linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0);
+
+            -webkit-mask-composite: xor;
+
+            mask:
+                linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0);
+
+            mask-composite: exclude;
 
             opacity: 0;
 
+            pointer-events: none;
+
+            z-index: -1;
+
             filter:
-                blur(2px)
                 drop-shadow(
-                    0 0 6px #ff3c00
+                    0 0 4px #ff3b00
+                )
+                drop-shadow(
+                    0 0 9px #ff1800
                 );
 
             transition:
                 opacity 0.25s ease;
-
         }
 
 
-        /* ================================
-           FIRE GLOW
-        ================================= */
+        /*
+            Larger blurred glow behind
+            the main fire ring.
+        */
 
         .card::after {
-
             content: "";
 
             position: absolute;
 
-            inset: -8px;
+            inset: -10px;
 
-            border-radius: 23px;
+            border-radius: 26px;
 
             background:
                 conic-gradient(
                     from 0deg,
-                    transparent,
-                    #ff2200,
-                    #ff7a00,
-                    transparent 35%,
-                    transparent
+
+                    transparent 0deg,
+                    transparent 25deg,
+
+                    #ff1a00 55deg,
+                    #ff5400 85deg,
+                    #ff9d00 110deg,
+                    #ff3c00 140deg,
+                    #ff0900 165deg,
+
+                    transparent 205deg,
+
+                    transparent 360deg
                 );
 
-            z-index: -2;
+            padding: 10px;
+
+            -webkit-mask:
+                linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0);
+
+            -webkit-mask-composite: xor;
+
+            mask:
+                linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0);
+
+            mask-composite: exclude;
 
             opacity: 0;
 
+            pointer-events: none;
+
+            z-index: -2;
+
             filter:
-                blur(12px);
+                blur(7px);
 
             transition:
                 opacity 0.25s ease;
-
         }
 
 
@@ -326,45 +353,40 @@
         ================================= */
 
         .card:hover {
-
             transform:
-                translateY(-7px);
+                translateY(-8px)
+                scale(1.015);
 
             box-shadow:
-                0 15px 35px
+                0 18px 40px
                 rgba(
                     0,
                     0,
                     0,
                     0.45
                 );
-
         }
 
 
         .card:hover::before {
-
             opacity: 1;
 
             animation:
                 fireRing
-                1.4s
+                1.15s
                 linear
                 infinite;
-
         }
 
 
         .card:hover::after {
-
-            opacity: 0.65;
+            opacity: 0.75;
 
             animation:
                 fireRing
-                1.4s
+                1.15s
                 linear
                 infinite;
-
         }
 
 
@@ -375,19 +397,14 @@
         @keyframes fireRing {
 
             from {
-
                 transform:
                     rotate(0deg);
-
             }
 
             to {
-
                 transform:
                     rotate(360deg);
-
             }
-
         }
 
 
@@ -398,10 +415,8 @@
         @media (max-width: 1100px) {
 
             .cards {
-
                 grid-template-columns:
                     repeat(3, 1fr);
-
             }
 
         }
@@ -414,32 +429,26 @@
         @media (max-width: 700px) {
 
             .navbar {
-
                 padding:
                     0 18px;
-
             }
 
 
             .user-name {
-
                 display: none;
-
             }
 
 
             .logout {
-
                 margin-left: 0;
-
             }
 
 
             .cards {
-
                 grid-template-columns:
                     repeat(2, 1fr);
 
+                gap: 18px;
             }
 
         }
@@ -447,19 +456,21 @@
 
         @media (max-width: 450px) {
 
-            .cards {
+            .content {
+                padding:
+                    30px 20px;
+            }
 
+
+            .cards {
                 grid-template-columns:
                     1fr;
-
             }
 
 
             .card {
-
                 aspect-ratio:
                     4 / 6;
-
             }
 
         }
@@ -480,8 +491,8 @@
 
 
         <!--
-            CLICKING ARCHER GIVEAWAYS
-            OPENS THE DISCORD SERVER
+            Archer Giveaways
+            Clicking opens Discord
         -->
 
         <a
@@ -493,6 +504,8 @@
             Archer Giveaways
         </a>
 
+
+        <!-- USER AREA -->
 
         <div class="user-area">
 
@@ -537,37 +550,27 @@
         <div class="cards">
 
 
-            <!-- =================================
-                 WEBSITE CARD 1
-            ================================== -->
+            <!-- CARD 1 -->
 
             <div class="card"></div>
 
 
-            <!-- =================================
-                 WEBSITE CARD 2
-            ================================== -->
+            <!-- CARD 2 -->
 
             <div class="card"></div>
 
 
-            <!-- =================================
-                 WEBSITE CARD 3
-            ================================== -->
+            <!-- CARD 3 -->
 
             <div class="card"></div>
 
 
-            <!-- =================================
-                 WEBSITE CARD 4
-            ================================== -->
+            <!-- CARD 4 -->
 
             <div class="card"></div>
 
 
-            <!-- =================================
-                 WEBSITE CARD 5
-            ================================== -->
+            <!-- CARD 5 -->
 
             <div class="card"></div>
 
@@ -642,7 +645,6 @@
 
     if (user) {
 
-
         const name =
             user.name ||
             user.given_name ||
@@ -680,7 +682,6 @@
     // =====================================================
 
     function logout() {
-
 
         localStorage.removeItem(
             "archer_google_logged_in"
@@ -720,3 +721,4 @@
 
 </body>
 </html>
+```
