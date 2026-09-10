@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -174,14 +175,38 @@
         }
 
 
+        .dashboard {
+            width: 100%;
+
+            max-width: 1250px;
+        }
+
+
+        /* =================================
+           HEADING
+        ================================= */
+
+        .dashboard-title {
+            margin: 0 0 28px;
+
+            text-align: center;
+
+            font-size: 32px;
+
+            font-weight: 900;
+
+            letter-spacing: -0.5px;
+
+            color: #ffffff;
+        }
+
+
         /* =================================
            CARDS
         ================================= */
 
         .cards {
             width: 100%;
-
-            max-width: 1250px;
 
             display: grid;
 
@@ -233,11 +258,6 @@
             inset: -4px;
 
             border-radius: 20px;
-
-            /*
-                This is the actual lava border.
-                It does NOT rotate.
-            */
 
             background:
                 linear-gradient(
@@ -376,11 +396,6 @@
         }
 
 
-        /*
-            The lava slowly moves from
-            side to side instead of rotating.
-        */
-
         @keyframes lavaFlow {
 
             0% {
@@ -444,6 +459,11 @@
                 gap: 18px;
             }
 
+
+            .dashboard-title {
+                font-size: 26px;
+            }
+
         }
 
 
@@ -458,6 +478,11 @@
             .cards {
                 grid-template-columns:
                     1fr;
+            }
+
+
+            .dashboard-title {
+                font-size: 23px;
             }
 
 
@@ -483,11 +508,6 @@
     <nav class="navbar">
 
 
-        <!--
-            ARCHER GIVEAWAYS
-            Opens Discord
-        -->
-
         <a
             class="brand"
             href="https://discord.gg/jBFAzkdfWG"
@@ -497,8 +517,6 @@
             Archer Giveaways
         </a>
 
-
-        <!-- USER -->
 
         <div class="user-area">
 
@@ -532,22 +550,36 @@
 
 
     <!-- =================================
-         FIVE EMPTY CARDS
+         MAIN DASHBOARD
     ================================= -->
 
     <main class="content">
 
-        <div class="cards">
+        <div class="dashboard">
 
-            <div class="card"></div>
 
-            <div class="card"></div>
+            <!-- TITLE ABOVE THE CARDS -->
 
-            <div class="card"></div>
+            <h1 class="dashboard-title">
+                Pick what you want to acces/do
+            </h1>
 
-            <div class="card"></div>
 
-            <div class="card"></div>
+            <!-- FIVE EMPTY CARDS -->
+
+            <div class="cards">
+
+                <div class="card"></div>
+
+                <div class="card"></div>
+
+                <div class="card"></div>
+
+                <div class="card"></div>
+
+                <div class="card"></div>
+
+            </div>
 
         </div>
 
@@ -695,3 +727,4 @@
 
 </body>
 </html>
+```
