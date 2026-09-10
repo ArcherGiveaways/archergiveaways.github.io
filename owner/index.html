@@ -1,0 +1,78 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Archer Giveaways</title>
+
+    <link
+        rel="icon"
+        href="favicon.ico"
+    >
+
+    <script>
+
+        (function () {
+
+            /*
+             * Check whether the user is
+             * already signed in with Google.
+             */
+
+            const loggedIn =
+                localStorage.getItem(
+                    "archer_google_logged_in"
+                );
+
+
+            /*
+             * Already logged in:
+             * send them to the normal home page.
+             */
+
+            if (
+                loggedIn === "true"
+            ) {
+
+                window.location.replace(
+                    "home/"
+                );
+
+                return;
+            }
+
+
+            /*
+             * Not logged in:
+             * send them to the normal login page.
+             */
+
+            window.location.replace(
+                "login/"
+            );
+
+        })();
+
+    </script>
+
+</head>
+
+
+<body>
+
+    <p>
+        Loading Archer Giveaways...
+    </p>
+
+</body>
+
+</html>
+```
