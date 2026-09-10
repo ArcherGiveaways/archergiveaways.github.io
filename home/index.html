@@ -13,6 +13,7 @@
 
     <link rel="icon" href="../favicon.ico">
 
+
     <style>
 
         * {
@@ -63,7 +64,7 @@
 
 
         /* ================================
-           ARCHER GIVEAWAYS BRAND
+           ARCHER GIVEAWAYS
         ================================= */
 
         .brand {
@@ -132,6 +133,10 @@
         }
 
 
+        /* ================================
+           LOGOUT
+        ================================= */
+
         .logout {
 
             margin-left: 10px;
@@ -162,13 +167,14 @@
 
             background: #dc2626;
 
-            transform: translateY(-1px);
+            transform:
+                translateY(-1px);
 
         }
 
 
         /* ================================
-           MAIN
+           MAIN CONTENT
         ================================= */
 
         .content {
@@ -182,13 +188,14 @@
 
             justify-content: center;
 
-            padding: 40px 25px;
+            padding:
+                50px 30px;
 
         }
 
 
         /* ================================
-           FIVE WEBSITE CARDS
+           FIVE CARDS
         ================================= */
 
         .cards {
@@ -207,9 +214,17 @@
         }
 
 
+        /* ================================
+           CARD
+        ================================= */
+
         .card {
 
-            height: 260px;
+            width: 100%;
+
+            aspect-ratio: 4 / 6;
+
+            position: relative;
 
             background: #181b24;
 
@@ -219,28 +234,165 @@
             border-radius: 16px;
 
             transition:
-                transform 0.2s ease,
-                border-color 0.2s ease,
-                box-shadow 0.2s ease;
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
 
-        }
-
-
-        .card:hover {
-
-            transform: translateY(-5px);
-
-            border-color: #3b82f6;
-
-            box-shadow:
-                0 10px 30px
-                rgba(0, 0, 0, 0.25);
+            overflow: visible;
 
         }
 
 
         /* ================================
-           RESPONSIVE
+           FIRE RING
+        ================================= */
+
+        .card::before {
+
+            content: "";
+
+            position: absolute;
+
+            inset: -3px;
+
+            border-radius: 19px;
+
+            background:
+                conic-gradient(
+                    from 0deg,
+                    transparent 0deg,
+                    transparent 35deg,
+                    #ff1e00 70deg,
+                    #ff5e00 100deg,
+                    #ffb300 130deg,
+                    transparent 165deg,
+                    transparent 360deg
+                );
+
+            z-index: -1;
+
+            opacity: 0;
+
+            filter:
+                blur(2px)
+                drop-shadow(
+                    0 0 6px #ff3c00
+                );
+
+            transition:
+                opacity 0.25s ease;
+
+        }
+
+
+        /* ================================
+           FIRE GLOW
+        ================================= */
+
+        .card::after {
+
+            content: "";
+
+            position: absolute;
+
+            inset: -8px;
+
+            border-radius: 23px;
+
+            background:
+                conic-gradient(
+                    from 0deg,
+                    transparent,
+                    #ff2200,
+                    #ff7a00,
+                    transparent 35%,
+                    transparent
+                );
+
+            z-index: -2;
+
+            opacity: 0;
+
+            filter:
+                blur(12px);
+
+            transition:
+                opacity 0.25s ease;
+
+        }
+
+
+        /* ================================
+           CARD HOVER
+        ================================= */
+
+        .card:hover {
+
+            transform:
+                translateY(-7px);
+
+            box-shadow:
+                0 15px 35px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.45
+                );
+
+        }
+
+
+        .card:hover::before {
+
+            opacity: 1;
+
+            animation:
+                fireRing
+                1.4s
+                linear
+                infinite;
+
+        }
+
+
+        .card:hover::after {
+
+            opacity: 0.65;
+
+            animation:
+                fireRing
+                1.4s
+                linear
+                infinite;
+
+        }
+
+
+        /* ================================
+           FIRE ANIMATION
+        ================================= */
+
+        @keyframes fireRing {
+
+            from {
+
+                transform:
+                    rotate(0deg);
+
+            }
+
+            to {
+
+                transform:
+                    rotate(360deg);
+
+            }
+
+        }
+
+
+        /* ================================
+           TABLET
         ================================= */
 
         @media (max-width: 1100px) {
@@ -255,11 +407,16 @@
         }
 
 
+        /* ================================
+           MOBILE
+        ================================= */
+
         @media (max-width: 700px) {
 
             .navbar {
 
-                padding: 0 18px;
+                padding:
+                    0 18px;
 
             }
 
@@ -300,7 +457,8 @@
 
             .card {
 
-                height: 200px;
+                aspect-ratio:
+                    4 / 6;
 
             }
 
@@ -321,7 +479,10 @@
     <nav class="navbar">
 
 
-        <!-- CLICKING THIS OPENS DISCORD -->
+        <!--
+            CLICKING ARCHER GIVEAWAYS
+            OPENS THE DISCORD SERVER
+        -->
 
         <a
             class="brand"
@@ -334,6 +495,7 @@
 
 
         <div class="user-area">
+
 
             <img
                 id="userImage"
@@ -358,6 +520,7 @@
                 Logout
             </button>
 
+
         </div>
 
     </nav>
@@ -370,30 +533,41 @@
 
     <main class="content">
 
+
         <div class="cards">
 
 
-            <!-- WEBSITE CARD 1 -->
+            <!-- =================================
+                 WEBSITE CARD 1
+            ================================== -->
 
             <div class="card"></div>
 
 
-            <!-- WEBSITE CARD 2 -->
+            <!-- =================================
+                 WEBSITE CARD 2
+            ================================== -->
 
             <div class="card"></div>
 
 
-            <!-- WEBSITE CARD 3 -->
+            <!-- =================================
+                 WEBSITE CARD 3
+            ================================== -->
 
             <div class="card"></div>
 
 
-            <!-- WEBSITE CARD 4 -->
+            <!-- =================================
+                 WEBSITE CARD 4
+            ================================== -->
 
             <div class="card"></div>
 
 
-            <!-- WEBSITE CARD 5 -->
+            <!-- =================================
+                 WEBSITE CARD 5
+            ================================== -->
 
             <div class="card"></div>
 
@@ -405,6 +579,7 @@
 
 
 <script>
+
 
     // =====================================================
     // CHECK LOGIN
@@ -443,9 +618,10 @@
 
         if (savedUser) {
 
-            user = JSON.parse(
-                savedUser
-            );
+            user =
+                JSON.parse(
+                    savedUser
+                );
 
         }
 
@@ -466,6 +642,7 @@
 
     if (user) {
 
+
         const name =
             user.name ||
             user.given_name ||
@@ -474,20 +651,23 @@
 
         document.getElementById(
             "userName"
-        ).textContent = name;
+        ).textContent =
+            name;
 
 
         if (user.picture) {
 
             document.getElementById(
                 "userImage"
-            ).src = user.picture;
+            ).src =
+                user.picture;
 
         } else {
 
             document.getElementById(
                 "userImage"
-            ).style.display = "none";
+            ).style.display =
+                "none";
 
         }
 
@@ -501,13 +681,16 @@
 
     function logout() {
 
+
         localStorage.removeItem(
             "archer_google_logged_in"
         );
 
+
         localStorage.removeItem(
             "archer_google_credential"
         );
+
 
         localStorage.removeItem(
             "archer_google_user"
@@ -520,7 +703,8 @@
             google.accounts.id
         ) {
 
-            google.accounts.id.disableAutoSelect();
+            google.accounts.id
+                .disableAutoSelect();
 
         }
 
