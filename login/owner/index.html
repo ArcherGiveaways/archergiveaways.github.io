@@ -1,6 +1,8 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -12,14 +14,8 @@
 
     <link rel="icon" href="../../favicon.ico">
 
-    <!-- Google Identity Services -->
-    <script
-        src="https://accounts.google.com/gsi/client"
-        async
-        defer
-    ></script>
-
     <style>
+
         * {
             box-sizing: border-box;
         }
@@ -32,13 +28,16 @@
             align-items: center;
             justify-content: center;
 
-            font-family: Arial, Helvetica, sans-serif;
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
 
             background:
                 radial-gradient(
                     circle at top,
-                    #252525 0%,
-                    #101010 45%,
+                    #202020 0%,
+                    #0d0d0d 45%,
                     #050505 100%
                 );
 
@@ -46,54 +45,77 @@
         }
 
         .container {
-            width: min(430px, 90%);
+            width: calc(100% - 30px);
+            max-width: 430px;
 
             padding: 35px;
 
-            background: rgba(20, 20, 20, 0.92);
-
-            border: 1px solid rgba(255, 255, 255, 0.12);
-
             border-radius: 22px;
 
+            background:
+                rgba(20, 20, 20, 0.94);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.08);
+
             box-shadow:
-                0 20px 60px rgba(0, 0, 0, 0.55);
+                0 25px 70px rgba(0, 0, 0, 0.65);
 
             text-align: center;
         }
 
-        .title {
-            margin: 0 0 8px;
+        h1 {
+            margin: 0 0 10px;
 
             font-size: 32px;
-            font-weight: 900;
+            font-weight: 800;
         }
 
         .subtitle {
-            margin: 0 0 28px;
+            margin: 0 0 30px;
 
             color: #999;
 
-            font-size: 14px;
+            font-size: 15px;
         }
 
         .google-section {
+            margin-bottom: 25px;
+        }
+
+        #googleButton {
             display: flex;
             justify-content: center;
+        }
 
-            margin-bottom: 25px;
+        .status {
+            min-height: 22px;
+
+            margin-top: 14px;
+
+            font-size: 14px;
+
+            color: #777;
+
+            transition:
+                color 0.2s ease;
+        }
+
+        .success {
+            color: #6cff9b !important;
+        }
+
+        .error {
+            color: #ff6b6b !important;
         }
 
         .divider {
             display: flex;
             align-items: center;
+
             gap: 12px;
 
-            margin: 20px 0;
-
-            color: #666;
-
-            font-size: 12px;
+            margin: 25px 0;
         }
 
         .divider::before,
@@ -104,56 +126,48 @@
 
             height: 1px;
 
-            background: #333;
+            background:
+                rgba(255, 255, 255, 0.1);
+        }
+
+        .divider span {
+            color: #666;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            letter-spacing: 1px;
         }
 
         .password-section {
-            opacity: 0.35;
+            opacity: 0.4;
 
             pointer-events: none;
 
             transition:
-                opacity 0.3s ease,
-                transform 0.3s ease;
+                opacity 0.25s ease;
         }
 
         .password-section.unlocked {
             opacity: 1;
 
             pointer-events: auto;
-
-            transform: translateY(0);
-        }
-
-        .password-section.locked {
-            transform: translateY(5px);
-        }
-
-        label {
-            display: block;
-
-            margin-bottom: 9px;
-
-            text-align: left;
-
-            font-size: 13px;
-            font-weight: 700;
-
-            color: #bbb;
         }
 
         input {
             width: 100%;
 
-            padding: 14px 15px;
-
-            border: 1px solid #333;
+            padding: 15px 16px;
 
             border-radius: 12px;
 
+            border:
+                1px solid #292929;
+
             outline: none;
 
-            background: #0d0d0d;
+            background: #111;
 
             color: white;
 
@@ -164,25 +178,30 @@
                 box-shadow 0.2s ease;
         }
 
+        input::placeholder {
+            color: #666;
+        }
+
         input:focus {
-            border-color: #777;
+            border-color: #666;
 
             box-shadow:
-                0 0 0 3px rgba(255, 255, 255, 0.06);
+                0 0 0 3px
+                rgba(255, 255, 255, 0.05);
         }
 
         input:disabled {
             cursor: not-allowed;
         }
 
-        button {
+        #loginButton {
             width: 100%;
 
             margin-top: 14px;
 
-            padding: 14px;
+            padding: 15px;
 
-            border: 0;
+            border: none;
 
             border-radius: 12px;
 
@@ -192,455 +211,575 @@
 
             font-size: 15px;
 
-            font-weight: 800;
+            font-weight: 700;
 
             cursor: pointer;
 
             transition:
-                transform 0.15s ease,
-                opacity 0.15s ease;
+                transform 0.2s ease,
+                opacity 0.2s ease;
         }
 
-        button:hover:not(:disabled) {
+        #loginButton:hover:not(:disabled) {
             transform: translateY(-2px);
         }
 
-        button:disabled {
-            opacity: 0.35;
-
-            cursor: not-allowed;
+        #loginButton:active:not(:disabled) {
+            transform: translateY(0);
         }
 
-        .status {
+        #loginButton:disabled {
+            cursor: not-allowed;
+
+            opacity: 0.4;
+        }
+
+        .message {
             min-height: 20px;
 
             margin-top: 15px;
 
-            font-size: 13px;
+            font-size: 14px;
         }
 
-        .status.success {
-            color: #7cff9b;
+        .back {
+            display: inline-block;
+
+            margin-top: 25px;
+
+            color: #777;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            transition:
+                color 0.2s ease;
         }
 
-        .status.error {
-            color: #ff7777;
+        .back:hover {
+            color: white;
         }
 
-        .status.info {
-            color: #aaa;
-        }
-
-        .user-info {
-            display: none;
-
-            align-items: center;
-            justify-content: center;
-            gap: 9px;
-
-            margin-top: 12px;
-
-            color: #aaa;
-
-            font-size: 12px;
-        }
-
-        .user-info.visible {
-            display: flex;
-        }
-
-        .user-info img {
-            width: 26px;
-            height: 26px;
-
-            border-radius: 50%;
-        }
     </style>
+
 </head>
 
 <body>
 
-    <main class="container">
+    <div class="container">
 
-        <h1 class="title">Owner Login</h1>
+        <h1>Owner Login</h1>
 
         <p class="subtitle">
-            Google authentication is required before entering the owner password.
+            Sign in with Google to continue
         </p>
 
-        <!-- GOOGLE LOGIN -->
+
+        <!-- GOOGLE SIGN-IN -->
+
         <div class="google-section">
 
-            <div
-                id="g_id_onload"
-                data-client_id="263646768191-7854avn92k94rq8pbit809o0erq48grq.apps.googleusercontent.com"
-                data-callback="handleGoogleLogin"
-                data-auto_prompt="false">
-            </div>
+            <div id="googleButton"></div>
 
             <div
-                class="g_id_signin"
-                data-type="standard"
-                data-size="large"
-                data-theme="filled_black"
-                data-text="signin_with"
-                data-shape="rectangular"
-                data-logo_alignment="left">
-            </div>
-
-        </div>
-
-        <!-- LOGGED IN USER -->
-        <div
-            id="userInfo"
-            class="user-info">
-            <img
-                id="userPicture"
-                src=""
-                alt="Google account"
+                id="googleStatus"
+                class="status"
             >
+                Waiting for Google sign-in...
+            </div>
 
-            <span id="userEmail"></span>
         </div>
+
 
         <div class="divider">
-            OWNER PASSWORD
+
+            <span>
+                OWNER ACCESS
+            </span>
+
         </div>
 
-        <!-- PASSWORD -->
-        <section
-            id="passwordSection"
-            class="password-section locked">
 
-            <label for="ownerPassword">
-                Owner Password
-            </label>
+        <!-- OWNER PASSWORD -->
+
+        <div
+            id="passwordSection"
+            class="password-section"
+        >
 
             <input
-                id="ownerPassword"
+                id="password"
                 type="password"
-                placeholder="Enter owner password"
-                autocomplete="off"
+                placeholder="Owner password"
                 disabled
+                autocomplete="off"
             >
 
             <button
                 id="loginButton"
-                type="button"
                 disabled
-                onclick="verifyOwnerPassword()">
-                Enter Owner Panel
+            >
+                Unlock Owner Panel
             </button>
 
-        </section>
+            <div
+                id="message"
+                class="message"
+            ></div>
 
-        <div
-            id="status"
-            class="status info">
-            Sign in with Google to continue.
         </div>
 
-    </main>
+
+        <a
+            class="back"
+            href="../../login/"
+        >
+            ← Back to Login
+        </a>
+
+    </div>
+
+
+    <!-- GOOGLE IDENTITY SERVICES -->
+
+    <script
+        src="https://accounts.google.com/gsi/client"
+        async
+        defer
+    ></script>
 
 
     <script>
+
+        /*
+         * GOOGLE CLIENT ID
+         */
+
+        const GOOGLE_CLIENT_ID =
+            "263646768191-7854avn92k94rq8pbit809o0erq48grq.apps.googleusercontent.com";
+
+
+        /*
+         * CLOUDFLARE WORKER
+         */
+
+        const WORKER_URL =
+            "https://archer.arcdepths.workers.dev/";
+
+
+        /*
+         * GOOGLE CREDENTIAL
+         */
 
         let googleCredential = null;
 
 
         /*
-         * GOOGLE LOGIN
+         * ELEMENTS
          */
-        function handleGoogleLogin(response) {
 
-            if (!response || !response.credential) {
+        const googleButton =
+            document.getElementById(
+                "googleButton"
+            );
 
-                setStatus(
-                    "Google authentication failed.",
-                    "error"
-                );
+        const googleStatus =
+            document.getElementById(
+                "googleStatus"
+            );
+
+        const passwordSection =
+            document.getElementById(
+                "passwordSection"
+            );
+
+        const passwordInput =
+            document.getElementById(
+                "password"
+            );
+
+        const loginButton =
+            document.getElementById(
+                "loginButton"
+            );
+
+        const message =
+            document.getElementById(
+                "message"
+            );
+
+
+        /*
+         * GOOGLE LOGIN CALLBACK
+         */
+
+        function handleGoogleLogin(
+            response
+        ) {
+
+            if (
+                !response ||
+                !response.credential
+            ) {
+
+                googleStatus.textContent =
+                    "Google sign-in failed.";
+
+                googleStatus.className =
+                    "status error";
 
                 return;
             }
 
 
-            googleCredential = response.credential;
+            googleCredential =
+                response.credential;
 
 
             /*
-             * Decode the Google ID token.
-
-             * IMPORTANT:
-             * This is only used for displaying the
-             * account information.
-
-             * The backend must verify the token
-             * before trusting the Google account.
+             * GOOGLE SUCCESS
              */
-            try {
 
-                const payload = JSON.parse(
-                    atob(
-                        response.credential
-                            .split(".")[1]
-                            .replace(/-/g, "+")
-                            .replace(/_/g, "/")
-                    )
-                );
+            googleStatus.textContent =
+                "Google account verified ✓";
 
-
-                const email = payload.email || "";
-                const picture = payload.picture || "";
-
-
-                document.getElementById(
-                    "userEmail"
-                ).textContent = email;
-
-
-                if (picture) {
-
-                    document.getElementById(
-                        "userPicture"
-                    ).src = picture;
-
-                }
-
-
-                document.getElementById(
-                    "userInfo"
-                ).classList.add("visible");
-
-
-            } catch (error) {
-
-                console.error(
-                    "Could not read Google account:",
-                    error
-                );
-
-            }
+            googleStatus.className =
+                "status success";
 
 
             /*
-             * Unlock password section
+             * UNLOCK PASSWORD
              */
-            const passwordSection =
-                document.getElementById(
-                    "passwordSection"
-                );
-
-            const passwordInput =
-                document.getElementById(
-                    "ownerPassword"
-                );
-
-            const loginButton =
-                document.getElementById(
-                    "loginButton"
-                );
-
-
-            passwordSection.classList.remove(
-                "locked"
-            );
 
             passwordSection.classList.add(
                 "unlocked"
             );
 
+            passwordInput.disabled =
+                false;
 
-            passwordInput.disabled = false;
-
-            loginButton.disabled = false;
+            loginButton.disabled =
+                false;
 
 
             passwordInput.focus();
 
 
-            setStatus(
-                "Google authentication successful. Enter the owner password.",
-                "success"
-            );
+            /*
+             * SAVE GOOGLE LOGIN STATE
+             */
+
+            try {
+
+                localStorage.setItem(
+                    "archer_google_logged_in",
+                    "true"
+                );
+
+                localStorage.setItem(
+                    "archer_google_credential",
+                    googleCredential
+                );
+
+            } catch (error) {
+
+                console.log(
+                    "Could not save Google login state."
+                );
+
+            }
+
         }
 
 
         /*
-         * PASSWORD VERIFICATION
+         * INITIALIZE GOOGLE
          */
-        async function verifyOwnerPassword() {
 
-            const password =
-                document.getElementById(
-                    "ownerPassword"
-                ).value;
-
-
-            if (!googleCredential) {
-
-                setStatus(
-                    "Please sign in with Google first.",
-                    "error"
-                );
-
-                return;
-            }
-
-
-            if (!password) {
-
-                setStatus(
-                    "Please enter the owner password.",
-                    "error"
-                );
-
-                return;
-            }
-
-
-            const button =
-                document.getElementById(
-                    "loginButton"
-                );
-
-
-            button.disabled = true;
-
-            button.textContent = "Checking...";
-
-
-            setStatus(
-                "Verifying owner access...",
-                "info"
-            );
-
-
-            try {
-
-                /*
-                 * IMPORTANT:
-                 *
-                 * This endpoint needs to be created
-                 * server-side.
-                 *
-                 * GitHub Pages cannot directly read
-                 * OWNER_PASSWORD because GitHub secrets
-                 * are never exposed to browser JavaScript.
-                 */
-
-                const response = await fetch(
-                    "/api/owner-login",
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-
-                        body: JSON.stringify({
-                            googleCredential:
-                                googleCredential,
-
-                            password:
-                                password
-                        })
-                    }
-                );
-
-
-                const result =
-                    await response.json();
-
+        window.addEventListener(
+            "load",
+            function() {
 
                 if (
-                    response.ok &&
-                    result.success
+                    typeof google ===
+                    "undefined"
                 ) {
 
-                    setStatus(
-                        "Access granted. Redirecting...",
-                        "success"
-                    );
+                    googleStatus.textContent =
+                        "Google Sign-In could not load.";
 
-
-                    window.location.href =
-                        "/home/owner/";
+                    googleStatus.className =
+                        "status error";
 
                     return;
                 }
 
 
-                setStatus(
-                    result.message ||
-                    "Incorrect owner password.",
-                    "error"
-                );
+                google.accounts.id.initialize({
+
+                    client_id:
+                        GOOGLE_CLIENT_ID,
+
+                    callback:
+                        handleGoogleLogin
+
+                });
 
 
-            } catch (error) {
+                google.accounts.id.renderButton(
 
-                console.error(error);
+                    googleButton,
 
+                    {
 
-                setStatus(
-                    "Could not connect to the owner authentication server.",
-                    "error"
+                        theme:
+                            "filled_black",
+
+                        size:
+                            "large",
+
+                        width:
+                            300,
+
+                        text:
+                            "signin_with",
+
+                        shape:
+                            "pill"
+
+                    }
+
                 );
 
             }
-
-
-            button.disabled = false;
-
-            button.textContent =
-                "Enter Owner Panel";
-        }
+        );
 
 
         /*
-         * STATUS MESSAGE
+         * OWNER LOGIN
          */
-        function setStatus(
-            message,
-            type
-        ) {
 
-            const status =
-                document.getElementById(
-                    "status"
-                );
+        loginButton.addEventListener(
+            "click",
+            async function() {
+
+                const password =
+                    passwordInput.value.trim();
 
 
-            status.textContent =
-                message;
+                message.textContent = "";
+
+                message.className =
+                    "message";
 
 
-            status.className =
-                "status " + type;
-        }
+                /*
+                 * MAKE SURE GOOGLE LOGIN
+                 * HAPPENED FIRST
+                 */
+
+                if (!googleCredential) {
+
+                    message.textContent =
+                        "Please sign in with Google first.";
+
+                    message.className =
+                        "message error";
+
+                    return;
+
+                }
+
+
+                /*
+                 * MAKE SURE PASSWORD EXISTS
+                 */
+
+                if (!password) {
+
+                    message.textContent =
+                        "Enter the owner password.";
+
+                    message.className =
+                        "message error";
+
+                    passwordInput.focus();
+
+                    return;
+
+                }
+
+
+                /*
+                 * LOCK BUTTON WHILE
+                 * REQUEST IS RUNNING
+                 */
+
+                loginButton.disabled =
+                    true;
+
+                loginButton.textContent =
+                    "Checking...";
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            WORKER_URL,
+                            {
+
+                                method:
+                                    "POST",
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json"
+
+                                },
+
+                                body:
+                                    JSON.stringify({
+
+                                        googleCredential:
+                                            googleCredential,
+
+                                        password:
+                                            password
+
+                                    })
+
+                            }
+                        );
+
+
+                    /*
+                     * READ WORKER RESPONSE
+                     */
+
+                    const data =
+                        await response.json();
+
+
+                    /*
+                     * SUCCESS
+                     */
+
+                    if (
+                        response.ok &&
+                        data.success === true
+                    ) {
+
+                        message.textContent =
+                            "Owner access granted ✓";
+
+                        message.className =
+                            "message success";
+
+
+                        /*
+                         * STORE OWNER LOGIN
+                         */
+
+                        localStorage.setItem(
+                            "archer_owner_authenticated",
+                            "true"
+                        );
+
+
+                        /*
+                         * REDIRECT
+                         */
+
+                        setTimeout(
+                            function() {
+
+                                window.location.href =
+                                    "/home/owner/";
+
+                            },
+                            500
+                        );
+
+
+                        return;
+
+                    }
+
+
+                    /*
+                     * WORKER REJECTED LOGIN
+                     */
+
+                    message.textContent =
+                        data.message ||
+                        "Incorrect owner password.";
+
+                    message.className =
+                        "message error";
+
+
+                    loginButton.disabled =
+                        false;
+
+                    loginButton.textContent =
+                        "Unlock Owner Panel";
+
+                } catch (error) {
+
+                    console.error(
+                        "Owner authentication error:",
+                        error
+                    );
+
+
+                    /*
+                     * CONNECTION ERROR
+                     */
+
+                    message.textContent =
+                        "Could not connect to the owner authentication server.";
+
+                    message.className =
+                        "message error";
+
+
+                    loginButton.disabled =
+                        false;
+
+                    loginButton.textContent =
+                        "Unlock Owner Panel";
+
+                }
+
+            }
+        );
 
 
         /*
          * ENTER KEY
          */
-        document
-            .getElementById("ownerPassword")
-            .addEventListener(
-                "keydown",
-                function(event) {
 
-                    if (
-                        event.key === "Enter"
-                    ) {
+        passwordInput.addEventListener(
+            "keydown",
+            function(event) {
 
-                        verifyOwnerPassword();
+                if (
+                    event.key === "Enter" &&
+                    !loginButton.disabled
+                ) {
 
-                    }
+                    loginButton.click();
 
                 }
-            );
+
+            }
+        );
 
     </script>
 
 </body>
 </html>
+```
