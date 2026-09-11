@@ -588,103 +588,73 @@
 
 <script>
 
-
-    // =============================================
-    // CHECK LOGIN
-    // =============================================
-
-    const loggedIn =
-        localStorage.getItem(
-            "archer_google_logged_in"
-        );
-
-
-    if (loggedIn !== "true") {
-
-        window.location.replace(
-            "../login/"
-        );
-
-    }
-
-
-
-    // =============================================
-    // LOAD SAVED GOOGLE USER
-    // =============================================
-
-    let user = null;
-
-
-    try {
-
-        const savedUser =
+    function renderUser() {
+        const loggedIn =
             localStorage.getItem(
-                "archer_google_user"
+                "archer_google_logged_in"
             );
 
+        if (loggedIn !== "true") {
+            window.location.replace(
+                "../login/"
+            );
+            return;
+        }
 
-        if (savedUser) {
+        let user = null;
 
-            user =
-                JSON.parse(
-                    savedUser
+        try {
+            const savedUser =
+                localStorage.getItem(
+                    "archer_google_user"
                 );
 
+            if (savedUser) {
+                user =
+                    JSON.parse(
+                        savedUser
+                    );
+            }
+        } catch (error) {
+            console.error(
+                "Could not load Google user:",
+                error
+            );
         }
 
-    } catch (error) {
+        if (user) {
+            const name =
+                user.name ||
+                user.given_name ||
+                "User";
 
-        console.error(
-            "Could not load Google user:",
-            error
+            document.getElementById(
+                "userName"
+            ).textContent =
+                name;
+
+            if (user.picture) {
+                document.getElementById(
+                    "userImage"
+                ).src =
+                    user.picture;
+            } else {
+                document.getElementById(
+                    "userImage"
+                ).style.display =
+                    "none";
+            }
+        }
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener(
+            "DOMContentLoaded",
+            renderUser
         );
-
+    } else {
+        renderUser();
     }
-
-
-
-    // =============================================
-    // DISPLAY USER
-    // =============================================
-
-    if (user) {
-
-        const name =
-            user.name ||
-            user.given_name ||
-            "User";
-
-
-        document.getElementById(
-            "userName"
-        ).textContent =
-            name;
-
-
-        if (user.picture) {
-
-            document.getElementById(
-                "userImage"
-            ).src =
-                user.picture;
-
-        } else {
-
-            document.getElementById(
-                "userImage"
-            ).style.display =
-                "none";
-
-        }
-
-    }
-
-
-
-    // =============================================
-    // LOGOUT
-    // =============================================
 
     function logout() {
 
