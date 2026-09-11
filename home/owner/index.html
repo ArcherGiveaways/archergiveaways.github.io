@@ -1,862 +1,442 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Owner Panel - Archer Giveaways</title>
-
     <link rel="icon" href="../../favicon.ico">
 
-
     <style>
-
         * {
             box-sizing: border-box;
         }
 
-
         body {
             margin: 0;
-
             min-height: 100vh;
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-
+            font-family: Arial, Helvetica, sans-serif;
             background: #0f1117;
-
             color: white;
         }
-
-
-        /* =================================
-           NAVBAR
-        ================================= */
 
         .navbar {
             height: 70px;
-
             display: flex;
-
             align-items: center;
-
             justify-content: space-between;
-
             padding: 0 30px;
-
             background: #181b24;
-
-            border-bottom:
-                1px solid #292e3a;
+            border-bottom: 1px solid #292e3a;
         }
-
-
-        /* =================================
-           BRAND
-        ================================= */
 
         .brand {
             font-size: 20px;
-
             font-weight: bold;
-
             color: white;
-
             text-decoration: none;
-
             cursor: pointer;
-
-            transition:
-                opacity 0.2s ease,
-                transform 0.2s ease;
+            transition: opacity 0.2s ease, transform 0.2s ease;
         }
-
 
         .brand:hover {
             opacity: 0.85;
-
-            transform:
-                translateY(-1px);
+            transform: translateY(-1px);
         }
-
-
-        /* =================================
-           USER AREA
-        ================================= */
 
         .user-area {
             display: flex;
-
             align-items: center;
-
             gap: 12px;
         }
 
+        .user-profile-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 14px;
+            background: #101218;
+            border: 1px solid #292e3a;
+            border-radius: 10px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .user-profile-box:hover {
+            background: #1f2330;
+            border-color: #3b82f6;
+        }
 
         .user-image {
             width: 38px;
             height: 38px;
-
             border-radius: 50%;
-
             object-fit: cover;
-
-            border:
-                2px solid #3b82f6;
+            border: 2px solid #3b82f6;
         }
-
 
         .user-name {
             font-size: 14px;
         }
 
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            width: 220px;
+            min-height: 120px;
+            background: #181b24;
+            border: 1px solid #292e3a;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            padding: 15px;
+        }
 
-        /* =================================
-           LOGOUT
-        ================================= */
+        .user-dropdown.active {
+            display: block;
+        }
 
         .logout {
             margin-left: 10px;
-
-            padding:
-                9px 15px;
-
+            padding: 9px 15px;
             border: none;
-
             border-radius: 8px;
-
             background: #ef4444;
-
             color: white;
-
             cursor: pointer;
-
             font-size: 14px;
-
-            transition:
-                background 0.2s ease,
-                transform 0.2s ease;
+            transition: background 0.2s ease, transform 0.2s ease;
         }
-
 
         .logout:hover {
             background: #dc2626;
-
-            transform:
-                translateY(-1px);
+            transform: translateY(-1px);
         }
-
-
-        /* =================================
-           MAIN
-        ================================= */
 
         .content {
-            min-height:
-                calc(100vh - 70px);
-
+            min-height: calc(100vh - 70px);
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
-            padding:
-                50px 30px;
+            padding: 50px 30px;
         }
-
 
         .dashboard {
             width: 100%;
-
             max-width: 1250px;
         }
 
-
-        /* =================================
-           HEADING
-        ================================= */
-
         .dashboard-title {
             margin: 0 0 28px;
-
             text-align: center;
-
             font-size: 32px;
-
             font-weight: 900;
-
             letter-spacing: -0.5px;
-
             color: #ffffff;
         }
 
-
-        /* =================================
-           CARDS
-        ================================= */
-
         .cards {
             width: 100%;
-
             display: grid;
-
-            grid-template-columns:
-                repeat(5, 1fr);
-
+            grid-template-columns: repeat(5, 1fr);
             gap: 22px;
         }
 
-
-        /* =================================
-           CARD
-        ================================= */
-
         .card {
             position: relative;
-
             width: 100%;
-
-            aspect-ratio:
-                4 / 6;
-
+            aspect-ratio: 4 / 6;
             display: flex;
-
             flex-direction: column;
-
             justify-content: flex-end;
-
             padding: 18px;
-
             background: #181b24;
-
-            border:
-                1px solid #292e3a;
-
+            border: 1px solid #292e3a;
             border-radius: 16px;
-
             isolation: isolate;
-
-            transition:
-                transform 0.25s ease,
-                box-shadow 0.25s ease;
-
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
             overflow: visible;
         }
 
-
-        /* =================================
-           LAVA OUTER GLOW
-        ================================= */
-
         .card::before {
             content: "";
-
             position: absolute;
-
             inset: -4px;
-
             border-radius: 20px;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    #ff1600 0%,
-                    #ff4d00 18%,
-                    #ff9d00 35%,
-                    #ff3100 52%,
-                    #ff0800 70%,
-                    #ff7800 86%,
-                    #ff1a00 100%
-                );
-
+            background: linear-gradient(
+                90deg,
+                #ff1600 0%,
+                #ff4d00 18%,
+                #ff9d00 35%,
+                #ff3100 52%,
+                #ff0800 70%,
+                #ff7800 86%,
+                #ff1a00 100%
+            );
             padding: 4px;
-
-            -webkit-mask:
-                linear-gradient(#000 0 0) content-box,
-                linear-gradient(#000 0 0);
-
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
             -webkit-mask-composite: xor;
-
-            mask:
-                linear-gradient(#000 0 0) content-box,
-                linear-gradient(#000 0 0);
-
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
             mask-composite: exclude;
-
             opacity: 0;
-
             pointer-events: none;
-
             z-index: -1;
-
-            filter:
-                drop-shadow(0 0 4px #ff3b00)
-                drop-shadow(0 0 10px #ff1800)
-                drop-shadow(0 0 18px #ff5a00);
-
-            transition:
-                opacity 0.25s ease;
+            filter: drop-shadow(0 0 4px #ff3b00) drop-shadow(0 0 10px #ff1800) drop-shadow(0 0 18px #ff5a00);
+            transition: opacity 0.25s ease;
         }
-
-
-        /* =================================
-           LAVA FLOW
-        ================================= */
 
         .card::after {
             content: "";
-
             position: absolute;
-
             inset: -6px;
-
             border-radius: 22px;
-
-            background:
-                linear-gradient(
-                    100deg,
-                    transparent 0%,
-                    transparent 15%,
-                    #ff2100 25%,
-                    #ff6500 32%,
-                    #ffb300 38%,
-                    #ff3b00 45%,
-                    transparent 55%,
-                    transparent 72%,
-                    #ff1800 82%,
-                    #ff7a00 91%,
-                    transparent 100%
-                );
-
-            background-size:
-                300% 100%;
-
+            background: linear-gradient(
+                100deg,
+                transparent 0%,
+                transparent 15%,
+                #ff2100 25%,
+                #ff6500 32%,
+                #ffb300 38%,
+                #ff3b00 45%,
+                transparent 55%,
+                transparent 72%,
+                #ff1800 82%,
+                #ff7a00 91%,
+                transparent 100%
+            );
+            background-size: 300% 100%;
             padding: 6px;
-
-            -webkit-mask:
-                linear-gradient(#000 0 0) content-box,
-                linear-gradient(#000 0 0);
-
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
             -webkit-mask-composite: xor;
-
-            mask:
-                linear-gradient(#000 0 0) content-box,
-                linear-gradient(#000 0 0);
-
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
             mask-composite: exclude;
-
             opacity: 0;
-
             pointer-events: none;
-
             z-index: -2;
-
-            filter:
-                blur(7px);
-
-            transition:
-                opacity 0.25s ease;
+            filter: blur(7px);
+            transition: opacity 0.25s ease;
         }
-
-
-        /* =================================
-           HOVER
-        ================================= */
 
         .card:hover {
-            transform:
-                translateY(-8px);
-
-            box-shadow:
-                0 18px 40px
-                rgba(
-                    0,
-                    0,
-                    0,
-                    0.45
-                );
+            transform: translateY(-8px);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
         }
-
 
         .card:hover::before {
             opacity: 1;
         }
 
-
         .card:hover::after {
             opacity: 0.8;
-
-            animation:
-                lavaFlow
-                2.2s
-                ease-in-out
-                infinite;
+            animation: lavaFlow 2.2s ease-in-out infinite;
         }
-
 
         @keyframes lavaFlow {
-
             0% {
-                background-position:
-                    100% 50%;
+                background-position: 100% 50%;
             }
-
             50% {
-                background-position:
-                    0% 50%;
+                background-position: 0% 50%;
             }
-
             100% {
-                background-position:
-                    100% 50%;
+                background-position: 100% 50%;
             }
-
         }
-
-
-        /* =================================
-           OWNER PANEL AREA
-        ================================= */
 
         .owner-panel {
             position: relative;
-
             z-index: 5;
-
             width: 100%;
-
             padding: 13px 12px;
-
             border-radius: 11px;
-
-            border:
-                1px solid #343946;
-
+            border: 1px solid #343946;
             background: #101218;
-
             color: white;
-
             text-align: center;
-
             text-decoration: none;
-
             font-size: 14px;
-
             font-weight: 800;
-
             cursor: pointer;
-
-            transition:
-                background 0.2s ease,
-                border-color 0.2s ease,
-                transform 0.2s ease,
-                box-shadow 0.2s ease;
+            transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
         }
-
 
         .owner-panel:hover {
             background: #222631;
-
             border-color: #ff5a00;
-
-            box-shadow:
-                0 0 18px
-                rgba(
-                    255,
-                    80,
-                    0,
-                    0.25
-                );
-
-            transform:
-                translateY(-2px);
+            box-shadow: 0 0 18px rgba(255, 80, 0, 0.25);
+            transform: translateY(-2px);
         }
-
 
         .owner-panel:active {
-            transform:
-                translateY(0);
+            transform: translateY(0);
         }
-
-
-        /* =================================
-           TABLET
-        ================================= */
 
         @media (max-width: 1100px) {
-
             .cards {
-                grid-template-columns:
-                    repeat(3, 1fr);
+                grid-template-columns: repeat(3, 1fr);
             }
-
         }
 
-
-        /* =================================
-           MOBILE
-        ================================= */
-
         @media (max-width: 700px) {
-
             .navbar {
-                padding:
-                    0 18px;
+                padding: 0 18px;
             }
-
 
             .user-name {
                 display: none;
             }
 
-
             .logout {
                 margin-left: 0;
             }
 
-
             .cards {
-                grid-template-columns:
-                    repeat(2, 1fr);
-
+                grid-template-columns: repeat(2, 1fr);
                 gap: 18px;
             }
-
 
             .dashboard-title {
                 font-size: 26px;
             }
-
         }
 
-
         @media (max-width: 450px) {
-
             .content {
-                padding:
-                    30px 20px;
+                padding: 30px 20px;
             }
-
 
             .cards {
-                grid-template-columns:
-                    1fr;
+                grid-template-columns: 1fr;
             }
-
 
             .dashboard-title {
                 font-size: 23px;
             }
 
-
             .card {
-                aspect-ratio:
-                    4 / 6;
+                aspect-ratio: 4 / 6;
             }
-
         }
-
     </style>
-
 </head>
-
-
 <body>
 
-
-    <!-- =================================
-         NAVBAR
-    ================================= -->
-
     <nav class="navbar">
-
-
-        <a
-            class="brand"
-            href="https://discord.gg/jBFAzkdfWG"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
+        <a class="brand" href="https://discord.gg/jBFAzkdfWG" target="_blank" rel="noopener noreferrer">
             Archer Giveaways
         </a>
 
-
         <div class="user-area">
+            <div class="user-profile-box" id="userProfileBtn">
+                <img id="userImage" class="user-image" src="" alt="Profile">
+                <span id="userName" class="user-name">Loading...</span>
+                <div class="user-dropdown" id="userDropdown"></div>
+            </div>
 
-            <img
-                id="userImage"
-                class="user-image"
-                src=""
-                alt="Profile"
-            >
-
-
-            <span
-                id="userName"
-                class="user-name"
-            >
-                Loading...
-            </span>
-
-
-            <button
-                class="logout"
-                onclick="logout()"
-            >
+            <button class="logout" onclick="logout()">
                 Logout
             </button>
-
         </div>
-
     </nav>
 
-
-
-    <!-- =================================
-         MAIN DASHBOARD
-    ================================= -->
-
     <main class="content">
-
         <div class="dashboard">
-
-
-            <!-- TITLE -->
-
             <h1 class="dashboard-title">
                 Pick what you want to access/do
             </h1>
 
-
-            <!-- FIVE CARDS -->
-
             <div class="cards">
-
-
-                <!-- CARD 1 -->
-
                 <div class="card">
-
-                    <a
-                        class="owner-panel"
-                        href="/home/owner/"
-                    >
+                    <a class="owner-panel" href="/home/owner/">
                         Owner Panel
                     </a>
-
                 </div>
-
-
-                <!-- CARD 2 -->
 
                 <div class="card">
-
-                    <a
-                        class="owner-panel"
-                        href="/home/owner/"
-                    >
+                    <a class="owner-panel" href="/home/owner/">
                         Owner Panel
                     </a>
-
                 </div>
-
-
-                <!-- CARD 3 -->
 
                 <div class="card">
-
-                    <a
-                        class="owner-panel"
-                        href="/home/owner/"
-                    >
+                    <a class="owner-panel" href="/home/owner/">
                         Owner Panel
                     </a>
-
                 </div>
-
-
-                <!-- CARD 4 -->
 
                 <div class="card">
-
-                    <a
-                        class="owner-panel"
-                        href="/home/owner/"
-                    >
+                    <a class="owner-panel" href="/home/owner/">
                         Owner Panel
                     </a>
-
                 </div>
-
-
-                <!-- CARD 5 -->
 
                 <div class="card">
-
-                    <a
-                        class="owner-panel"
-                        href="/home/owner/"
-                    >
+                    <a class="owner-panel" href="/home/owner/">
                         Owner Panel
                     </a>
-
                 </div>
-
-
             </div>
-
         </div>
-
     </main>
 
-
-
 <script>
-
-
-    // =============================================
-    // CHECK LOGIN
-    // =============================================
-
-    const loggedIn =
-        localStorage.getItem(
-            "archer_google_logged_in"
-        );
-
+    const loggedIn = localStorage.getItem("archer_google_logged_in");
 
     if (loggedIn !== "true") {
-
-        window.location.replace(
-            "../../login/"
-        );
-
+        window.location.replace("../../login/");
     }
-
-
-
-    // =============================================
-    // LOAD SAVED GOOGLE USER
-    // =============================================
 
     let user = null;
 
-
     try {
-
-        const savedUser =
-            localStorage.getItem(
-                "archer_google_user"
-            );
-
-
+        const savedUser = localStorage.getItem("archer_google_user");
         if (savedUser) {
-
-            user =
-                JSON.parse(
-                    savedUser
-                );
-
+            user = JSON.parse(savedUser);
         }
-
     } catch (error) {
-
-        console.error(
-            "Could not load Google user:",
-            error
-        );
-
+        console.error("Could not load Google user:", error);
     }
-
-
-
-    // =============================================
-    // DISPLAY USER
-    // =============================================
 
     if (user) {
-
-        const name =
-            user.name ||
-            user.given_name ||
-            "User";
-
-
-        document.getElementById(
-            "userName"
-        ).textContent =
-            name;
-
+        const name = user.name || user.given_name || "User";
+        document.getElementById("userName").textContent = name;
 
         if (user.picture) {
-
-            document.getElementById(
-                "userImage"
-            ).src =
-                user.picture;
-
+            document.getElementById("userImage").src = user.picture;
         } else {
-
-            document.getElementById(
-                "userImage"
-            ).style.display =
-                "none";
-
+            document.getElementById("userImage").style.display = "none";
         }
-
     }
 
+    const userProfileBtn = document.getElementById("userProfileBtn");
+    const userDropdown = document.getElementById("userDropdown");
 
+    userProfileBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        userDropdown.classList.toggle("active");
+    });
 
-    // =============================================
-    // LOGOUT
-    // =============================================
+    document.addEventListener("click", (e) => {
+        if (!userProfileBtn.contains(e.target)) {
+            userDropdown.classList.remove("active");
+        }
+    });
 
     function logout() {
+        localStorage.removeItem("archer_google_logged_in");
+        localStorage.removeItem("archer_google_credential");
+        localStorage.removeItem("archer_google_user");
 
-        localStorage.removeItem(
-            "archer_google_logged_in"
-        );
-
-
-        localStorage.removeItem(
-            "archer_google_credential"
-        );
-
-
-        localStorage.removeItem(
-            "archer_google_user"
-        );
-
-
-        if (
-            window.google &&
-            google.accounts &&
-            google.accounts.id
-        ) {
-
-            google.accounts.id
-                .disableAutoSelect();
-
+        if (window.google && google.accounts && google.accounts.id) {
+            google.accounts.id.disableAutoSelect();
         }
 
-
-        window.location.replace(
-            "../../login/"
-        );
-
+        window.location.replace("../../login/");
     }
-
 </script>
-
 
 </body>
 </html>
