@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Home - Archer Giveaways</title>
+
     <link rel="icon" href="../favicon.ico">
 
     <style>
@@ -35,12 +37,6 @@
             color: white;
             text-decoration: none;
             cursor: pointer;
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-
-        .brand:hover {
-            opacity: 0.85;
-            transform: translateY(-1px);
         }
 
         .user-area {
@@ -60,7 +56,6 @@
             border-radius: 10px;
             cursor: pointer;
             user-select: none;
-            transition: background 0.2s ease, border-color 0.2s ease;
         }
 
         .user-profile-box:hover {
@@ -85,8 +80,7 @@
             position: absolute;
             top: calc(100% + 10px);
             right: 0;
-            width: 220px;
-            min-height: 120px;
+            width: 280px;
             background: #181b24;
             border: 1px solid #292e3a;
             border-radius: 12px;
@@ -99,6 +93,120 @@
             display: block;
         }
 
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .profile-header img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-header strong {
+            display: block;
+            font-size: 15px;
+        }
+
+        .profile-header span {
+            color: #888;
+            font-size: 12px;
+        }
+
+        .discord-section {
+            padding-top: 13px;
+            border-top: 1px solid #292e3a;
+        }
+
+        .discord-title {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .discord-status {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 10px;
+        }
+
+        .verify-button {
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            background: #5865f2;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .verify-button:hover {
+            background: #4752c4;
+        }
+
+        .verify-form {
+            display: none;
+            margin-top: 12px;
+        }
+
+        .verify-form.active {
+            display: block;
+        }
+
+        .verify-input {
+            width: 100%;
+            padding: 11px;
+            border-radius: 8px;
+            border: 1px solid #343946;
+            background: #101218;
+            color: white;
+            outline: none;
+            text-align: center;
+            letter-spacing: 4px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .verify-input:focus {
+            border-color: #5865f2;
+        }
+
+        .verify-submit {
+            width: 100%;
+            margin-top: 8px;
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            background: #22c55e;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .verify-submit:hover {
+            background: #16a34a;
+        }
+
+        .verify-message {
+            min-height: 18px;
+            margin-top: 8px;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .verify-success {
+            color: #6cff9b;
+        }
+
+        .verify-error {
+            color: #ff6b6b;
+        }
+
         .logout {
             margin-left: 10px;
             padding: 9px 15px;
@@ -108,12 +216,10 @@
             color: white;
             cursor: pointer;
             font-size: 14px;
-            transition: background 0.2s ease, transform 0.2s ease;
         }
 
         .logout:hover {
             background: #dc2626;
-            transform: translateY(-1px);
         }
 
         .content {
@@ -134,8 +240,6 @@
             text-align: center;
             font-size: 32px;
             font-weight: 900;
-            letter-spacing: -0.5px;
-            color: #ffffff;
         }
 
         .cards {
@@ -154,7 +258,6 @@
             border-radius: 16px;
             isolation: isolate;
             transition: transform 0.25s ease, box-shadow 0.25s ease;
-            overflow: visible;
         }
 
         .card::before {
@@ -173,15 +276,21 @@
                 #ff1a00 100%
             );
             padding: 4px;
-            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask:
+                linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0);
             -webkit-mask-composite: xor;
-            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask:
+                linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0);
             mask-composite: exclude;
             opacity: 0;
             pointer-events: none;
             z-index: -1;
-            filter: drop-shadow(0 0 4px #ff3b00) drop-shadow(0 0 10px #ff1800) drop-shadow(0 0 18px #ff5a00);
-            transition: opacity 0.25s ease;
+            filter:
+                drop-shadow(0 0 4px #ff3b00)
+                drop-shadow(0 0 10px #ff1800)
+                drop-shadow(0 0 18px #ff5a00);
         }
 
         .card::after {
@@ -205,15 +314,18 @@
             );
             background-size: 300% 100%;
             padding: 6px;
-            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask:
+                linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0);
             -webkit-mask-composite: xor;
-            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask:
+                linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0);
             mask-composite: exclude;
             opacity: 0;
             pointer-events: none;
             z-index: -2;
             filter: blur(7px);
-            transition: opacity 0.25s ease;
         }
 
         .card:hover {
@@ -234,9 +346,11 @@
             0% {
                 background-position: 100% 50%;
             }
+
             50% {
                 background-position: 0% 50%;
             }
+
             100% {
                 background-position: 100% 50%;
             }
@@ -255,10 +369,6 @@
 
             .user-name {
                 display: none;
-            }
-
-            .logout {
-                margin-left: 0;
             }
 
             .cards {
@@ -283,112 +393,612 @@
             .dashboard-title {
                 font-size: 23px;
             }
-
-            .card {
-                aspect-ratio: 4 / 6;
-            }
         }
     </style>
 </head>
+
 <body>
 
-    <nav class="navbar">
-        <a class="brand" href="https://discord.gg/jBFAzkdfWG" target="_blank" rel="noopener noreferrer">
-            Archer Giveaways
-        </a>
+<nav class="navbar">
 
-        <div class="user-area">
-            <div class="user-profile-box" id="userProfileBtn">
-                <img id="userImage" class="user-image" src="" alt="Profile">
-                <span id="userName" class="user-name">Loading...</span>
-                <div class="user-dropdown" id="userDropdown"></div>
+    <a
+        class="brand"
+        href="https://discord.gg/jBFAzkdfWG"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        Archer Giveaways
+    </a>
+
+    <div class="user-area">
+
+        <div
+            class="user-profile-box"
+            id="userProfileBtn"
+        >
+
+            <img
+                id="userImage"
+                class="user-image"
+                src=""
+                alt="Profile"
+            >
+
+            <span
+                id="userName"
+                class="user-name"
+            >
+                Loading...
+            </span>
+
+            <div
+                class="user-dropdown"
+                id="userDropdown"
+            >
+
+                <div class="profile-header">
+
+                    <img
+                        id="dropdownUserImage"
+                        src=""
+                        alt="Discord / Google profile"
+                    >
+
+                    <div>
+                        <strong id="dropdownUserName">
+                            User
+                        </strong>
+
+                        <span id="dropdownUserEmail">
+                            —
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="discord-section">
+
+                    <div class="discord-title">
+                        Discord
+                    </div>
+
+                    <div
+                        class="discord-status"
+                        id="discordStatus"
+                    >
+                        Not verified
+                    </div>
+
+                    <button
+                        class="verify-button"
+                        id="verifyButton"
+                        onclick="openVerifyForm(event)"
+                    >
+                        Verify Discord
+                    </button>
+
+                    <div
+                        class="verify-form"
+                        id="verifyForm"
+                    >
+
+                        <input
+                            id="verifyCode"
+                            class="verify-input"
+                            type="text"
+                            maxlength="6"
+                            placeholder="6-CHAR CODE"
+                            autocomplete="off"
+                            spellcheck="false"
+                        >
+
+                        <button
+                            class="verify-submit"
+                            id="verifySubmit"
+                            onclick="submitDiscordVerification(event)"
+                        >
+                            Verify Discord
+                        </button>
+
+                        <div
+                            class="verify-message"
+                            id="verifyMessage"
+                        ></div>
+
+                    </div>
+
+                </div>
+
             </div>
 
-            <button class="logout" onclick="logout()">
-                Logout
-            </button>
         </div>
-    </nav>
 
-    <main class="content">
-        <div class="dashboard">
-            <h1 class="dashboard-title">
-                Pick what you want to acces/do
-            </h1>
+        <button
+            class="logout"
+            onclick="logout()"
+        >
+            Logout
+        </button>
 
-            <div class="cards">
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-            </div>
+    </div>
+</nav>
+
+
+<main class="content">
+
+    <div class="dashboard">
+
+        <h1 class="dashboard-title">
+            Pick what you want to access/do
+        </h1>
+
+        <div class="cards">
+
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+
         </div>
-    </main>
+
+    </div>
+
+</main>
+
 
 <script>
-    function renderUser() {
-        const loggedIn = localStorage.getItem("archer_google_logged_in");
 
-        if (loggedIn !== "true") {
-            window.location.replace("../login/");
+const WORKER_URL =
+    "https://archer.arcdepths.workers.dev";
+
+let currentUser = null;
+
+
+/* --------------------------------
+   LOAD GOOGLE USER
+-------------------------------- */
+
+function renderUser() {
+
+    const loggedIn =
+        localStorage.getItem(
+            "archer_google_logged_in"
+        );
+
+    if (loggedIn !== "true") {
+
+        window.location.replace("../login/");
+        return;
+    }
+
+
+    try {
+
+        const savedUser =
+            localStorage.getItem(
+                "archer_google_user"
+            );
+
+        if (savedUser) {
+
+            currentUser =
+                JSON.parse(savedUser);
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Could not load user:",
+            error
+        );
+
+    }
+
+
+    if (!currentUser) {
+        return;
+    }
+
+
+    const name =
+        currentUser.name ||
+        currentUser.given_name ||
+        "User";
+
+
+    document.getElementById(
+        "userName"
+    ).textContent = name;
+
+
+    document.getElementById(
+        "dropdownUserName"
+    ).textContent = name;
+
+
+    document.getElementById(
+        "dropdownUserEmail"
+    ).textContent =
+        currentUser.email || "";
+
+
+    const picture =
+        currentUser.picture;
+
+
+    if (picture) {
+
+        document.getElementById(
+            "userImage"
+        ).src = picture;
+
+        document.getElementById(
+            "dropdownUserImage"
+        ).src = picture;
+
+    }
+
+
+    updateDiscordStatus();
+
+}
+
+
+/* --------------------------------
+   DISCORD STATUS
+-------------------------------- */
+
+function updateDiscordStatus() {
+
+    const verified =
+        currentUser?.discordVerified === true;
+
+    const status =
+        document.getElementById(
+            "discordStatus"
+        );
+
+    const button =
+        document.getElementById(
+            "verifyButton"
+        );
+
+    if (verified) {
+
+        status.textContent =
+            "Verified ✓";
+
+        status.className =
+            "discord-status verify-success";
+
+        button.style.display =
+            "none";
+
+    } else {
+
+        status.textContent =
+            "Not verified";
+
+        button.style.display =
+            "block";
+
+    }
+
+}
+
+
+/* --------------------------------
+   OPEN VERIFY FORM
+-------------------------------- */
+
+function openVerifyForm(event) {
+
+    if (event) {
+        event.stopPropagation();
+    }
+
+    document
+        .getElementById("verifyForm")
+        .classList.add("active");
+
+    document
+        .getElementById("verifyCode")
+        .focus();
+
+}
+
+
+/* --------------------------------
+   VERIFY DISCORD
+-------------------------------- */
+
+async function submitDiscordVerification(event) {
+
+    if (event) {
+        event.stopPropagation();
+    }
+
+    const input =
+        document.getElementById(
+            "verifyCode"
+        );
+
+    const message =
+        document.getElementById(
+            "verifyMessage"
+        );
+
+    const submit =
+        document.getElementById(
+            "verifySubmit"
+        );
+
+
+    const code =
+        input.value
+            .trim()
+            .toUpperCase();
+
+
+    message.className =
+        "verify-message";
+
+    message.textContent = "";
+
+
+    if (!/^[A-Z0-9]{6}$/.test(code)) {
+
+        message.className =
+            "verify-message verify-error";
+
+        message.textContent =
+            "Enter the 6-character code.";
+
+        return;
+    }
+
+
+    if (!currentUser?.sub) {
+
+        message.className =
+            "verify-message verify-error";
+
+        message.textContent =
+            "Your Google account could not be identified.";
+
+        return;
+    }
+
+
+    submit.disabled = true;
+    submit.textContent = "Checking...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${WORKER_URL}/discord/verify`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+                            code: code,
+                            googleId: currentUser.sub
+                        })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            response.ok &&
+            data.success === true
+        ) {
+
+            currentUser.discordVerified =
+                true;
+
+            currentUser.discordId =
+                data.discordId;
+
+            currentUser.discordName =
+                data.discordName;
+
+            currentUser.discordUsername =
+                data.discordUsername;
+
+            currentUser.picture =
+                data.discordAvatar ||
+                currentUser.picture;
+
+
+            localStorage.setItem(
+                "archer_google_user",
+                JSON.stringify(
+                    currentUser
+                )
+            );
+
+
+            document.getElementById(
+                "userImage"
+            ).src =
+                currentUser.picture;
+
+
+            document.getElementById(
+                "dropdownUserImage"
+            ).src =
+                currentUser.picture;
+
+
+            updateDiscordStatus();
+
+
+            message.className =
+                "verify-message verify-success";
+
+            message.textContent =
+                "Discord verified ✓";
+
+
+            input.value = "";
+
             return;
         }
 
-        let user = null;
 
-        try {
-            const savedUser = localStorage.getItem("archer_google_user");
-            if (savedUser) {
-                user = JSON.parse(savedUser);
-            }
-        } catch (error) {
-            console.error("Could not load Google user:", error);
-        }
+        message.className =
+            "verify-message verify-error";
 
-        if (user) {
-            const name = user.name || user.given_name || "User";
-            document.getElementById("userName").textContent = name;
+        message.textContent =
+            data.message ||
+            "Invalid or expired code.";
 
-            if (user.picture) {
-                document.getElementById("userImage").src = user.picture;
-            } else {
-                document.getElementById("userImage").style.display = "none";
-            }
-        }
+
+    } catch (error) {
+
+        console.error(
+            "Discord verification error:",
+            error
+        );
+
+        message.className =
+            "verify-message verify-error";
+
+        message.textContent =
+            "Could not connect to Archer.";
+
+    } finally {
+
+        submit.disabled = false;
+        submit.textContent =
+            "Verify Discord";
+
     }
 
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", renderUser);
-    } else {
-        renderUser();
+}
+
+
+/* --------------------------------
+   PROFILE DROPDOWN
+-------------------------------- */
+
+const userProfileBtn =
+    document.getElementById(
+        "userProfileBtn"
+    );
+
+const userDropdown =
+    document.getElementById(
+        "userDropdown"
+    );
+
+
+userProfileBtn.addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+        userDropdown.classList.toggle(
+            "active"
+        );
+
+    }
+);
+
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            !userProfileBtn.contains(
+                event.target
+            )
+        ) {
+
+            userDropdown.classList.remove(
+                "active"
+            );
+
+        }
+
+    }
+);
+
+
+/* --------------------------------
+   LOGOUT
+-------------------------------- */
+
+function logout() {
+
+    localStorage.removeItem(
+        "archer_google_logged_in"
+    );
+
+    localStorage.removeItem(
+        "archer_google_credential"
+    );
+
+    localStorage.removeItem(
+        "archer_google_user"
+    );
+
+
+    if (
+        window.google &&
+        google.accounts &&
+        google.accounts.id
+    ) {
+
+        google.accounts.id
+            .disableAutoSelect();
+
     }
 
-    const userProfileBtn = document.getElementById("userProfileBtn");
-    const userDropdown = document.getElementById("userDropdown");
 
-    userProfileBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        userDropdown.classList.toggle("active");
-    });
+    window.location.replace(
+        "../login/"
+    );
 
-    document.addEventListener("click", (e) => {
-        if (!userProfileBtn.contains(e.target)) {
-            userDropdown.classList.remove("active");
-        }
-    });
+}
 
-    function logout() {
-        localStorage.removeItem("archer_google_logged_in");
-        localStorage.removeItem("archer_google_credential");
-        localStorage.removeItem("archer_google_user");
 
-        if (window.google && google.accounts && google.accounts.id) {
-            google.accounts.id.disableAutoSelect();
-        }
+/* --------------------------------
+   START
+-------------------------------- */
 
-        window.location.replace("../login/");
-    }
+if (
+    document.readyState ===
+    "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        renderUser
+    );
+
+} else {
+
+    renderUser();
+
+}
+
 </script>
 
 </body>
