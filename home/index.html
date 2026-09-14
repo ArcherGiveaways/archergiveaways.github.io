@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Home - Archer Giveaways</title>
+    <title>Owner Home - Archer Giveaways</title>
 
-    <link rel="icon" href="../favicon.ico">
+    <link rel="icon" href="../../favicon.ico">
 
     <style>
 
@@ -17,10 +19,20 @@
             box-sizing: border-box;
         }
 
+        /*
+         * The page starts hidden.
+         *
+         * It is only revealed after the owner
+         * authentication check succeeds.
+         */
         body {
             margin: 0;
             min-height: 100vh;
-            font-family: Arial, Helvetica, sans-serif;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
 
             background:
                 radial-gradient(
@@ -36,6 +48,15 @@
                 #0f1117;
 
             color: white;
+
+            visibility: hidden;
+        }
+
+        /*
+         * Only added after authentication.
+         */
+        body.auth-ready {
+            visibility: visible;
         }
 
         /* =====================================================
@@ -57,7 +78,8 @@
             border-bottom:
                 1px solid #292e3a;
 
-            backdrop-filter: blur(14px);
+            backdrop-filter:
+                blur(14px);
 
             position: sticky;
             top: 0;
@@ -75,7 +97,9 @@
 
         .user-area {
             display: flex;
+
             align-items: center;
+
             gap: 12px;
         }
 
@@ -89,7 +113,8 @@
 
             padding: 6px 14px;
 
-            background: #101218;
+            background:
+                #101218;
 
             border:
                 1px solid #292e3a;
@@ -99,12 +124,16 @@
             cursor: pointer;
             user-select: none;
 
-            transition: 0.2s ease;
+            transition:
+                0.2s ease;
         }
 
         .user-profile-box:hover {
-            background: #1f2330;
-            border-color: #5865f2;
+            background:
+                #1f2330;
+
+            border-color:
+                #5865f2;
         }
 
         .user-image {
@@ -118,7 +147,8 @@
             border:
                 2px solid #5865f2;
 
-            background: #20232d;
+            background:
+                #20232d;
         }
 
         .user-name {
@@ -126,9 +156,14 @@
 
             max-width: 180px;
 
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            overflow:
+                hidden;
+
+            text-overflow:
+                ellipsis;
+
+            white-space:
+                nowrap;
         }
 
         /* =====================================================
@@ -147,7 +182,8 @@
 
             width: 330px;
 
-            background: #181b24;
+            background:
+                #181b24;
 
             border:
                 1px solid #292e3a;
@@ -155,7 +191,8 @@
             border-radius: 16px;
 
             box-shadow:
-                0 18px 45px rgba(0, 0, 0, 0.55);
+                0 18px 45px
+                rgba(0, 0, 0, 0.55);
 
             z-index: 100;
 
@@ -163,11 +200,13 @@
         }
 
         .user-dropdown.active {
-            display: block;
+            display:
+                block;
         }
 
         .profile-header {
             display: flex;
+
             align-items: center;
 
             gap: 12px;
@@ -183,7 +222,8 @@
 
             object-fit: cover;
 
-            background: #20232d;
+            background:
+                #20232d;
         }
 
         .profile-header strong {
@@ -195,10 +235,15 @@
         }
 
         .profile-header span {
-            color: #9298a5;
+            color:
+                #9298a5;
 
             font-size: 12px;
         }
+
+        /* =====================================================
+           DISCORD
+        ===================================================== */
 
         .discord-section {
             padding-top: 15px;
@@ -218,15 +263,18 @@
         .discord-status {
             font-size: 12px;
 
-            color: #9298a5;
+            color:
+                #9298a5;
 
             margin-bottom: 12px;
 
-            line-height: 1.5;
+            line-height:
+                1.5;
         }
 
         .discord-status.success {
-            color: #6cff9b;
+            color:
+                #6cff9b;
         }
 
         .discord-button {
@@ -238,7 +286,8 @@
 
             padding: 11px 12px;
 
-            background: #5865f2;
+            background:
+                #5865f2;
 
             color: white;
 
@@ -246,40 +295,49 @@
 
             cursor: pointer;
 
-            transition: 0.2s ease;
+            transition:
+                0.2s ease;
 
             margin-top: 8px;
         }
 
         .discord-button:hover {
-            background: #4752c4;
+            background:
+                #4752c4;
 
             transform:
                 translateY(-1px);
         }
 
         .discord-button:disabled {
-            opacity: 0.65;
+            opacity:
+                0.65;
 
-            cursor: wait;
+            cursor:
+                wait;
 
-            transform: none;
+            transform:
+                none;
         }
 
         .discord-button.cancel {
-            background: #ef4444;
+            background:
+                #ef4444;
         }
 
         .discord-button.cancel:hover {
-            background: #dc2626;
+            background:
+                #dc2626;
         }
 
         .discord-button.verify {
-            background: #303642;
+            background:
+                #303642;
         }
 
         .discord-button.verify:hover {
-            background: #3b4252;
+            background:
+                #3b4252;
         }
 
         .link-code-box {
@@ -292,15 +350,18 @@
             border:
                 1px solid #343946;
 
-            background: #101218;
+            background:
+                #101218;
 
             border-radius: 12px;
 
-            text-align: center;
+            text-align:
+                center;
         }
 
         .link-code-box.active {
-            display: block;
+            display:
+                block;
         }
 
         .link-code {
@@ -310,15 +371,18 @@
 
             font-weight: 900;
 
-            margin: 6px 0 4px;
+            margin:
+                6px 0 4px;
         }
 
         .link-instructions {
-            color: #a8adba;
+            color:
+                #a8adba;
 
             font-size: 12px;
 
-            line-height: 1.5;
+            line-height:
+                1.5;
         }
 
         .link-timer {
@@ -328,7 +392,8 @@
 
             font-weight: 800;
 
-            color: #ffb86b;
+            color:
+                #ffb86b;
         }
 
         .link-message {
@@ -338,15 +403,18 @@
 
             font-size: 12px;
 
-            text-align: center;
+            text-align:
+                center;
         }
 
         .link-message.success {
-            color: #6cff9b;
+            color:
+                #6cff9b;
         }
 
         .link-message.error {
-            color: #ff6b6b;
+            color:
+                #ff6b6b;
         }
 
         .linked-discord-profile {
@@ -360,16 +428,19 @@
 
             padding: 10px;
 
-            background: #101218;
+            background:
+                #101218;
 
             border:
                 1px solid #292e3a;
 
-            border-radius: 11px;
+            border-radius:
+                11px;
         }
 
         .linked-discord-profile.active {
-            display: flex;
+            display:
+                flex;
         }
 
         .linked-discord-profile img {
@@ -378,49 +449,71 @@
 
             border-radius: 50%;
 
-            object-fit: cover;
+            object-fit:
+                cover;
         }
 
         .linked-discord-profile strong {
-            display: block;
+            display:
+                block;
 
-            font-size: 13px;
+            font-size:
+                13px;
         }
 
         .linked-discord-profile span {
-            display: block;
+            display:
+                block;
 
-            margin-top: 2px;
+            margin-top:
+                2px;
 
-            font-size: 11px;
+            font-size:
+                11px;
 
-            color: #6cff9b;
+            color:
+                #6cff9b;
         }
 
+        /* =====================================================
+           LOGOUT
+        ===================================================== */
+
         .logout {
-            margin-left: 10px;
+            margin-left:
+                10px;
 
-            padding: 9px 15px;
+            padding:
+                9px 15px;
 
-            border: none;
+            border:
+                none;
 
-            border-radius: 9px;
+            border-radius:
+                9px;
 
-            background: #ef4444;
+            background:
+                #ef4444;
 
-            color: white;
+            color:
+                white;
 
-            cursor: pointer;
+            cursor:
+                pointer;
 
-            font-size: 14px;
+            font-size:
+                14px;
 
-            font-weight: 700;
+            font-weight:
+                700;
 
-            transition: 0.2s ease;
+            transition:
+                0.2s ease;
         }
 
         .logout:hover {
-            background: #dc2626;
+            background:
+                #dc2626;
 
             transform:
                 translateY(-1px);
@@ -434,95 +527,126 @@
             min-height:
                 calc(100vh - 70px);
 
-            display: flex;
+            display:
+                flex;
 
-            align-items: center;
+            align-items:
+                center;
 
-            justify-content: center;
+            justify-content:
+                center;
 
             padding:
                 56px 30px 70px;
         }
 
         .dashboard {
-            width: 100%;
+            width:
+                100%;
 
-            max-width: 1250px;
+            max-width:
+                1250px;
         }
 
         .eyebrow {
-            text-align: center;
+            text-align:
+                center;
 
-            color: #9298a5;
+            color:
+                #9298a5;
 
-            font-size: 12px;
+            font-size:
+                12px;
 
-            font-weight: 800;
+            font-weight:
+                800;
 
-            text-transform: uppercase;
+            text-transform:
+                uppercase;
 
-            letter-spacing: 2px;
+            letter-spacing:
+                2px;
 
-            margin-bottom: 10px;
+            margin-bottom:
+                10px;
         }
 
         .dashboard-title {
-            margin: 0;
+            margin:
+                0;
 
-            text-align: center;
+            text-align:
+                center;
 
-            font-size: 36px;
+            font-size:
+                36px;
 
-            font-weight: 900;
+            font-weight:
+                900;
 
-            letter-spacing: -1px;
+            letter-spacing:
+                -1px;
         }
 
         .dashboard-subtitle {
-            max-width: 720px;
+            max-width:
+                720px;
 
             margin:
                 12px auto 32px;
 
-            text-align: center;
+            text-align:
+                center;
 
-            color: #9ca3af;
+            color:
+                #9ca3af;
 
-            line-height: 1.6;
+            line-height:
+                1.6;
 
-            font-size: 14px;
+            font-size:
+                14px;
         }
 
         /* =====================================================
-           OLD FIVE-CARD LAYOUT
+           FIVE CARD LAYOUT
         ===================================================== */
 
         .cards {
-            width: 100%;
+            width:
+                100%;
 
-            display: grid;
+            display:
+                grid;
 
             grid-template-columns:
                 repeat(5, 1fr);
 
-            gap: 22px;
+            gap:
+                22px;
         }
 
         .card {
-            position: relative;
+            position:
+                relative;
 
-            width: 100%;
+            width:
+                100%;
 
             aspect-ratio:
                 4 / 6;
 
-            display: flex;
+            display:
+                flex;
 
-            flex-direction: column;
+            flex-direction:
+                column;
 
-            justify-content: flex-end;
+            justify-content:
+                flex-end;
 
-            padding: 18px;
+            padding:
+                18px;
 
             background:
                 linear-gradient(
@@ -534,22 +658,28 @@
             border:
                 1px solid #292e3a;
 
-            border-radius: 17px;
+            border-radius:
+                17px;
 
-            isolation: isolate;
+            isolation:
+                isolate;
 
             transition:
                 0.25s ease;
         }
 
         .card::before {
-            content: "";
+            content:
+                "";
 
-            position: absolute;
+            position:
+                absolute;
 
-            inset: -4px;
+            inset:
+                -4px;
 
-            border-radius: 21px;
+            border-radius:
+                21px;
 
             background:
                 linear-gradient(
@@ -563,27 +693,33 @@
                     #ff1a00
                 );
 
-            padding: 4px;
+            padding:
+                4px;
 
             -webkit-mask:
                 linear-gradient(#000 0 0)
                 content-box,
                 linear-gradient(#000 0 0);
 
-            -webkit-mask-composite: xor;
+            -webkit-mask-composite:
+                xor;
 
             mask:
                 linear-gradient(#000 0 0)
                 content-box,
                 linear-gradient(#000 0 0);
 
-            mask-composite: exclude;
+            mask-composite:
+                exclude;
 
-            opacity: 0;
+            opacity:
+                0;
 
-            pointer-events: none;
+            pointer-events:
+                none;
 
-            z-index: -1;
+            z-index:
+                -1;
 
             filter:
                 drop-shadow(0 0 4px #ff3b00)
@@ -595,13 +731,17 @@
         }
 
         .card::after {
-            content: "";
+            content:
+                "";
 
-            position: absolute;
+            position:
+                absolute;
 
-            inset: -6px;
+            inset:
+                -6px;
 
-            border-radius: 23px;
+            border-radius:
+                23px;
 
             background:
                 linear-gradient(
@@ -622,27 +762,33 @@
             background-size:
                 300% 100%;
 
-            padding: 6px;
+            padding:
+                6px;
 
             -webkit-mask:
                 linear-gradient(#000 0 0)
                 content-box,
                 linear-gradient(#000 0 0);
 
-            -webkit-mask-composite: xor;
+            -webkit-mask-composite:
+                xor;
 
             mask:
                 linear-gradient(#000 0 0)
                 content-box,
                 linear-gradient(#000 0 0);
 
-            mask-composite: exclude;
+            mask-composite:
+                exclude;
 
-            opacity: 0;
+            opacity:
+                0;
 
-            pointer-events: none;
+            pointer-events:
+                none;
 
-            z-index: -2;
+            z-index:
+                -2;
 
             filter:
                 blur(7px);
@@ -658,11 +804,13 @@
         }
 
         .card:hover::before {
-            opacity: 1;
+            opacity:
+                1;
         }
 
         .card:hover::after {
-            opacity: 0.8;
+            opacity:
+                0.8;
 
             animation:
                 lavaFlow 2.2s
@@ -685,87 +833,118 @@
                 background-position:
                     100% 50%;
             }
+
         }
 
         .card-content {
-            position: relative;
+            position:
+                relative;
 
-            z-index: 2;
+            z-index:
+                2;
         }
 
         .card-icon {
-            width: 44px;
+            width:
+                44px;
 
-            height: 44px;
+            height:
+                44px;
 
-            border-radius: 12px;
+            border-radius:
+                12px;
 
-            display: grid;
+            display:
+                grid;
 
-            place-items: center;
+            place-items:
+                center;
 
-            background: #101218;
+            background:
+                #101218;
 
             border:
                 1px solid #343946;
 
-            font-size: 20px;
+            font-size:
+                20px;
 
-            margin-bottom: 12px;
+            margin-bottom:
+                12px;
         }
 
         .card-title {
-            font-size: 17px;
+            font-size:
+                17px;
 
-            font-weight: 900;
+            font-weight:
+                900;
 
-            margin-bottom: 5px;
+            margin-bottom:
+                5px;
         }
 
         .card-description {
-            color: #9298a5;
+            color:
+                #9298a5;
 
-            font-size: 12px;
+            font-size:
+                12px;
 
-            line-height: 1.5;
+            line-height:
+                1.5;
 
-            min-height: 37px;
+            min-height:
+                37px;
 
-            margin-bottom: 14px;
+            margin-bottom:
+                14px;
         }
 
         .card-action {
-            display: block;
+            display:
+                block;
 
-            width: 100%;
+            width:
+                100%;
 
-            padding: 11px 12px;
+            padding:
+                11px 12px;
 
-            border-radius: 10px;
+            border-radius:
+                10px;
 
-            text-align: center;
+            text-align:
+                center;
 
-            text-decoration: none;
+            text-decoration:
+                none;
 
             border:
                 1px solid #343946;
 
-            background: #101218;
+            background:
+                #101218;
 
-            color: white;
+            color:
+                white;
 
-            font-weight: 800;
+            font-weight:
+                800;
 
-            font-size: 13px;
+            font-size:
+                13px;
 
-            cursor: pointer;
+            cursor:
+                pointer;
 
             transition:
                 0.2s ease;
         }
 
         .card-action:hover {
-            background: #222631;
+            background:
+                #222631;
 
             border-color:
                 #5865f2;
@@ -797,17 +976,23 @@
         ===================================================== */
 
         .settings-overlay {
-            display: none;
+            display:
+                none;
 
-            position: fixed;
+            position:
+                fixed;
 
-            inset: 0;
+            inset:
+                0;
 
-            align-items: center;
+            align-items:
+                center;
 
-            justify-content: center;
+            justify-content:
+                center;
 
-            padding: 20px;
+            padding:
+                20px;
 
             background:
                 rgba(0, 0, 0, 0.72);
@@ -815,18 +1000,18 @@
             backdrop-filter:
                 blur(9px);
 
-            z-index: 500;
+            z-index:
+                500;
         }
 
         .settings-overlay.active {
-            display: flex;
+            display:
+                flex;
         }
 
         .settings-modal {
-            width: min(
-                520px,
-                100%
-            );
+            width:
+                min(520px, 100%);
 
             background:
                 #181b24;
@@ -834,9 +1019,11 @@
             border:
                 1px solid #292e3a;
 
-            border-radius: 18px;
+            border-radius:
+                18px;
 
-            padding: 24px;
+            padding:
+                24px;
 
             box-shadow:
                 0 25px 70px
@@ -844,72 +1031,95 @@
         }
 
         .settings-header {
-            display: flex;
+            display:
+                flex;
 
             justify-content:
                 space-between;
 
-            align-items: center;
+            align-items:
+                center;
 
-            margin-bottom: 18px;
+            margin-bottom:
+                18px;
         }
 
         .settings-header h2 {
-            margin: 0;
+            margin:
+                0;
 
-            font-size: 21px;
+            font-size:
+                21px;
         }
 
         .close-settings {
-            width: 35px;
+            width:
+                35px;
 
-            height: 35px;
-
-            border: none;
-
-            border-radius: 9px;
-
-            background: #101218;
-
-            color: #a8adba;
-
-            cursor: pointer;
-        }
-
-        .close-settings:hover {
-            color: white;
-
-            background: #222631;
-        }
-
-        .setting-box {
-            padding: 15px;
+            height:
+                35px;
 
             border:
-                1px solid #292e3a;
+                none;
 
-            border-radius: 12px;
+            border-radius:
+                9px;
 
             background:
                 #101218;
 
-            margin-bottom: 10px;
+            color:
+                #a8adba;
+
+            cursor:
+                pointer;
+        }
+
+        .close-settings:hover {
+            color:
+                white;
+
+            background:
+                #222631;
+        }
+
+        .setting-box {
+            padding:
+                15px;
+
+            border:
+                1px solid #292e3a;
+
+            border-radius:
+                12px;
+
+            background:
+                #101218;
+
+            margin-bottom:
+                10px;
         }
 
         .setting-box strong {
-            display: block;
+            display:
+                block;
 
-            font-size: 13px;
+            font-size:
+                13px;
         }
 
         .setting-box span {
-            display: block;
+            display:
+                block;
 
-            color: #9298a5;
+            color:
+                #9298a5;
 
-            font-size: 12px;
+            font-size:
+                12px;
 
-            margin-top: 4px;
+            margin-top:
+                4px;
         }
 
         /* =====================================================
@@ -928,26 +1138,31 @@
         @media (max-width: 760px) {
 
             .navbar {
-                padding: 0 18px;
+                padding:
+                    0 18px;
             }
 
             .user-name {
-                display: none;
+                display:
+                    none;
             }
 
             .cards {
                 grid-template-columns:
                     repeat(2, 1fr);
 
-                gap: 18px;
+                gap:
+                    18px;
             }
 
             .dashboard-title {
-                font-size: 29px;
+                font-size:
+                    29px;
             }
 
             .user-dropdown {
-                right: -8px;
+                right:
+                    -8px;
 
                 width:
                     min(
@@ -971,36 +1186,84 @@
             }
 
             .dashboard-title {
-                font-size: 25px;
+                font-size:
+                    25px;
             }
 
             .dashboard-subtitle {
-                font-size: 13px;
+                font-size:
+                    13px;
             }
 
             .user-area {
-                gap: 6px;
-            }
-
-            .logout {
-                padding:
-                    8px 11px;
+                gap:
+                    6px;
             }
 
         }
 
     </style>
+
 </head>
 
 <body>
+
+<!-- ==========================================================
+     OWNER AUTH CHECK
+=========================================================== -->
+
+<script>
+
+(function protectOwnerPage() {
+
+    const ownerAuthenticated =
+        localStorage.getItem(
+            "archer_owner_authenticated"
+        );
+
+
+    /*
+     * No owner authentication:
+     * immediately leave this page.
+     */
+
+    if (
+        ownerAuthenticated !== "true"
+    ) {
+
+        window.location.replace(
+            "/login/owner/"
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * Owner authentication exists.
+     *
+     * Reveal the page.
+     */
+
+    document.body.classList.add(
+        "auth-ready"
+    );
+
+})();
+
+</script>
+
+
+<!-- ==========================================================
+     NAVBAR
+=========================================================== -->
 
 <nav class="navbar">
 
     <a
         class="brand"
-        href="https://discord.gg/jBFAzkdfWG"
-        target="_blank"
-        rel="noopener noreferrer"
+        href="/home/"
     >
         Archer Giveaways
     </a>
@@ -1061,6 +1324,8 @@
                 </div>
 
 
+                <!-- DISCORD -->
+
                 <div class="discord-section">
 
                     <div class="discord-title">
@@ -1118,14 +1383,14 @@
                         id="linkCodeBox"
                     >
 
-                        <div
-                            class="link-instructions"
-                        >
+                        <div class="link-instructions">
+
                             Run
                             <strong>
                                 /link CODE
                             </strong>
                             in ArcherBot
+
                         </div>
 
 
@@ -1174,10 +1439,13 @@
                 </div>
 
 
+                <!-- LOGOUT -->
+
                 <button
-                    class="logout"
+                    class="discord-button cancel"
+                    id="ownerLogoutButton"
                     type="button"
-                    onclick="logout()"
+                    style="margin-top:16px;"
                 >
                     Logout
                 </button>
@@ -1191,86 +1459,58 @@
 </nav>
 
 
+<!-- ==========================================================
+     OWNER CONTENT
+=========================================================== -->
+
 <main class="content">
 
     <div class="dashboard">
 
         <div class="eyebrow">
-            Archer Giveaways
+            Archer Giveaways Owner
         </div>
 
 
         <h1 class="dashboard-title">
-            Pick what you want to access/do
+            Owner Control Center
         </h1>
 
 
         <p class="dashboard-subtitle">
-            Manage your Archer Giveaways account,
-            connect Discord, and access the owner
-            area from one place.
+            Manage Archer Giveaways systems,
+            Discord, statistics, and owner
+            configuration from one place.
         </p>
 
 
         <div class="cards">
 
-            <!-- SETTINGS -->
+            <!-- WEBSITE MANAGEMENT -->
 
             <div class="card">
 
                 <div class="card-content">
 
                     <div class="card-icon">
-                        ⚙️
+                        🌐
                     </div>
 
                     <div class="card-title">
-                        Settings
+                        Website Management
                     </div>
 
                     <div class="card-description">
-                        Manage your Archer Giveaways
-                        account settings and connected
-                        services.
-                    </div>
-
-                    <button
-                        class="card-action settings-action"
-                        id="settingsButton"
-                        type="button"
-                    >
-                        Open Settings
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <!-- OWNER -->
-
-            <div class="card">
-
-                <div class="card-content">
-
-                    <div class="card-icon">
-                        👑
-                    </div>
-
-                    <div class="card-title">
-                        Owner Panel
-                    </div>
-
-                    <div class="card-description">
-                        Open the protected Archer
-                        Giveaways owner dashboard.
+                        Manage Archer Giveaways
+                        website systems and pages.
                     </div>
 
                     <a
                         class="card-action owner-action"
-                        href="/owner/"
+                        href="#"
+                        onclick="return false;"
                     >
-                        Open Owner Panel
+                        Manage Website
                     </a>
 
                 </div>
@@ -1278,7 +1518,7 @@
             </div>
 
 
-            <!-- GIVEAWAYS -->
+            <!-- GIVEAWAY MANAGEMENT -->
 
             <div class="card">
 
@@ -1289,20 +1529,52 @@
                     </div>
 
                     <div class="card-title">
-                        Giveaways
+                        Giveaway Management
                     </div>
 
                     <div class="card-description">
-                        Your giveaway tools can be
-                        placed here later.
+                        Manage Archer Giveaways,
+                        events, and giveaway systems.
                     </div>
 
                     <a
-                        class="card-action"
+                        class="card-action owner-action"
                         href="#"
                         onclick="return false;"
                     >
-                        Coming Soon
+                        Manage Giveaways
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- DISCORD MANAGEMENT -->
+
+            <div class="card">
+
+                <div class="card-content">
+
+                    <div class="card-icon">
+                        🤖
+                    </div>
+
+                    <div class="card-title">
+                        Discord Systems
+                    </div>
+
+                    <div class="card-description">
+                        Manage Discord integrations,
+                        bot systems, and linking.
+                    </div>
+
+                    <a
+                        class="card-action owner-action"
+                        href="#"
+                        onclick="return false;"
+                    >
+                        Manage Discord
                     </a>
 
                 </div>
@@ -1325,16 +1597,16 @@
                     </div>
 
                     <div class="card-description">
-                        Your account and giveaway
-                        statistics can appear here.
+                        View Archer Giveaways
+                        statistics and system data.
                     </div>
 
                     <a
-                        class="card-action"
+                        class="card-action owner-action"
                         href="#"
                         onclick="return false;"
                     >
-                        Coming Soon
+                        View Statistics
                     </a>
 
                 </div>
@@ -1342,30 +1614,31 @@
             </div>
 
 
-            <!-- WEBSITE -->
+            <!-- CONFIGURATION -->
 
             <div class="card">
 
                 <div class="card-content">
 
                     <div class="card-icon">
-                        🌐
+                        ⚙️
                     </div>
 
                     <div class="card-title">
-                        Website
+                        Configuration
                     </div>
 
                     <div class="card-description">
-                        Return to the main Archer
-                        Giveaways website.
+                        Manage owner configuration
+                        and Archer system settings.
                     </div>
 
                     <a
-                        class="card-action"
-                        href="/"
+                        class="card-action owner-action"
+                        href="#"
+                        onclick="return false;"
                     >
-                        Open Website
+                        Open Configuration
                     </a>
 
                 </div>
@@ -1453,6 +1726,10 @@
 
 <script>
 
+/* ============================================================
+   CONFIGURATION
+============================================================ */
+
 const WORKER_URL =
     "https://archer.arcdepths.workers.dev";
 
@@ -1463,6 +1740,10 @@ const LINK_CODE_LENGTH =
 
 const LINK_CODE_CHARACTERS =
     "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+
+const OWNER_AUTH_KEY =
+    "archer_owner_authenticated";
 
 
 let currentUser =
@@ -1490,10 +1771,56 @@ let currentCodeExpiresAt =
 
 
 /* ============================================================
+   OWNER AUTH
+============================================================ */
+
+function verifyOwnerSession() {
+
+    const authenticated =
+        localStorage.getItem(
+            OWNER_AUTH_KEY
+        );
+
+
+    if (
+        authenticated !== "true"
+    ) {
+
+        window.location.replace(
+            "/login/owner/"
+        );
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* ============================================================
    USER
 ============================================================ */
 
 function loadCurrentUser() {
+
+    /*
+     * This page requires BOTH:
+     *
+     * 1. Owner authentication
+     * 2. Google account information
+     */
+
+    if (
+        !verifyOwnerSession()
+    ) {
+
+        return false;
+
+    }
+
 
     const loggedIn =
         localStorage.getItem(
@@ -1505,8 +1832,13 @@ function loadCurrentUser() {
         loggedIn !== "true"
     ) {
 
+        localStorage.removeItem(
+            OWNER_AUTH_KEY
+        );
+
+
         window.location.replace(
-            "../login/"
+            "/login/owner/"
         );
 
         return false;
@@ -1549,6 +1881,10 @@ function loadCurrentUser() {
     ) {
 
         localStorage.removeItem(
+            OWNER_AUTH_KEY
+        );
+
+        localStorage.removeItem(
             "archer_google_logged_in"
         );
 
@@ -1560,8 +1896,9 @@ function loadCurrentUser() {
             "archer_google_credential"
         );
 
+
         window.location.replace(
-            "../login/"
+            "/login/owner/"
         );
 
         return false;
@@ -1601,7 +1938,8 @@ function loadCurrentUser() {
     document.getElementById(
         "dropdownUserEmail"
     ).textContent =
-        currentUser.email || "";
+        currentUser.email ||
+        "";
 
 
     document.getElementById(
@@ -1672,6 +2010,7 @@ async function getDiscordProfile() {
         await fetch(
             `${WORKER_URL}/discord/profile?t=${Date.now()}`,
             {
+
                 method:
                     "POST",
 
@@ -1679,18 +2018,23 @@ async function getDiscordProfile() {
                     "no-store",
 
                 headers: {
+
                     "Content-Type":
                         "application/json",
 
                     "Cache-Control":
                         "no-cache"
+
                 },
 
                 body:
                     JSON.stringify({
+
                         googleId:
                             currentUser.sub
+
                     })
+
             }
         );
 
@@ -1718,7 +2062,7 @@ async function getDiscordProfile() {
 
 
 /* ============================================================
-   DISCORD PROFILE
+   DISCORD STATUS
 ============================================================ */
 
 async function updateDiscordStatus() {
@@ -1915,6 +2259,33 @@ function startProfilePolling() {
         setInterval(
             async function() {
 
+                /*
+                 * Check that the owner session
+                 * still exists.
+                 */
+
+                if (
+                    localStorage.getItem(
+                        OWNER_AUTH_KEY
+                    ) !== "true"
+                ) {
+
+                    clearInterval(
+                        profilePollTimer
+                    );
+
+                    profilePollTimer =
+                        null;
+
+                    window.location.replace(
+                        "/login/owner/"
+                    );
+
+                    return;
+
+                }
+
+
                 try {
 
                     const data =
@@ -2000,7 +2371,9 @@ function applyDiscordProfile(
         "https://cdn.discordapp.com/embed/avatars/0.png";
 
 
-    /* Header */
+    /*
+     * Header
+     */
 
     document.getElementById(
         "userName"
@@ -2014,7 +2387,9 @@ function applyDiscordProfile(
         avatar;
 
 
-    /* Dropdown */
+    /*
+     * Dropdown
+     */
 
     document.getElementById(
         "dropdownUserName"
@@ -2028,7 +2403,9 @@ function applyDiscordProfile(
         avatar;
 
 
-    /* Status */
+    /*
+     * Status
+     */
 
     const status =
         document.getElementById(
@@ -2046,7 +2423,9 @@ function applyDiscordProfile(
         "discord-status success";
 
 
-    /* Linked profile */
+    /*
+     * Linked profile
+     */
 
     document.getElementById(
         "linkedDiscordProfile"
@@ -2067,7 +2446,9 @@ function applyDiscordProfile(
         discordName;
 
 
-    /* Settings */
+    /*
+     * Settings
+     */
 
     document.getElementById(
         "settingsDiscord"
@@ -2078,7 +2459,9 @@ function applyDiscordProfile(
     stopCodeRotation();
 
 
-    /* Stop unnecessary polling after successful link */
+    /*
+     * Stop unnecessary polling
+     */
 
     if (
         profilePollTimer
@@ -2102,7 +2485,8 @@ function applyDiscordProfile(
 
 function generateCode() {
 
-    let code = "";
+    let code =
+        "";
 
 
     const values =
@@ -2161,12 +2545,15 @@ async function createDiscordLinkCode() {
         await fetch(
             `${WORKER_URL}/discord/code`,
             {
+
                 method:
                     "POST",
 
                 headers: {
+
                     "Content-Type":
                         "application/json"
+
                 },
 
                 body:
@@ -2365,9 +2752,10 @@ async function generateAndShowCode() {
         );
 
 
+    } finally {
+
         button.disabled =
             false;
-
 
         button.textContent =
             "Generate Discord Code";
@@ -2846,30 +3234,18 @@ const settingsOverlay =
 document
     .getElementById(
         "settingsButton"
-    )
-    .addEventListener(
-        "click",
-        function() {
-
-            document.getElementById(
-                "settingsDiscord"
-            ).textContent =
-                currentUser?.discordVerified
-                    ? `Verified as ${
-                        currentUser.discordUsername ||
-                        currentUser.discordName ||
-                        "Discord User"
-                      }`
-                    : "Not verified";
-
-
-            settingsOverlay.classList.add(
-                "active"
-            );
-
-        }
     );
 
+    /*
+     * Owner page does not have a visible
+     * Settings card button, but the modal
+     * remains available from the same system.
+     */
+
+
+/* ============================================================
+   CLOSE SETTINGS
+============================================================ */
 
 document
     .getElementById(
@@ -2907,10 +3283,10 @@ settingsOverlay.addEventListener(
 
 
 /* ============================================================
-   LOGOUT
+   OWNER LOGOUT
 ============================================================ */
 
-function logout() {
+function ownerLogout() {
 
     stopCodeRotation();
 
@@ -2928,6 +3304,20 @@ function logout() {
 
     }
 
+
+    /*
+     * Remove owner authentication.
+     */
+
+    localStorage.removeItem(
+        OWNER_AUTH_KEY
+    );
+
+
+    /*
+     * Remove Google session too,
+     * matching the owner-login flow.
+     */
 
     localStorage.removeItem(
         "archer_google_logged_in"
@@ -2957,10 +3347,20 @@ function logout() {
 
 
     window.location.replace(
-        "../login/"
+        "/login/owner/"
     );
 
 }
+
+
+document
+    .getElementById(
+        "ownerLogoutButton"
+    )
+    .addEventListener(
+        "click",
+        ownerLogout
+    );
 
 
 /* ============================================================
@@ -2968,34 +3368,10 @@ function logout() {
 ============================================================ */
 
 if (
-    document.readyState ===
-    "loading"
+    loadCurrentUser()
 ) {
 
-    document.addEventListener(
-        "DOMContentLoaded",
-        function() {
-
-            if (
-                loadCurrentUser()
-            ) {
-
-                startProfilePolling();
-
-            }
-
-        }
-    );
-
-} else {
-
-    if (
-        loadCurrentUser()
-    ) {
-
-        startProfilePolling();
-
-    }
+    startProfilePolling();
 
 }
 
