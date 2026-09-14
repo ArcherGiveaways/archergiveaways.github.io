@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +13,10 @@
 
     <title>Login - Archer Giveaways</title>
 
-    <link rel="icon" href="/favicon.ico">
+    <link
+        rel="icon"
+        href="/favicon.ico"
+    >
 
     <script
         src="https://accounts.google.com/gsi/client"
@@ -20,11 +24,13 @@
         defer
     ></script>
 
+
     <style>
 
         * {
             box-sizing: border-box;
         }
+
 
         body {
             margin: 0;
@@ -48,6 +54,7 @@
             color:
                 white;
         }
+
 
         .login-box {
             width:
@@ -76,6 +83,7 @@
                 rgba(0, 0, 0, 0.45);
         }
 
+
         .logo {
             width:
                 80px;
@@ -90,6 +98,7 @@
                 20px;
         }
 
+
         h1 {
             margin:
                 0;
@@ -97,6 +106,7 @@
             font-size:
                 30px;
         }
+
 
         .subtitle {
             margin:
@@ -106,6 +116,7 @@
                 #9ca3af;
         }
 
+
         #googleButton {
             display:
                 flex;
@@ -114,8 +125,12 @@
                 center;
         }
 
+
         #status {
             margin-top:
+                20px;
+
+            min-height:
                 20px;
 
             font-size:
@@ -125,11 +140,25 @@
                 #9ca3af;
         }
 
+
+        .error {
+            color:
+                #ff6b6b !important;
+        }
+
+
+        .success {
+            color:
+                #6cff9b !important;
+        }
+
     </style>
 
 </head>
 
+
 <body>
+
 
 <div class="login-box">
 
@@ -139,15 +168,19 @@
         class="logo"
     >
 
+
     <h1>
         Archer Giveaways
     </h1>
+
 
     <p class="subtitle">
         Sign in with Google to continue
     </p>
 
+
     <div id="googleButton"></div>
+
 
     <div id="status">
         Loading Google Login...
@@ -158,11 +191,20 @@
 
 <script>
 
+
+/* ============================================================
+   GOOGLE
+============================================================ */
+
 const GOOGLE_CLIENT_ID =
     "263646768191-7854avn92k94rq8pbit809o0erq48grq.apps.googleusercontent.com";
 
 
-function clearNormalSession() {
+/* ============================================================
+   CLEAR NORMAL SESSION
+============================================================ */
+
+function clearGoogleSession() {
 
     localStorage.removeItem(
         "archer_google_logged_in"
@@ -179,30 +221,250 @@ function clearNormalSession() {
 }
 
 
+/* ============================================================
+   GOOGLE CALLBACK
+============================================================ */
+
 function handleGoogleLogin(
     response
 ) {
+
+    const status =
+        document.getElementById(
+            "status"
+        );
+
 
     if (
         !response ||
         !response.credential
     ) {
 
-        document.getElementById(
-            "status"
-        ).textContent =
+        status.textContent =
             "Google login failed.";
+
+        status.className =
+            "error";
 
         return;
 
     }
 
 
-    const credential =
-        response.credential;
-
-
     try {
+
+        const credential =
+            response.credential;
+
 
         const parts =
             credential.split(".");
+
+
+        if (
+            parts.length !== 3
+        ) {
+
+            throw new Error(
+                "Invalid Google credential."
+            );
+
+        }
+
+
+        const payload =
+            JSON.parse(
+
+                atob(
+
+                    parts[1]
+                        .replace(/-/g, "+")
+                        .replace(/_/g, "/")
+
+                )
+
+            );
+
+
+        /*
+         * Normal Google login must NEVER
+         * create owner authentication.
+         */
+
+        localStorage.removeItem(
+            "archer_owner_authenticated"
+        );
+
+
+        localStorage.setItem(
+            "archer_google_logged_in",
+            "true"
+        );
+
+
+        localStorage.setItem(
+            "archer_google_credential",
+            credential
+        );
+
+
+        localStorage.setItem(
+            "archer_google_user",
+            JSON.stringify(
+                payload
+            )
+        );
+
+
+        status.textContent =
+            "Login successful ✓";
+
+        status.className =
+            "success";
+
+
+        setTimeout(
+            function () {
+
+                window.location.replace(
+                    "/home/"
+                );
+
+            },
+            300
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Google login error:",
+            error
+        );
+
+
+        clearGoogleSession();
+
+
+        status.textContent =
+            "Unable to complete Google login.";
+
+        status.className =
+            "error";
+
+    }
+
+}
+
+
+/* ============================================================
+   INITIALIZE GOOGLE
+============================================================ */
+
+function initializeGoogle() {
+
+    if (
+        !window.google ||
+        !window.google.accounts ||
+        !window.google.accounts.id
+    ) {
+
+        document.getElementById(
+            "status"
+        ).textContent =
+            "Google Login is still loading...";
+
+
+        setTimeout(
+            initializeGoogle,
+            500
+        );
+
+
+        return;
+
+    }
+
+
+    google.accounts.id.initialize({
+
+        client_id:
+            GOOGLE_CLIENT_ID,
+
+        callback:
+            handleGoogleLogin,
+
+        auto_select:
+            false,
+
+        cancel_on_tap_outside:
+            false
+
+    });
+
+
+    google.accounts.id.renderButton(
+
+        document.getElementById(
+            "googleButton"
+        ),
+
+        {
+
+            type:
+                "standard",
+
+            theme:
+                "filled_blue",
+
+            size:
+                "large",
+
+            text:
+                "signin_with",
+
+            shape:
+                "rectangular",
+
+            width:
+                280
+
+        }
+
+    );
+
+
+    document.getElementById(
+        "status"
+    ).textContent =
+        "";
+
+}
+
+
+/* ============================================================
+   ALREADY LOGGED IN
+============================================================ */
+
+if (
+    localStorage.getItem(
+        "archer_google_logged_in"
+    ) === "true"
+) {
+
+    window.location.replace(
+        "/home/"
+    );
+
+} else {
+
+    initializeGoogle();
+
+}
+
+</script>
+
+
+</body>
+</html>
+```
