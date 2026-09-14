@@ -1,2043 +1,2770 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>Archer Giveaways</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    :root {
-      --bg: #111216;
-      --panel: #191b20;
-      --panel-2: #20232b;
-      --border: rgba(255,255,255,0.08);
-      --text: #ffffff;
-      --muted: #9ca1ad;
-      --accent: #7c5cff;
-      --accent-hover: #8b70ff;
-      --success: #57f287;
-      --danger: #ed4245;
-      --warning: #faa61a;
-      --shadow: 0 18px 45px rgba(0,0,0,0.3);
-    }
-
-    body {
-      min-height: 100vh;
-      background:
-        radial-gradient(
-          circle at top left,
-          rgba(124,92,255,0.12),
-          transparent 35%
-        ),
-        radial-gradient(
-          circle at bottom right,
-          rgba(88,101,242,0.08),
-          transparent 30%
-        ),
-        var(--bg);
-      color: var(--text);
-      font-family:
-        Inter,
-        ui-sans-serif,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button {
-      font: inherit;
-    }
-
-    .page {
-      width: min(1180px, calc(100% - 32px));
-      margin: 0 auto;
-      padding: 28px 0 60px;
-    }
-
-    /* HEADER */
-
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 18px;
-      margin-bottom: 28px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-    }
-
-    .brand-logo {
-      width: 46px;
-      height: 46px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      background:
-        linear-gradient(
-          135deg,
-          #7c5cff,
-          #5865f2
-        );
-      box-shadow:
-        0 10px 25px rgba(124,92,255,0.25);
-      font-weight: 900;
-      font-size: 19px;
-    }
-
-    .brand-text h1 {
-      font-size: 20px;
-      font-weight: 800;
-    }
-
-    .brand-text p {
-      color: var(--muted);
-      font-size: 13px;
-      margin-top: 2px;
-    }
-
-    .profile-button {
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.045);
-      color: var(--text);
-      border-radius: 14px;
-      padding: 8px 12px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    .profile-button:hover {
-      background: rgba(255,255,255,0.08);
-      transform: translateY(-1px);
-    }
-
-    .profile-button img {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    .profile-button-info {
-      text-align: left;
-    }
-
-    .profile-button-info strong {
-      display: block;
-      font-size: 13px;
-    }
-
-    .profile-button-info span {
-      display: block;
-      color: var(--muted);
-      font-size: 11px;
-      margin-top: 2px;
-    }
-
-    /* HERO */
-
-    .hero {
-      padding: 34px;
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      background:
-        linear-gradient(
-          145deg,
-          rgba(124,92,255,0.13),
-          rgba(255,255,255,0.025)
-        );
-      box-shadow: var(--shadow);
-      margin-bottom: 22px;
-    }
-
-    .hero small {
-      color: #a99cff;
-      text-transform: uppercase;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.13em;
-    }
-
-    .hero h2 {
-      font-size: clamp(28px, 4vw, 42px);
-      margin-top: 8px;
-      line-height: 1.08;
-    }
-
-    .hero p {
-      color: var(--muted);
-      margin-top: 12px;
-      max-width: 700px;
-      line-height: 1.7;
-      font-size: 15px;
-    }
-
-    /* CARDS */
-
-    .cards {
-      display: grid;
-      grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .card {
-      min-height: 190px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 22px;
-      background:
-        linear-gradient(
-          160deg,
-          rgba(255,255,255,0.045),
-          rgba(255,255,255,0.018)
-        );
-      box-shadow: 0 12px 30px rgba(0,0,0,0.17);
-      transition:
-        transform 0.2s ease,
-        border-color 0.2s ease,
-        background 0.2s ease;
-      cursor: pointer;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      border-color:
-        rgba(124,92,255,0.35);
-      background:
-        linear-gradient(
-          160deg,
-          rgba(124,92,255,0.09),
-          rgba(255,255,255,0.02)
-        );
-    }
-
-    .card-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      background: rgba(124,92,255,0.12);
-      color: #b8abff;
-      font-size: 22px;
-      margin-bottom: 17px;
-    }
-
-    .card h3 {
-      font-size: 17px;
-      margin-bottom: 8px;
-    }
-
-    .card p {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.65;
-    }
-
-    .card-arrow {
-      color: #8e82ff;
-      margin-top: 17px;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    /* FOOTER */
-
-    .footer {
-      text-align: center;
-      color: #727782;
-      font-size: 12px;
-      margin-top: 28px;
-    }
-
-    /* MODAL */
-
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      background: rgba(0,0,0,0.72);
-      backdrop-filter: blur(10px);
-      z-index: 1000;
-    }
-
-    .modal-overlay.show {
-      display: flex;
-    }
-
-    .modal {
-      width: min(560px, 100%);
-      max-height: 90vh;
-      overflow-y: auto;
-      background: #181a20;
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
-    }
-
-    .modal-header {
-      padding: 22px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .modal-header h3 {
-      font-size: 19px;
-    }
-
-    .close-button {
-      width: 36px;
-      height: 36px;
-      border: 0;
-      border-radius: 10px;
-      cursor: pointer;
-      color: #b7bbc5;
-      background: rgba(255,255,255,0.05);
-    }
-
-    .close-button:hover {
-      background: rgba(255,255,255,0.09);
-      color: white;
-    }
-
-    .modal-body {
-      padding: 24px;
-    }
-
-    /* PROFILE */
-
-    .profile-main {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 24px;
-      padding: 16px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.025);
-      border-radius: 17px;
-    }
-
-    .profile-main img {
-      width: 68px;
-      height: 68px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid rgba(124,92,255,0.35);
-    }
-
-    .profile-main strong {
-      display: block;
-      font-size: 18px;
-    }
-
-    .profile-main span {
-      display: block;
-      color: var(--muted);
-      margin-top: 4px;
-      font-size: 13px;
-    }
-
-    .section-title {
-      font-size: 12px;
-      color: #9196a2;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-weight: 800;
-      margin-bottom: 10px;
-    }
-
-    .discord-panel {
-      padding: 18px;
-      border-radius: 18px;
-      border: 1px solid var(--border);
-      background:
-        linear-gradient(
-          145deg,
-          rgba(88,101,242,0.09),
-          rgba(255,255,255,0.025)
-        );
-    }
-
-    .discord-status {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      margin-bottom: 15px;
-    }
-
-    .status-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #727782;
-      flex-shrink: 0;
-    }
-
-    .status-dot.connected {
-      background: var(--success);
-      box-shadow: 0 0 12px rgba(87,242,135,0.45);
-    }
-
-    .discord-status strong {
-      font-size: 14px;
-    }
-
-    .discord-status span {
-      color: var(--muted);
-      display: block;
-      margin-top: 2px;
-      font-size: 12px;
-    }
-
-    .linked-profile {
-      display: none;
-      align-items: center;
-      gap: 11px;
-      padding: 11px;
-      margin-bottom: 14px;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.045);
-    }
-
-    .linked-profile.show {
-      display: flex;
-    }
-
-    .linked-profile img {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    .linked-profile strong {
-      display: block;
-      font-size: 13px;
-    }
-
-    .linked-profile span {
-      display: block;
-      color: var(--success);
-      font-size: 11px;
-      margin-top: 2px;
-    }
-
-    .code-box {
-      display: none;
-      padding: 18px;
-      text-align: center;
-      margin: 15px 0;
-      border-radius: 16px;
-      border:
-        1px solid rgba(124,92,255,0.25);
-      background:
-        rgba(124,92,255,0.07);
-    }
-
-    .code-box.show {
-      display: block;
-    }
-
-    .code-label {
-      color: var(--muted);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-weight: 700;
-    }
-
-    .code-value {
-      margin-top: 7px;
-      font-size: 31px;
-      font-weight: 900;
-      letter-spacing: 0.22em;
-      color: #ffffff;
-      font-family:
-        ui-monospace,
-        SFMono-Regular,
-        Menlo,
-        Monaco,
-        Consolas,
-        monospace;
-    }
-
-    .code-timer {
-      margin-top: 7px;
-      color: #a69aff;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .instructions {
-      color: var(--muted);
-      line-height: 1.6;
-      font-size: 12px;
-      margin-bottom: 15px;
-    }
-
-    .button-row {
-      display: grid;
-      grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .btn {
-      border: 0;
-      border-radius: 13px;
-      padding: 12px 15px;
-      cursor: pointer;
-      font-weight: 800;
-      font-size: 12px;
-      transition: 0.18s ease;
-    }
-
-    .btn-primary {
-      background:
-        linear-gradient(
-          135deg,
-          #7c5cff,
-          #5865f2
-        );
-      color: white;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.08);
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,0.07);
-      color: white;
-      border: 1px solid var(--border);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255,255,255,0.11);
-    }
-
-    .btn-danger {
-      background: rgba(237,66,69,0.12);
-      color: #ff8e90;
-      border: 1px solid rgba(237,66,69,0.18);
-    }
-
-    .btn-danger:hover {
-      background: rgba(237,66,69,0.18);
-    }
-
-    .message {
-      display: none;
-      padding: 11px 12px;
-      margin-top: 12px;
-      border-radius: 12px;
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    .message.show {
-      display: block;
-    }
-
-    .message.success {
-      color: #b9ffd0;
-      background: rgba(87,242,135,0.08);
-      border: 1px solid rgba(87,242,135,0.15);
-    }
-
-    .message.error {
-      color: #ffc2c3;
-      background: rgba(237,66,69,0.08);
-      border: 1px solid rgba(237,66,69,0.15);
-    }
-
-    /* SETTINGS */
-
-    .setting-row {
-      padding: 16px;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.025);
-      margin-bottom: 10px;
-    }
-
-    .setting-row strong {
-      display: block;
-      font-size: 14px;
-    }
-
-    .setting-row p {
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 4px;
-      line-height: 1.5;
-    }
-
-    @media (max-width: 850px) {
-      .cards {
-        grid-template-columns:
-          repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 600px) {
-      .page {
-        width: min(
-          100% - 20px,
-          1180px
-        );
-        padding-top: 15px;
-      }
-
-      .header {
-        align-items: flex-start;
-      }
-
-      .profile-button-info {
-        display: none;
-      }
-
-      .profile-button {
-        padding: 6px;
-      }
-
-      .cards {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        padding: 25px;
-      }
-
-      .button-row {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Home - Archer Giveaways</title>
+
+    <link rel="icon" href="../favicon.ico">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 20% 15%,
+                    rgba(88, 101, 242, 0.12),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 80% 70%,
+                    rgba(255, 90, 0, 0.08),
+                    transparent 25%
+                ),
+                #0f1117;
+
+            color: white;
+        }
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+            height: 70px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 30px;
+
+            background:
+                rgba(24, 27, 36, 0.94);
+
+            border-bottom:
+                1px solid #292e3a;
+
+            backdrop-filter: blur(14px);
+
+            position: sticky;
+            top: 0;
+
+            z-index: 100;
+        }
+
+        .brand {
+            font-size: 20px;
+            font-weight: 900;
+
+            color: white;
+            text-decoration: none;
+        }
+
+        .user-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-profile-box {
+            position: relative;
+
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 6px 14px;
+
+            background: #101218;
+
+            border:
+                1px solid #292e3a;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+            user-select: none;
+
+            transition: 0.2s ease;
+        }
+
+        .user-profile-box:hover {
+            background: #1f2330;
+            border-color: #5865f2;
+        }
+
+        .user-image {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            border:
+                2px solid #5865f2;
+
+            background: #20232d;
+        }
+
+        .user-name {
+            font-size: 14px;
+
+            max-width: 180px;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* =====================================================
+           PROFILE DROPDOWN
+        ===================================================== */
+
+        .user-dropdown {
+            display: none;
+
+            position: absolute;
+
+            top:
+                calc(100% + 10px);
+
+            right: 0;
+
+            width: 330px;
+
+            background: #181b24;
+
+            border:
+                1px solid #292e3a;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 18px 45px rgba(0, 0, 0, 0.55);
+
+            z-index: 100;
+
+            padding: 18px;
+        }
+
+        .user-dropdown.active {
+            display: block;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 16px;
+        }
+
+        .profile-header img {
+            width: 52px;
+            height: 52px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            background: #20232d;
+        }
+
+        .profile-header strong {
+            display: block;
+
+            font-size: 16px;
+
+            margin-bottom: 3px;
+        }
+
+        .profile-header span {
+            color: #9298a5;
+
+            font-size: 12px;
+        }
+
+        .discord-section {
+            padding-top: 15px;
+
+            border-top:
+                1px solid #292e3a;
+        }
+
+        .discord-title {
+            font-size: 14px;
+
+            font-weight: 800;
+
+            margin-bottom: 6px;
+        }
+
+        .discord-status {
+            font-size: 12px;
+
+            color: #9298a5;
+
+            margin-bottom: 12px;
+
+            line-height: 1.5;
+        }
+
+        .discord-status.success {
+            color: #6cff9b;
+        }
+
+        .discord-button {
+            width: 100%;
+
+            border: none;
+
+            border-radius: 10px;
+
+            padding: 11px 12px;
+
+            background: #5865f2;
+
+            color: white;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+
+            margin-top: 8px;
+        }
+
+        .discord-button:hover {
+            background: #4752c4;
+
+            transform:
+                translateY(-1px);
+        }
+
+        .discord-button:disabled {
+            opacity: 0.65;
+
+            cursor: wait;
+
+            transform: none;
+        }
+
+        .discord-button.cancel {
+            background: #ef4444;
+        }
+
+        .discord-button.cancel:hover {
+            background: #dc2626;
+        }
+
+        .discord-button.verify {
+            background: #303642;
+        }
+
+        .discord-button.verify:hover {
+            background: #3b4252;
+        }
+
+        .link-code-box {
+            display: none;
+
+            margin-top: 12px;
+
+            padding: 14px;
+
+            border:
+                1px solid #343946;
+
+            background: #101218;
+
+            border-radius: 12px;
+
+            text-align: center;
+        }
+
+        .link-code-box.active {
+            display: block;
+        }
+
+        .link-code {
+            font-size: 28px;
+
+            letter-spacing: 7px;
+
+            font-weight: 900;
+
+            margin: 6px 0 4px;
+        }
+
+        .link-instructions {
+            color: #a8adba;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+        .link-timer {
+            margin-top: 8px;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            color: #ffb86b;
+        }
+
+        .link-message {
+            min-height: 18px;
+
+            margin-top: 8px;
+
+            font-size: 12px;
+
+            text-align: center;
+        }
+
+        .link-message.success {
+            color: #6cff9b;
+        }
+
+        .link-message.error {
+            color: #ff6b6b;
+        }
+
+        .linked-discord-profile {
+            display: none;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-top: 12px;
+
+            padding: 10px;
+
+            background: #101218;
+
+            border:
+                1px solid #292e3a;
+
+            border-radius: 11px;
+        }
+
+        .linked-discord-profile.active {
+            display: flex;
+        }
+
+        .linked-discord-profile img {
+            width: 40px;
+            height: 40px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+        }
+
+        .linked-discord-profile strong {
+            display: block;
+
+            font-size: 13px;
+        }
+
+        .linked-discord-profile span {
+            display: block;
+
+            margin-top: 2px;
+
+            font-size: 11px;
+
+            color: #6cff9b;
+        }
+
+        .logout {
+            margin-left: 10px;
+
+            padding: 9px 15px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background: #ef4444;
+
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            transition: 0.2s ease;
+        }
+
+        .logout:hover {
+            background: #dc2626;
+
+            transform:
+                translateY(-1px);
+        }
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .content {
+            min-height:
+                calc(100vh - 70px);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding:
+                56px 30px 70px;
+        }
+
+        .dashboard {
+            width: 100%;
+
+            max-width: 1250px;
+        }
+
+        .eyebrow {
+            text-align: center;
+
+            color: #9298a5;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 10px;
+        }
+
+        .dashboard-title {
+            margin: 0;
+
+            text-align: center;
+
+            font-size: 36px;
+
+            font-weight: 900;
+
+            letter-spacing: -1px;
+        }
+
+        .dashboard-subtitle {
+            max-width: 720px;
+
+            margin:
+                12px auto 32px;
+
+            text-align: center;
+
+            color: #9ca3af;
+
+            line-height: 1.6;
+
+            font-size: 14px;
+        }
+
+        /* =====================================================
+           OLD FIVE-CARD LAYOUT
+        ===================================================== */
+
+        .cards {
+            width: 100%;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 22px;
+        }
+
+        .card {
+            position: relative;
+
+            width: 100%;
+
+            aspect-ratio:
+                4 / 6;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: flex-end;
+
+            padding: 18px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #1a1e28 0%,
+                    #151821 100%
+                );
+
+            border:
+                1px solid #292e3a;
+
+            border-radius: 17px;
+
+            isolation: isolate;
+
+            transition:
+                0.25s ease;
+        }
+
+        .card::before {
+            content: "";
+
+            position: absolute;
+
+            inset: -4px;
+
+            border-radius: 21px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ff1600,
+                    #ff4d00,
+                    #ff9d00,
+                    #ff3100,
+                    #ff0800,
+                    #ff7800,
+                    #ff1a00
+                );
+
+            padding: 4px;
+
+            -webkit-mask:
+                linear-gradient(#000 0 0)
+                content-box,
+                linear-gradient(#000 0 0);
+
+            -webkit-mask-composite: xor;
+
+            mask:
+                linear-gradient(#000 0 0)
+                content-box,
+                linear-gradient(#000 0 0);
+
+            mask-composite: exclude;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            z-index: -1;
+
+            filter:
+                drop-shadow(0 0 4px #ff3b00)
+                drop-shadow(0 0 10px #ff1800)
+                drop-shadow(0 0 18px #ff5a00);
+
+            transition:
+                opacity 0.25s ease;
+        }
+
+        .card::after {
+            content: "";
+
+            position: absolute;
+
+            inset: -6px;
+
+            border-radius: 23px;
+
+            background:
+                linear-gradient(
+                    100deg,
+                    transparent 0%,
+                    transparent 15%,
+                    #ff2100 25%,
+                    #ff6500 32%,
+                    #ffb300 38%,
+                    #ff3b00 45%,
+                    transparent 55%,
+                    transparent 72%,
+                    #ff1800 82%,
+                    #ff7a00 91%,
+                    transparent 100%
+                );
+
+            background-size:
+                300% 100%;
+
+            padding: 6px;
+
+            -webkit-mask:
+                linear-gradient(#000 0 0)
+                content-box,
+                linear-gradient(#000 0 0);
+
+            -webkit-mask-composite: xor;
+
+            mask:
+                linear-gradient(#000 0 0)
+                content-box,
+                linear-gradient(#000 0 0);
+
+            mask-composite: exclude;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            z-index: -2;
+
+            filter:
+                blur(7px);
+        }
+
+        .card:hover {
+            transform:
+                translateY(-8px);
+
+            box-shadow:
+                0 20px 45px
+                rgba(0, 0, 0, 0.42);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover::after {
+            opacity: 0.8;
+
+            animation:
+                lavaFlow 2.2s
+                ease-in-out infinite;
+        }
+
+        @keyframes lavaFlow {
+
+            0% {
+                background-position:
+                    100% 50%;
+            }
+
+            50% {
+                background-position:
+                    0% 50%;
+            }
+
+            100% {
+                background-position:
+                    100% 50%;
+            }
+        }
+
+        .card-content {
+            position: relative;
+
+            z-index: 2;
+        }
+
+        .card-icon {
+            width: 44px;
+
+            height: 44px;
+
+            border-radius: 12px;
+
+            display: grid;
+
+            place-items: center;
+
+            background: #101218;
+
+            border:
+                1px solid #343946;
+
+            font-size: 20px;
+
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 17px;
+
+            font-weight: 900;
+
+            margin-bottom: 5px;
+        }
+
+        .card-description {
+            color: #9298a5;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+
+            min-height: 37px;
+
+            margin-bottom: 14px;
+        }
+
+        .card-action {
+            display: block;
+
+            width: 100%;
+
+            padding: 11px 12px;
+
+            border-radius: 10px;
+
+            text-align: center;
+
+            text-decoration: none;
+
+            border:
+                1px solid #343946;
+
+            background: #101218;
+
+            color: white;
+
+            font-weight: 800;
+
+            font-size: 13px;
+
+            cursor: pointer;
+
+            transition:
+                0.2s ease;
+        }
+
+        .card-action:hover {
+            background: #222631;
+
+            border-color:
+                #5865f2;
+
+            transform:
+                translateY(-1px);
+        }
+
+        .owner-action:hover {
+            border-color:
+                #ff5a00;
+
+            box-shadow:
+                0 0 18px
+                rgba(255, 80, 0, 0.2);
+        }
+
+        .settings-action:hover {
+            border-color:
+                #5865f2;
+
+            box-shadow:
+                0 0 18px
+                rgba(88, 101, 242, 0.2);
+        }
+
+        /* =====================================================
+           SETTINGS MODAL
+        ===================================================== */
+
+        .settings-overlay {
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                rgba(0, 0, 0, 0.72);
+
+            backdrop-filter:
+                blur(9px);
+
+            z-index: 500;
+        }
+
+        .settings-overlay.active {
+            display: flex;
+        }
+
+        .settings-modal {
+            width: min(
+                520px,
+                100%
+            );
+
+            background:
+                #181b24;
+
+            border:
+                1px solid #292e3a;
+
+            border-radius: 18px;
+
+            padding: 24px;
+
+            box-shadow:
+                0 25px 70px
+                rgba(0, 0, 0, 0.5);
+        }
+
+        .settings-header {
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            margin-bottom: 18px;
+        }
+
+        .settings-header h2 {
+            margin: 0;
+
+            font-size: 21px;
+        }
+
+        .close-settings {
+            width: 35px;
+
+            height: 35px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background: #101218;
+
+            color: #a8adba;
+
+            cursor: pointer;
+        }
+
+        .close-settings:hover {
+            color: white;
+
+            background: #222631;
+        }
+
+        .setting-box {
+            padding: 15px;
+
+            border:
+                1px solid #292e3a;
+
+            border-radius: 12px;
+
+            background:
+                #101218;
+
+            margin-bottom: 10px;
+        }
+
+        .setting-box strong {
+            display: block;
+
+            font-size: 13px;
+        }
+
+        .setting-box span {
+            display: block;
+
+            color: #9298a5;
+
+            font-size: 12px;
+
+            margin-top: 4px;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1100px) {
+
+            .cards {
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+
+        }
+
+        @media (max-width: 760px) {
+
+            .navbar {
+                padding: 0 18px;
+            }
+
+            .user-name {
+                display: none;
+            }
+
+            .cards {
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+                gap: 18px;
+            }
+
+            .dashboard-title {
+                font-size: 29px;
+            }
+
+            .user-dropdown {
+                right: -8px;
+
+                width:
+                    min(
+                        330px,
+                        calc(100vw - 28px)
+                    );
+            }
+
+        }
+
+        @media (max-width: 500px) {
+
+            .content {
+                padding:
+                    40px 20px 60px;
+            }
+
+            .cards {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .dashboard-title {
+                font-size: 25px;
+            }
+
+            .dashboard-subtitle {
+                font-size: 13px;
+            }
+
+            .user-area {
+                gap: 6px;
+            }
+
+            .logout {
+                padding:
+                    8px 11px;
+            }
+
+        }
+
+    </style>
 </head>
 
 <body>
 
-  <main class="page">
+<nav class="navbar">
 
-    <header class="header">
-
-      <a
+    <a
         class="brand"
-        href="/home/"
-      >
-        <div class="brand-logo">
-          AG
-        </div>
+        href="https://discord.gg/jBFAzkdfWG"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        Archer Giveaways
+    </a>
 
-        <div class="brand-text">
-          <h1>Archer Giveaways</h1>
-          <p>Community & giveaway platform</p>
-        </div>
-      </a>
 
-      <button
-        class="profile-button"
-        id="profileButton"
-        type="button"
-      >
-        <img
-          id="headerAvatar"
-          src="https://cdn.discordapp.com/embed/avatars/0.png"
-          alt=""
+    <div class="user-area">
+
+        <div
+            class="user-profile-box"
+            id="userProfileBtn"
+            aria-label="Open profile"
         >
 
-        <div class="profile-button-info">
-          <strong id="headerName">
-            Profile
-          </strong>
-
-          <span id="headerStatus">
-            Google account
-          </span>
-        </div>
-      </button>
-
-    </header>
-
-
-    <section class="hero">
-
-      <small>Archer dashboard</small>
-
-      <h2>
-        Welcome back,
-        <span id="heroName">
-          User
-        </span>
-      </h2>
-
-      <p>
-        Manage your Archer Giveaways account,
-        connect Discord, view your profile,
-        and access your website settings.
-      </p>
-
-    </section>
-
-
-    <section class="cards">
-
-      <!-- PROFILE -->
-
-      <article
-        class="card"
-        id="profileCard"
-      >
-        <div class="card-icon">
-          👤
-        </div>
-
-        <h3>Profile</h3>
-
-        <p>
-          View your account and connect your
-          Discord profile to Archer Giveaways.
-        </p>
-
-        <div class="card-arrow">
-          Open profile →
-        </div>
-      </article>
-
-
-      <!-- SETTINGS -->
-
-      <article
-        class="card"
-        id="settingsCard"
-      >
-        <div class="card-icon">
-          ⚙️
-        </div>
-
-        <h3>Settings</h3>
-
-        <p>
-          Manage your website account settings
-          and profile preferences.
-        </p>
-
-        <div class="card-arrow">
-          Open settings →
-        </div>
-      </article>
-
-
-      <!-- WEBSITE -->
-
-      <article
-        class="card"
-        id="websiteCard"
-      >
-        <div class="card-icon">
-          🌐
-        </div>
-
-        <h3>Website</h3>
-
-        <p>
-          Return to the Archer Giveaways website
-          and explore the platform.
-        </p>
-
-        <div class="card-arrow">
-          Open website →
-        </div>
-      </article>
-
-
-      <!-- GIVEAWAYS -->
-
-      <article
-        class="card"
-        id="giveawaysCard"
-      >
-        <div class="card-icon">
-          🎁
-        </div>
-
-        <h3>Giveaways</h3>
-
-        <p>
-          View active giveaways and future
-          Archer community events.
-        </p>
-
-        <div class="card-arrow">
-          View giveaways →
-        </div>
-      </article>
-
-
-      <!-- OWNER -->
-
-      <article
-        class="card"
-        id="ownerCard"
-      >
-        <div class="card-icon">
-          🛡️
-        </div>
-
-        <h3>Owner Panel</h3>
-
-        <p>
-          Access the Archer owner dashboard
-          and administrative controls.
-        </p>
-
-        <div class="card-arrow">
-          Open owner panel →
-        </div>
-      </article>
-
-
-      <!-- DISCORD -->
-
-      <article
-        class="card"
-        id="discordCard"
-      >
-        <div class="card-icon">
-          💬
-        </div>
-
-        <h3>Discord</h3>
-
-        <p>
-          Join the Archer Giveaways Discord
-          community and stay connected.
-        </p>
-
-        <div class="card-arrow">
-          Open Discord →
-        </div>
-      </article>
-
-    </section>
-
-
-    <footer class="footer">
-      Archer Giveaways • Made by N1ghtcore
-    </footer>
-
-  </main>
-
-
-  <!-- =====================================================
-       PROFILE MODAL
-       ===================================================== -->
-
-  <div
-    class="modal-overlay"
-    id="profileModal"
-  >
-
-    <div class="modal">
-
-      <div class="modal-header">
-
-        <h3>
-          Your Profile
-        </h3>
-
-        <button
-          class="close-button"
-          id="closeProfile"
-          type="button"
-        >
-          ✕
-        </button>
-
-      </div>
-
-
-      <div class="modal-body">
-
-        <div class="profile-main">
-
-          <img
-            id="profileAvatar"
-            src="https://cdn.discordapp.com/embed/avatars/0.png"
-            alt=""
-          >
-
-          <div>
-            <strong id="profileName">
-              User
-            </strong>
-
-            <span id="profileEmail">
-              Google account
-            </span>
-          </div>
-
-        </div>
-
-
-        <div class="section-title">
-          Discord connection
-        </div>
-
-
-        <div class="discord-panel">
-
-          <div class="discord-status">
+            <img
+                id="userImage"
+                class="user-image"
+                src=""
+                alt="Profile"
+            >
 
             <span
-              class="status-dot"
-              id="discordStatusDot"
-            ></span>
-
-            <div>
-              <strong id="discordStatusTitle">
-                Discord not verified
-              </strong>
-
-              <span id="discordStatusText">
-                Connect your Discord account to
-                Archer Giveaways.
-              </span>
-            </div>
-
-          </div>
-
-
-          <div
-            class="linked-profile"
-            id="linkedProfile"
-          >
-            <img
-              id="linkedAvatar"
-              src="https://cdn.discordapp.com/embed/avatars/0.png"
-              alt=""
+                id="userName"
+                class="user-name"
             >
+                Loading...
+            </span>
 
-            <div>
-              <strong id="linkedName">
-                Discord User
-              </strong>
-
-              <span>
-                ✓ Verified with Archer Giveaways
-              </span>
-            </div>
-          </div>
-
-
-          <div
-            class="instructions"
-            id="linkInstructions"
-          >
-            Generate a temporary code, then
-            enter it in Discord with
-            <strong>/link CODE</strong>.
-            The code changes automatically every
-            minute until you cancel it.
-          </div>
-
-
-          <div
-            class="code-box"
-            id="codeBox"
-          >
-            <div class="code-label">
-              Your Discord verification code
-            </div>
 
             <div
-              class="code-value"
-              id="codeValue"
+                class="user-dropdown"
+                id="userDropdown"
             >
-              ------
+
+                <div class="profile-header">
+
+                    <img
+                        id="dropdownUserImage"
+                        src=""
+                        alt="Profile"
+                    >
+
+                    <div>
+
+                        <strong
+                            id="dropdownUserName"
+                        >
+                            User
+                        </strong>
+
+                        <span
+                            id="dropdownUserEmail"
+                        >
+                            —
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="discord-section">
+
+                    <div class="discord-title">
+                        Discord account
+                    </div>
+
+
+                    <div
+                        class="discord-status"
+                        id="discordStatus"
+                    >
+                        Checking...
+                    </div>
+
+
+                    <div
+                        class="linked-discord-profile"
+                        id="linkedDiscordProfile"
+                    >
+
+                        <img
+                            id="linkedDiscordAvatar"
+                            src=""
+                            alt="Discord"
+                        >
+
+                        <div>
+
+                            <strong
+                                id="linkedDiscordName"
+                            >
+                                Discord User
+                            </strong>
+
+                            <span>
+                                ✓ Verified
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="discord-button"
+                        id="generateLinkButton"
+                        type="button"
+                    >
+                        Generate Discord Code
+                    </button>
+
+
+                    <div
+                        class="link-code-box"
+                        id="linkCodeBox"
+                    >
+
+                        <div
+                            class="link-instructions"
+                        >
+                            Run
+                            <strong>
+                                /link CODE
+                            </strong>
+                            in ArcherBot
+                        </div>
+
+
+                        <div
+                            class="link-code"
+                            id="linkCode"
+                        >
+                            ------
+                        </div>
+
+
+                        <div
+                            class="link-timer"
+                            id="linkTimer"
+                        >
+                            Expires in 60s
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="discord-button cancel"
+                        id="cancelLinkButton"
+                        type="button"
+                        style="display:none;"
+                    >
+                        Cancel
+                    </button>
+
+
+                    <button
+                        class="discord-button verify"
+                        id="checkVerificationButton"
+                        type="button"
+                    >
+                        Check Verification
+                    </button>
+
+
+                    <div
+                        class="link-message"
+                        id="linkMessage"
+                    ></div>
+
+                </div>
+
+
+                <button
+                    class="logout"
+                    type="button"
+                    onclick="logout()"
+                >
+                    Logout
+                </button>
+
             </div>
-
-            <div
-              class="code-timer"
-              id="codeTimer"
-            >
-              Expires in 60s
-            </div>
-          </div>
-
-
-          <div class="button-row">
-
-            <button
-              class="btn btn-primary"
-              id="generateButton"
-              type="button"
-            >
-              Generate Discord Code
-            </button>
-
-            <button
-              class="btn btn-secondary"
-              id="verifyButton"
-              type="button"
-            >
-              Check Verification
-            </button>
-
-          </div>
-
-
-          <div
-            class="button-row"
-            id="cancelRow"
-            style="display:none; margin-top:10px;"
-          >
-
-            <button
-              class="btn btn-danger"
-              id="cancelButton"
-              type="button"
-            >
-              Cancel Code Generation
-            </button>
-
-          </div>
-
-
-          <div
-            class="message"
-            id="linkMessage"
-          ></div>
 
         </div>
-
-      </div>
 
     </div>
 
-  </div>
+</nav>
 
 
-  <!-- =====================================================
-       SETTINGS MODAL
-       ===================================================== -->
+<main class="content">
 
-  <div
-    class="modal-overlay"
-    id="settingsModal"
-  >
+    <div class="dashboard">
 
-    <div class="modal">
-
-      <div class="modal-header">
-
-        <h3>
-          Settings
-        </h3>
-
-        <button
-          class="close-button"
-          id="closeSettings"
-          type="button"
-        >
-          ✕
-        </button>
-
-      </div>
-
-
-      <div class="modal-body">
-
-        <div class="setting-row">
-
-          <strong>
-            Account
-          </strong>
-
-          <p>
-            Your Archer account is connected
-            through Google.
-          </p>
-
-        </div>
-
-
-        <div class="setting-row">
-
-          <strong>
-            Discord verification
-          </strong>
-
-          <p>
-            Open Profile to generate a Discord
-            verification code or check whether your
-            Discord account is already connected.
-          </p>
-
-        </div>
-
-
-        <div class="setting-row">
-
-          <strong>
+        <div class="eyebrow">
             Archer Giveaways
-          </strong>
+        </div>
 
-          <p>
-            Website settings and account controls
-            will appear here as more features are
-            added.
-          </p>
+
+        <h1 class="dashboard-title">
+            Pick what you want to access/do
+        </h1>
+
+
+        <p class="dashboard-subtitle">
+            Manage your Archer Giveaways account,
+            connect Discord, and access the owner
+            area from one place.
+        </p>
+
+
+        <div class="cards">
+
+            <!-- SETTINGS -->
+
+            <div class="card">
+
+                <div class="card-content">
+
+                    <div class="card-icon">
+                        ⚙️
+                    </div>
+
+                    <div class="card-title">
+                        Settings
+                    </div>
+
+                    <div class="card-description">
+                        Manage your Archer Giveaways
+                        account settings and connected
+                        services.
+                    </div>
+
+                    <button
+                        class="card-action settings-action"
+                        id="settingsButton"
+                        type="button"
+                    >
+                        Open Settings
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- OWNER -->
+
+            <div class="card">
+
+                <div class="card-content">
+
+                    <div class="card-icon">
+                        👑
+                    </div>
+
+                    <div class="card-title">
+                        Owner Panel
+                    </div>
+
+                    <div class="card-description">
+                        Open the protected Archer
+                        Giveaways owner dashboard.
+                    </div>
+
+                    <a
+                        class="card-action owner-action"
+                        href="/owner/"
+                    >
+                        Open Owner Panel
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- GIVEAWAYS -->
+
+            <div class="card">
+
+                <div class="card-content">
+
+                    <div class="card-icon">
+                        🎁
+                    </div>
+
+                    <div class="card-title">
+                        Giveaways
+                    </div>
+
+                    <div class="card-description">
+                        Your giveaway tools can be
+                        placed here later.
+                    </div>
+
+                    <a
+                        class="card-action"
+                        href="#"
+                        onclick="return false;"
+                    >
+                        Coming Soon
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- STATISTICS -->
+
+            <div class="card">
+
+                <div class="card-content">
+
+                    <div class="card-icon">
+                        📊
+                    </div>
+
+                    <div class="card-title">
+                        Statistics
+                    </div>
+
+                    <div class="card-description">
+                        Your account and giveaway
+                        statistics can appear here.
+                    </div>
+
+                    <a
+                        class="card-action"
+                        href="#"
+                        onclick="return false;"
+                    >
+                        Coming Soon
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- WEBSITE -->
+
+            <div class="card">
+
+                <div class="card-content">
+
+                    <div class="card-icon">
+                        🌐
+                    </div>
+
+                    <div class="card-title">
+                        Website
+                    </div>
+
+                    <div class="card-description">
+                        Return to the main Archer
+                        Giveaways website.
+                    </div>
+
+                    <a
+                        class="card-action"
+                        href="/"
+                    >
+                        Open Website
+                    </a>
+
+                </div>
+
+            </div>
 
         </div>
 
-      </div>
+    </div>
+
+</main>
+
+
+<!-- ==========================================================
+     SETTINGS MODAL
+=========================================================== -->
+
+<div
+    class="settings-overlay"
+    id="settingsOverlay"
+>
+
+    <div class="settings-modal">
+
+        <div class="settings-header">
+
+            <h2>
+                Settings
+            </h2>
+
+            <button
+                class="close-settings"
+                id="closeSettings"
+                type="button"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="setting-box">
+
+            <strong>
+                Account
+            </strong>
+
+            <span id="settingsAccount">
+                Loading...
+            </span>
+
+        </div>
+
+
+        <div class="setting-box">
+
+            <strong>
+                Discord
+            </strong>
+
+            <span id="settingsDiscord">
+                Checking verification...
+            </span>
+
+        </div>
+
+
+        <div class="setting-box">
+
+            <strong>
+                Connected profile
+            </strong>
+
+            <span>
+                Your Discord profile appears here
+                after successful verification.
+            </span>
+
+        </div>
 
     </div>
 
-  </div>
+</div>
 
 
-  <script>
+<script>
 
-    const WORKER_URL =
-      "https://archer.arcdepths.workers.dev";
+const WORKER_URL =
+    "https://archer.arcdepths.workers.dev";
 
 
-    /* =====================================================
-       ACCOUNT
-       ===================================================== */
+const LINK_CODE_LENGTH =
+    6;
 
-    let googleUser = null;
 
-    try {
-      const stored =
+const LINK_CODE_CHARACTERS =
+    "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+
+let currentUser =
+    null;
+
+
+let codeRotationTimer =
+    null;
+
+
+let countdownTimer =
+    null;
+
+
+let currentCode =
+    null;
+
+
+let currentCodeExpiresAt =
+    0;
+
+
+/* ============================================================
+   USER
+============================================================ */
+
+function loadCurrentUser() {
+
+    const loggedIn =
         localStorage.getItem(
-          "archer_google_user"
+            "archer_google_logged_in"
         );
 
-      if (stored) {
-        googleUser =
-          JSON.parse(stored);
-      }
+
+    if (
+        loggedIn !== "true"
+    ) {
+
+        window.location.replace(
+            "../login/"
+        );
+
+        return false;
+
+    }
+
+
+    try {
+
+        const savedUser =
+            localStorage.getItem(
+                "archer_google_user"
+            );
+
+
+        if (savedUser) {
+
+            currentUser =
+                JSON.parse(
+                    savedUser
+                );
+
+        }
+
     } catch (error) {
-      console.error(
-        "Failed to read Google user:",
-        error
-      );
-    }
 
-
-    if (!googleUser || !googleUser.sub) {
-
-      window.location.href =
-        "/login/";
+        console.error(
+            "Could not load Google user:",
+            error
+        );
 
     }
 
 
-    /* =====================================================
-       ELEMENTS
-       ===================================================== */
+    if (
+        !currentUser
+    ) {
 
-    const headerName =
-      document.getElementById(
-        "headerName"
-      );
+        return false;
 
-    const headerStatus =
-      document.getElementById(
-        "headerStatus"
-      );
-
-    const headerAvatar =
-      document.getElementById(
-        "headerAvatar"
-      );
-
-    const heroName =
-      document.getElementById(
-        "heroName"
-      );
-
-    const profileName =
-      document.getElementById(
-        "profileName"
-      );
-
-    const profileEmail =
-      document.getElementById(
-        "profileEmail"
-      );
-
-    const profileAvatar =
-      document.getElementById(
-        "profileAvatar"
-      );
-
-
-    /* =====================================================
-       MODALS
-       ===================================================== */
-
-    const profileModal =
-      document.getElementById(
-        "profileModal"
-      );
-
-    const settingsModal =
-      document.getElementById(
-        "settingsModal"
-      );
-
-
-    function openModal(modal) {
-      modal.classList.add(
-        "show"
-      );
     }
 
 
-    function closeModal(modal) {
-      modal.classList.remove(
-        "show"
-      );
+    const name =
+        currentUser.name ||
+        currentUser.given_name ||
+        currentUser.email ||
+        "User";
+
+
+    document.getElementById(
+        "userName"
+    ).textContent =
+        name;
+
+
+    document.getElementById(
+        "dropdownUserName"
+    ).textContent =
+        name;
+
+
+    document.getElementById(
+        "dropdownUserEmail"
+    ).textContent =
+        currentUser.email || "";
+
+
+    document.getElementById(
+        "settingsAccount"
+    ).textContent =
+        currentUser.email ||
+        name;
+
+
+    if (
+        currentUser.picture
+    ) {
+
+        document.getElementById(
+            "userImage"
+        ).src =
+            currentUser.picture;
+
+
+        document.getElementById(
+            "dropdownUserImage"
+        ).src =
+            currentUser.picture;
+
     }
 
 
-    document
-      .getElementById("profileButton")
-      .addEventListener(
-        "click",
-        () => openModal(profileModal)
-      );
+    updateDiscordStatus();
 
 
-    document
-      .getElementById("profileCard")
-      .addEventListener(
-        "click",
-        () => openModal(profileModal)
-      );
+    return true;
+
+}
 
 
-    document
-      .getElementById("settingsCard")
-      .addEventListener(
-        "click",
-        () => openModal(settingsModal)
-      );
+/* ============================================================
+   DISCORD PROFILE
+============================================================ */
 
+async function updateDiscordStatus() {
 
-    document
-      .getElementById("closeProfile")
-      .addEventListener(
-        "click",
-        () => closeModal(profileModal)
-      );
+    const status =
+        document.getElementById(
+            "discordStatus"
+        );
 
-
-    document
-      .getElementById("closeSettings")
-      .addEventListener(
-        "click",
-        () => closeModal(settingsModal)
-      );
-
-
-    profileModal.addEventListener(
-      "click",
-      event => {
-        if (
-          event.target ===
-          profileModal
-        ) {
-          closeModal(profileModal);
-        }
-      }
-    );
-
-
-    settingsModal.addEventListener(
-      "click",
-      event => {
-        if (
-          event.target ===
-          settingsModal
-        ) {
-          closeModal(settingsModal);
-        }
-      }
-    );
-
-
-    /* =====================================================
-       PROFILE DATA
-       ===================================================== */
-
-    const googleDisplayName =
-      googleUser.name ||
-      googleUser.email ||
-      "User";
-
-    const googleEmail =
-      googleUser.email ||
-      "Google account";
-
-
-    headerName.textContent =
-      googleDisplayName;
-
-    headerStatus.textContent =
-      "Google account";
-
-    heroName.textContent =
-      googleDisplayName;
-
-    profileName.textContent =
-      googleDisplayName;
-
-    profileEmail.textContent =
-      googleEmail;
-
-
-    if (googleUser.picture) {
-      headerAvatar.src =
-        googleUser.picture;
-
-      profileAvatar.src =
-        googleUser.picture;
-    }
-
-
-    /* =====================================================
-       DISCORD LINK STATE
-       ===================================================== */
-
-    let codeInterval = null;
-    let countdownInterval = null;
-    let currentCode = null;
-    let secondsRemaining = 0;
-
-
-    const codeBox =
-      document.getElementById(
-        "codeBox"
-      );
-
-    const codeValue =
-      document.getElementById(
-        "codeValue"
-      );
-
-    const codeTimer =
-      document.getElementById(
-        "codeTimer"
-      );
-
-    const cancelRow =
-      document.getElementById(
-        "cancelRow"
-      );
-
-    const linkMessage =
-      document.getElementById(
-        "linkMessage"
-      );
 
     const generateButton =
-      document.getElementById(
-        "generateButton"
-      );
-
-    const verifyButton =
-      document.getElementById(
-        "verifyButton"
-      );
-
-    const cancelButton =
-      document.getElementById(
-        "cancelButton"
-      );
-
-    const linkedProfile =
-      document.getElementById(
-        "linkedProfile"
-      );
-
-    const linkedAvatar =
-      document.getElementById(
-        "linkedAvatar"
-      );
-
-    const linkedName =
-      document.getElementById(
-        "linkedName"
-      );
-
-    const discordStatusDot =
-      document.getElementById(
-        "discordStatusDot"
-      );
-
-    const discordStatusTitle =
-      document.getElementById(
-        "discordStatusTitle"
-      );
-
-    const discordStatusText =
-      document.getElementById(
-        "discordStatusText"
-      );
-
-    const linkInstructions =
-      document.getElementById(
-        "linkInstructions"
-      );
+        document.getElementById(
+            "generateLinkButton"
+        );
 
 
-    /* =====================================================
-       MESSAGE
-       ===================================================== */
+    const settingsDiscord =
+        document.getElementById(
+            "settingsDiscord"
+        );
 
-    function showMessage(
-      text,
-      type
+
+    if (
+        !currentUser?.sub
     ) {
-      linkMessage.textContent =
-        text;
 
-      linkMessage.className =
-        `message show ${type}`;
-    }
+        status.textContent =
+            "Your Google account ID is unavailable.";
 
+        generateButton.disabled =
+            true;
 
-    function clearMessage() {
-      linkMessage.textContent =
-        "";
-
-      linkMessage.className =
-        "message";
-    }
-
-
-    /* =====================================================
-       RANDOM CODE
-       ===================================================== */
-
-    function generateLocalCode() {
-
-      const chars =
-        "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-
-      let result = "";
-
-      for (
-        let i = 0;
-        i < 6;
-        i++
-      ) {
-        result +=
-          chars[
-            Math.floor(
-              Math.random() *
-              chars.length
-            )
-          ];
-      }
-
-      return result;
-    }
-
-
-    /* =====================================================
-       CREATE CODE
-       ===================================================== */
-
-    async function createCode() {
-
-      if (
-        !googleUser ||
-        !googleUser.sub
-      ) {
         return;
-      }
 
-      const newCode =
-        generateLocalCode();
+    }
 
-      try {
+
+    try {
 
         const response =
-          await fetch(
-            `${WORKER_URL}/discord/code`,
-            {
-              method: "POST",
+            await fetch(
+                `${WORKER_URL}/discord/profile`,
+                {
+                    method:
+                        "POST",
 
-              headers: {
-                "Content-Type":
-                  "application/json"
-              },
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
 
-              body: JSON.stringify({
-                googleId:
-                  googleUser.sub,
-
-                code:
-                  newCode
-              })
-            }
-          );
+                    body:
+                        JSON.stringify({
+                            googleId:
+                                currentUser.sub
+                        })
+                }
+            );
 
 
         const data =
-          await response.json();
+            await response.json();
 
 
         if (
-          !response.ok ||
-          !data.success
+            response.ok &&
+            data.success === true &&
+            data.linked === true &&
+            data.profile
         ) {
-          throw new Error(
-            data.message ||
-            "Failed to create code."
-          );
+
+            applyDiscordProfile(
+                data.profile
+            );
+
+
+        } else {
+
+            currentUser.discordVerified =
+                false;
+
+
+            status.textContent =
+                "Not verified yet. Generate a code and run /link CODE in ArcherBot.";
+
+
+            status.className =
+                "discord-status";
+
+
+            settingsDiscord.textContent =
+                "Not verified";
+
+
         }
+
+    } catch (error) {
+
+        console.error(
+            "Could not load Discord profile:",
+            error
+        );
+
+
+        status.textContent =
+            "Could not check your Discord connection right now.";
+
+    }
+
+}
+
+
+/* ============================================================
+   APPLY DISCORD PROFILE
+============================================================ */
+
+function applyDiscordProfile(
+    profile
+) {
+
+    currentUser.discordVerified =
+        true;
+
+
+    currentUser.discordId =
+        profile.discordId;
+
+
+    currentUser.discordUsername =
+        profile.discordUsername;
+
+
+    currentUser.discordName =
+        profile.discordName;
+
+
+    currentUser.discordAvatar =
+        profile.discordAvatar;
+
+
+    localStorage.setItem(
+        "archer_google_user",
+        JSON.stringify(
+            currentUser
+        )
+    );
+
+
+    const discordName =
+        profile.discordUsername ||
+        profile.discordName ||
+        "Discord User";
+
+
+    const avatar =
+        profile.discordAvatar ||
+        "https://cdn.discordapp.com/embed/avatars/0.png";
+
+
+    /* Header */
+
+    document.getElementById(
+        "userName"
+    ).textContent =
+        discordName;
+
+
+    document.getElementById(
+        "userImage"
+    ).src =
+        avatar;
+
+
+    /* Dropdown */
+
+    document.getElementById(
+        "dropdownUserName"
+    ).textContent =
+        discordName;
+
+
+    document.getElementById(
+        "dropdownUserImage"
+    ).src =
+        avatar;
+
+
+    /* Status */
+
+    const status =
+        document.getElementById(
+            "discordStatus"
+        );
+
+
+    status.innerHTML =
+        `Verified as <strong>${escapeHtml(
+            discordName
+        )}</strong> ✓`;
+
+
+    status.className =
+        "discord-status success";
+
+
+    /* Linked profile */
+
+    document.getElementById(
+        "linkedDiscordProfile"
+    ).classList.add(
+        "active"
+    );
+
+
+    document.getElementById(
+        "linkedDiscordAvatar"
+    ).src =
+        avatar;
+
+
+    document.getElementById(
+        "linkedDiscordName"
+    ).textContent =
+        discordName;
+
+
+    /* Settings */
+
+    document.getElementById(
+        "settingsDiscord"
+    ).textContent =
+        `Verified as ${discordName}`;
+
+
+    /*
+       Stop any active code rotation
+       once the account is verified.
+    */
+
+    stopCodeRotation();
+
+}
+
+
+/* ============================================================
+   CODE GENERATOR
+============================================================ */
+
+function generateCode() {
+
+    let code = "";
+
+
+    const values =
+        new Uint32Array(
+            LINK_CODE_LENGTH
+        );
+
+
+    crypto.getRandomValues(
+        values
+    );
+
+
+    for (
+        let i = 0;
+        i < LINK_CODE_LENGTH;
+        i++
+    ) {
+
+        code +=
+            LINK_CODE_CHARACTERS[
+                values[i] %
+                LINK_CODE_CHARACTERS.length
+            ];
+
+    }
+
+
+    return code;
+
+}
+
+
+/* ============================================================
+   CREATE CODE
+============================================================ */
+
+async function createDiscordLinkCode() {
+
+    if (
+        !currentUser?.sub
+    ) {
+
+        throw new Error(
+            "Your Google account could not be identified."
+        );
+
+    }
+
+
+    const code =
+        generateCode();
+
+
+    const response =
+        await fetch(
+            `${WORKER_URL}/discord/code`,
+            {
+                method:
+                    "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body:
+                    JSON.stringify({
+
+                        googleId:
+                            currentUser.sub,
+
+                        code
+
+                    })
+
+            }
+        );
+
+
+    const data =
+        await response.json();
+
+
+    if (
+        !response.ok ||
+        data.success !== true
+    ) {
+
+        throw new Error(
+            data.message ||
+            "Could not generate a Discord linking code."
+        );
+
+    }
+
+
+    return {
+
+        code,
+
+        expiresIn:
+            Number(
+                data.expiresIn || 60
+            )
+
+    };
+
+}
+
+
+/* ============================================================
+   SHOW CODE
+============================================================ */
+
+async function generateAndShowCode() {
+
+    const button =
+        document.getElementById(
+            "generateLinkButton"
+        );
+
+
+    const box =
+        document.getElementById(
+            "linkCodeBox"
+        );
+
+
+    const codeElement =
+        document.getElementById(
+            "linkCode"
+        );
+
+
+    const timerElement =
+        document.getElementById(
+            "linkTimer"
+        );
+
+
+    button.disabled =
+        true;
+
+
+    button.textContent =
+        "Generating...";
+
+
+    try {
+
+        const result =
+            await createDiscordLinkCode();
 
 
         currentCode =
-          newCode;
-
-        secondsRemaining =
-          60;
-
-        codeValue.textContent =
-          newCode;
-
-        codeTimer.textContent =
-          "Expires in 60s";
-
-        codeBox.classList.add(
-          "show"
-        );
-
-        cancelRow.style.display =
-          "grid";
-
-        generateButton.style.display =
-          "none";
-
-        clearMessage();
+            result.code;
 
 
-        if (
-          countdownInterval
-        ) {
-          clearInterval(
-            countdownInterval
-          );
-        }
-
-
-        countdownInterval =
-          setInterval(
-            () => {
-
-              secondsRemaining--;
-
-              if (
-                secondsRemaining <=
-                0
-              ) {
-
-                secondsRemaining =
-                  60;
-
-                codeTimer.textContent =
-                  "Generating a new code...";
-
-              } else {
-
-                codeTimer.textContent =
-                  `Expires in ${secondsRemaining}s`;
-
-              }
-
-            },
-            1000
-          );
-
-
-        /*
-          Generate a completely new code
-          every 60 seconds.
-        */
-
-        if (
-          !codeInterval
-        ) {
-
-          codeInterval =
-            setInterval(
-              async () => {
-
-                try {
-                  await createCode();
-                } catch (
-                  error
-                ) {
-                  console.error(
-                    "Automatic code refresh failed:",
-                    error
-                  );
-                }
-
-              },
-              60000
+        currentCodeExpiresAt =
+            Date.now() +
+            (
+                result.expiresIn *
+                1000
             );
-        }
 
-      } catch (error) {
 
-        console.error(
-          "Code generation error:",
-          error
+        box.classList.add(
+            "active"
         );
 
-        showMessage(
-          error.message ||
-          "Failed to generate a code.",
-          "error"
-        );
-      }
-    }
+
+        codeElement.textContent =
+            result.code;
 
 
-    /* =====================================================
-       CANCEL CODE GENERATION
-       ===================================================== */
-
-    function cancelCodeGeneration() {
-
-      if (
-        codeInterval
-      ) {
-        clearInterval(
-          codeInterval
-        );
-
-        codeInterval =
-          null;
-      }
+        updateCountdown();
 
 
-      if (
-        countdownInterval
-      ) {
-        clearInterval(
-          countdownInterval
-        );
-
-        countdownInterval =
-          null;
-      }
+        startCountdown();
 
 
-      currentCode =
-        null;
-
-      secondsRemaining =
-        0;
-
-
-      codeValue.textContent =
-        "------";
-
-      codeTimer.textContent =
-        "No active code";
-
-      codeBox.classList.remove(
-        "show"
-      );
-
-      cancelRow.style.display =
-        "none";
-
-      generateButton.style.display =
-        "block";
-
-      clearMessage();
-    }
+        document.getElementById(
+            "cancelLinkButton"
+        ).style.display =
+            "block";
 
 
-    /* =====================================================
-       CHECK VERIFICATION
-       ===================================================== */
-
-    async function checkVerification(
-      silent = false
-    ) {
-
-      if (
-        !googleUser ||
-        !googleUser.sub
-      ) {
-        return false;
-      }
-
-
-      if (!silent) {
-        verifyButton.disabled =
-          true;
-
-        verifyButton.textContent =
-          "Checking...";
-      }
-
-
-      try {
-
-        const response =
-          await fetch(
-            `${WORKER_URL}/discord/profile`,
-            {
-              method: "POST",
-
-              headers: {
-                "Content-Type":
-                  "application/json"
-              },
-
-              body: JSON.stringify({
-                googleId:
-                  googleUser.sub
-              })
-            }
-          );
-
-
-        const data =
-          await response.json();
-
-
-        if (
-          !response.ok ||
-          !data.success
-        ) {
-          throw new Error(
-            data.message ||
-            "Verification check failed."
-          );
-        }
-
-
-        if (
-          data.linked &&
-          data.profile
-        ) {
-
-          const profile =
-            data.profile;
-
-
-          /* Stop the code generator */
-
-          cancelCodeGeneration();
-
-
-          /* Show Discord profile */
-
-          linkedProfile.classList.add(
-            "show"
-          );
-
-
-          linkedAvatar.src =
-            profile.discordAvatar ||
-            "https://cdn.discordapp.com/embed/avatars/0.png";
-
-
-          linkedName.textContent =
-            profile.discordUsername ||
-            profile.discordName ||
-            "Discord User";
-
-
-          discordStatusDot.classList.add(
-            "connected"
-          );
-
-
-          discordStatusTitle.textContent =
-            "Discord verified";
-
-
-          discordStatusText.textContent =
-            "Your Discord account is connected to Archer Giveaways.";
-
-
-          linkInstructions.innerHTML =
-            "Your Discord account is already verified with Archer Giveaways.";
-
-
-          generateButton.style.display =
+        button.style.display =
             "none";
 
 
-          verifyButton.textContent =
-            "Verified ✓";
-
-
-          /*
-            Change the website header/profile
-            to Discord identity.
-          */
-
-          const discordName =
-            profile.discordUsername ||
-            profile.discordName ||
-            "Discord User";
-
-
-          headerName.textContent =
-            discordName;
-
-
-          headerStatus.textContent =
-            "Discord verified";
-
-
-          heroName.textContent =
-            discordName;
-
-
-          profileName.textContent =
-            discordName;
-
-
-          profileEmail.textContent =
-            "Discord verified";
-
-
-          if (
-            profile.discordAvatar
-          ) {
-
-            headerAvatar.src =
-              profile.discordAvatar;
-
-            profileAvatar.src =
-              profile.discordAvatar;
-
-          }
-
-
-          if (!silent) {
-
-            showMessage(
-              "✅ Discord is verified and your profile has been updated.",
-              "success"
-            );
-
-          }
-
-
-          return true;
-        }
-
-
-        /* Not linked yet */
-
-        linkedProfile.classList.remove(
-          "show"
+        showLinkMessage(
+            "Code created. Run /link CODE in ArcherBot.",
+            "success"
         );
 
 
-        discordStatusDot.classList.remove(
-          "connected"
-        );
+        /*
+           Start automatic code replacement
+           every 60 seconds.
+        */
+
+        if (
+            !codeRotationTimer
+        ) {
+
+            codeRotationTimer =
+                setInterval(
+                    async function() {
+
+                        try {
+
+                            /*
+                               Check whether the
+                               Discord account was
+                               already linked.
+                            */
+
+                            const linked =
+                                await checkVerification(
+                                    true
+                                );
 
 
-        discordStatusTitle.textContent =
-          "Discord not verified";
+                            if (
+                                linked
+                            ) {
+
+                                return;
+
+                            }
 
 
-        discordStatusText.textContent =
-          "Your Discord account has not been connected yet.";
+                            await generateAndShowCode();
 
+                        } catch (error) {
 
-        if (!silent) {
+                            console.error(
+                                "Automatic code refresh failed:",
+                                error
+                            );
 
-          showMessage(
-            "Discord is not linked yet. Use your current code with /link CODE in Discord.",
-            "error"
-          );
+                        }
+
+                    },
+                    60000
+                );
 
         }
 
-
-        return false;
-
-      } catch (error) {
+    } catch (error) {
 
         console.error(
-          "Verification check error:",
-          error
+            "Discord code generation error:",
+            error
         );
 
 
-        if (!silent) {
-
-          showMessage(
+        showLinkMessage(
             error.message ||
-            "Could not check verification.",
+            "Could not generate your code.",
             "error"
-          );
-
-        }
+        );
 
 
-        return false;
-
-      } finally {
-
-        if (!silent) {
-
-          verifyButton.disabled =
+        button.disabled =
             false;
 
-          verifyButton.textContent =
-            "Check Verification";
 
-        }
+        button.textContent =
+            "Generate Discord Code";
 
-      }
+    }
+
+}
+
+
+/* ============================================================
+   COUNTDOWN
+============================================================ */
+
+function startCountdown() {
+
+    if (
+        countdownTimer
+    ) {
+
+        clearInterval(
+            countdownTimer
+        );
+
     }
 
 
-    /* =====================================================
-       BUTTONS
-       ===================================================== */
-
-    generateButton.addEventListener(
-      "click",
-      async () => {
-        await createCode();
-      }
-    );
-
-
-    cancelButton.addEventListener(
-      "click",
-      () => {
-        cancelCodeGeneration();
-
-        showMessage(
-          "Code generation cancelled.",
-          "success"
+    countdownTimer =
+        setInterval(
+            updateCountdown,
+            250
         );
-      }
+
+}
+
+
+/* ============================================================
+   UPDATE COUNTDOWN
+============================================================ */
+
+function updateCountdown() {
+
+    const timerElement =
+        document.getElementById(
+            "linkTimer"
+        );
+
+
+    if (
+        !currentCodeExpiresAt
+    ) {
+
+        timerElement.textContent =
+            "No active code";
+
+        return;
+
+    }
+
+
+    const remaining =
+        Math.max(
+            0,
+            Math.ceil(
+                (
+                    currentCodeExpiresAt -
+                    Date.now()
+                ) / 1000
+            )
+        );
+
+
+    if (
+        remaining <= 0
+    ) {
+
+        timerElement.textContent =
+            "Generating a new code...";
+
+        return;
+
+    }
+
+
+    timerElement.textContent =
+        `Expires in ${remaining}s`;
+
+}
+
+
+/* ============================================================
+   STOP CODE ROTATION
+============================================================ */
+
+function stopCodeRotation() {
+
+    if (
+        codeRotationTimer
+    ) {
+
+        clearInterval(
+            codeRotationTimer
+        );
+
+        codeRotationTimer =
+            null;
+
+    }
+
+
+    if (
+        countdownTimer
+    ) {
+
+        clearInterval(
+            countdownTimer
+        );
+
+        countdownTimer =
+            null;
+
+    }
+
+
+    currentCode =
+        null;
+
+
+    currentCodeExpiresAt =
+        0;
+
+
+    document.getElementById(
+        "linkCodeBox"
+    ).classList.remove(
+        "active"
     );
 
 
-    verifyButton.addEventListener(
-      "click",
-      async () => {
-        await checkVerification();
-      }
+    document.getElementById(
+        "cancelLinkButton"
+    ).style.display =
+        "none";
+
+
+    const button =
+        document.getElementById(
+            "generateLinkButton"
+        );
+
+
+    button.style.display =
+        "block";
+
+
+    button.disabled =
+        false;
+
+
+    button.textContent =
+        "Generate Discord Code";
+
+}
+
+
+/* ============================================================
+   CHECK VERIFICATION
+============================================================ */
+
+async function checkVerification(
+    silent = false
+) {
+
+    if (
+        !currentUser?.sub
+    ) {
+
+        return false;
+
+    }
+
+
+    const button =
+        document.getElementById(
+            "checkVerificationButton"
+        );
+
+
+    if (
+        !silent
+    ) {
+
+        button.disabled =
+            true;
+
+
+        button.textContent =
+            "Checking...";
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${WORKER_URL}/discord/profile`,
+                {
+                    method:
+                        "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            googleId:
+                                currentUser.sub
+
+                        })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            data.success !== true
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Verification check failed."
+            );
+
+        }
+
+
+        if (
+            data.linked === true &&
+            data.profile
+        ) {
+
+            applyDiscordProfile(
+                data.profile
+            );
+
+
+            if (
+                !silent
+            ) {
+
+                showLinkMessage(
+                    "✅ Discord is verified and your profile has been updated.",
+                    "success"
+                );
+
+            }
+
+
+            return true;
+
+        }
+
+
+        if (
+            !silent
+        ) {
+
+            showLinkMessage(
+                "Discord is not linked yet. Use the active code with /link CODE.",
+                "error"
+            );
+
+        }
+
+
+        return false;
+
+    } catch (error) {
+
+        console.error(
+            "Verification check failed:",
+            error
+        );
+
+
+        if (
+            !silent
+        ) {
+
+            showLinkMessage(
+                error.message ||
+                "Could not check verification.",
+                "error"
+            );
+
+        }
+
+
+        return false;
+
+    } finally {
+
+        if (
+            !silent
+        ) {
+
+            button.disabled =
+                false;
+
+
+            button.textContent =
+                "Check Verification";
+
+        }
+
+    }
+
+}
+
+
+/* ============================================================
+   MESSAGE
+============================================================ */
+
+function showLinkMessage(
+    message,
+    type = ""
+) {
+
+    const element =
+        document.getElementById(
+            "linkMessage"
+        );
+
+
+    element.textContent =
+        message;
+
+
+    element.className =
+        `link-message ${type}`;
+
+}
+
+
+/* ============================================================
+   ESCAPE HTML
+============================================================ */
+
+function escapeHtml(
+    value
+) {
+
+    return String(value)
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+
+/* ============================================================
+   PROFILE DROPDOWN
+============================================================ */
+
+const userProfileBtn =
+    document.getElementById(
+        "userProfileBtn"
     );
 
 
-    /* =====================================================
-       OTHER CARDS
-       ===================================================== */
-
-    document
-      .getElementById("websiteCard")
-      .addEventListener(
-        "click",
-        () => {
-          window.location.href =
-            "/";
-        }
-      );
-
-
-    document
-      .getElementById("giveawaysCard")
-      .addEventListener(
-        "click",
-        () => {
-          window.location.href =
-            "/giveaways/";
-        }
-      );
-
-
-    document
-      .getElementById("ownerCard")
-      .addEventListener(
-        "click",
-        () => {
-          window.location.href =
-            "/home/owner/";
-        }
-      );
-
-
-    document
-      .getElementById("discordCard")
-      .addEventListener(
-        "click",
-        () => {
-          window.open(
-            "https://discord.gg/",
-            "_blank"
-          );
-        }
-      );
-
-
-    /* =====================================================
-       INITIAL PROFILE CHECK
-       ===================================================== */
-
-    checkVerification(
-      true
+const userDropdown =
+    document.getElementById(
+        "userDropdown"
     );
 
-  </script>
+
+userProfileBtn.addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+
+        userDropdown.classList.toggle(
+            "active"
+        );
+
+    }
+);
+
+
+userDropdown.addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+    }
+);
+
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            !userProfileBtn.contains(
+                event.target
+            )
+        ) {
+
+            userDropdown.classList.remove(
+                "active"
+            );
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   LINK BUTTONS
+============================================================ */
+
+document
+    .getElementById(
+        "generateLinkButton"
+    )
+    .addEventListener(
+        "click",
+        generateAndShowCode
+    );
+
+
+document
+    .getElementById(
+        "cancelLinkButton"
+    )
+    .addEventListener(
+        "click",
+        function() {
+
+            stopCodeRotation();
+
+
+            showLinkMessage(
+                "Code generation cancelled.",
+                "success"
+            );
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "checkVerificationButton"
+    )
+    .addEventListener(
+        "click",
+        function() {
+
+            checkVerification(
+                false
+            );
+
+        }
+    );
+
+
+/* ============================================================
+   SETTINGS
+============================================================ */
+
+const settingsOverlay =
+    document.getElementById(
+        "settingsOverlay"
+    );
+
+
+document
+    .getElementById(
+        "settingsButton"
+    )
+    .addEventListener(
+        "click",
+        function() {
+
+            document.getElementById(
+                "settingsDiscord"
+            ).textContent =
+                currentUser?.discordVerified
+                    ? `Verified as ${
+                        currentUser.discordUsername ||
+                        currentUser.discordName ||
+                        "Discord User"
+                      }`
+                    : "Not verified";
+
+
+            settingsOverlay.classList.add(
+                "active"
+            );
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "closeSettings"
+    )
+    .addEventListener(
+        "click",
+        function() {
+
+            settingsOverlay.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+
+settingsOverlay.addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            event.target ===
+            settingsOverlay
+        ) {
+
+            settingsOverlay.classList.remove(
+                "active"
+            );
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   LOGOUT
+============================================================ */
+
+function logout() {
+
+    stopCodeRotation();
+
+
+    localStorage.removeItem(
+        "archer_google_logged_in"
+    );
+
+
+    localStorage.removeItem(
+        "archer_google_credential"
+    );
+
+
+    localStorage.removeItem(
+        "archer_google_user"
+    );
+
+
+    if (
+        window.google &&
+        google.accounts &&
+        google.accounts.id
+    ) {
+
+        google.accounts.id
+            .disableAutoSelect();
+
+    }
+
+
+    window.location.replace(
+        "../login/"
+    );
+
+}
+
+
+/* ============================================================
+   START
+============================================================ */
+
+if (
+    document.readyState ===
+    "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        loadCurrentUser
+    );
+
+} else {
+
+    loadCurrentUser();
+
+}
+
+</script>
 
 </body>
 </html>
