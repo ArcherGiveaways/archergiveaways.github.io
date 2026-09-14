@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Owner Panel - Archer Giveaways</title>
+    <title>Owner Home - Archer Giveaways</title>
 
     <link
         rel="icon"
@@ -24,23 +25,18 @@
 
         body {
             margin: 0;
-
             min-height: 100vh;
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
 
             background:
                 radial-gradient(
-                    circle at 15% 10%,
-                    rgba(255, 90, 0, 0.11),
-                    transparent 25%
+                    circle at 20% 15%,
+                    rgba(88, 101, 242, 0.12),
+                    transparent 28%
                 ),
                 radial-gradient(
-                    circle at 85% 80%,
-                    rgba(88, 101, 242, 0.12),
+                    circle at 80% 70%,
+                    rgba(255, 90, 0, 0.08),
                     transparent 25%
                 ),
                 #0f1117;
@@ -48,13 +44,15 @@
             color: white;
         }
 
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
         .navbar {
             height: 70px;
 
             display: flex;
-
             align-items: center;
-
             justify-content: space-between;
 
             padding: 0 30px;
@@ -65,66 +63,380 @@
             border-bottom:
                 1px solid #292e3a;
 
-            backdrop-filter:
-                blur(14px);
+            backdrop-filter: blur(14px);
 
             position: sticky;
-
             top: 0;
 
-            z-index: 50;
+            z-index: 100;
         }
 
         .brand {
             font-size: 20px;
-
             font-weight: 900;
 
             color: white;
-
             text-decoration: none;
         }
 
-        .nav-actions {
+        .user-area {
             display: flex;
-
-            gap: 10px;
+            align-items: center;
+            gap: 12px;
         }
 
-        .nav-button {
-            padding:
-                9px 14px;
+        .user-profile-box {
+            position: relative;
+
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 6px 14px;
+
+            background: #101218;
+
+            border:
+                1px solid #292e3a;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+            user-select: none;
+
+            transition: 0.2s ease;
+        }
+
+        .user-profile-box:hover {
+            background: #1f2330;
+            border-color: #5865f2;
+        }
+
+        .user-image {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            border:
+                2px solid #5865f2;
+
+            background: #20232d;
+        }
+
+        .user-name {
+            font-size: 14px;
+
+            max-width: 180px;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* =====================================================
+           PROFILE DROPDOWN
+        ===================================================== */
+
+        .user-dropdown {
+            display: none;
+
+            position: absolute;
+
+            top:
+                calc(100% + 10px);
+
+            right: 0;
+
+            width: 330px;
+
+            background: #181b24;
+
+            border:
+                1px solid #292e3a;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 18px 45px rgba(0, 0, 0, 0.55);
+
+            z-index: 100;
+
+            padding: 18px;
+        }
+
+        .user-dropdown.active {
+            display: block;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 16px;
+        }
+
+        .profile-header img {
+            width: 52px;
+            height: 52px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            background: #20232d;
+        }
+
+        .profile-header strong {
+            display: block;
+
+            font-size: 16px;
+
+            margin-bottom: 3px;
+        }
+
+        .profile-header span {
+            color: #9298a5;
+
+            font-size: 12px;
+        }
+
+        .discord-section {
+            padding-top: 15px;
+
+            border-top:
+                1px solid #292e3a;
+        }
+
+        .discord-title {
+            font-size: 14px;
+
+            font-weight: 800;
+
+            margin-bottom: 6px;
+        }
+
+        .discord-status {
+            font-size: 12px;
+
+            color: #9298a5;
+
+            margin-bottom: 12px;
+
+            line-height: 1.5;
+        }
+
+        .discord-status.success {
+            color: #6cff9b;
+        }
+
+        .discord-button {
+            width: 100%;
+
+            border: none;
+
+            border-radius: 10px;
+
+            padding: 11px 12px;
+
+            background: #5865f2;
+
+            color: white;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+
+            margin-top: 8px;
+        }
+
+        .discord-button:hover {
+            background: #4752c4;
+
+            transform:
+                translateY(-1px);
+        }
+
+        .discord-button:disabled {
+            opacity: 0.65;
+
+            cursor: wait;
+
+            transform: none;
+        }
+
+        .discord-button.cancel {
+            background: #ef4444;
+        }
+
+        .discord-button.cancel:hover {
+            background: #dc2626;
+        }
+
+        .discord-button.verify {
+            background: #303642;
+        }
+
+        .discord-button.verify:hover {
+            background: #3b4252;
+        }
+
+        .link-code-box {
+            display: none;
+
+            margin-top: 12px;
+
+            padding: 14px;
 
             border:
                 1px solid #343946;
 
-            border-radius:
-                9px;
+            background: #101218;
 
-            background:
-                #101218;
+            border-radius: 12px;
 
-            color: white;
+            text-align: center;
+        }
 
-            text-decoration: none;
+        .link-code-box.active {
+            display: block;
+        }
 
-            font-size: 13px;
+        .link-code {
+            font-size: 28px;
+
+            letter-spacing: 7px;
+
+            font-weight: 900;
+
+            margin: 6px 0 4px;
+        }
+
+        .link-instructions {
+            color: #a8adba;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+        .link-timer {
+            margin-top: 8px;
+
+            font-size: 12px;
 
             font-weight: 800;
 
-            transition:
-                0.2s ease;
+            color: #ffb86b;
         }
 
-        .nav-button:hover {
-            border-color:
-                #5865f2;
+        .link-message {
+            min-height: 18px;
 
-            background:
-                #1f2330;
+            margin-top: 8px;
+
+            font-size: 12px;
+
+            text-align: center;
         }
 
-        .page {
+        .link-message.success {
+            color: #6cff9b;
+        }
+
+        .link-message.error {
+            color: #ff6b6b;
+        }
+
+        .linked-discord-profile {
+            display: none;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-top: 12px;
+
+            padding: 10px;
+
+            background: #101218;
+
+            border:
+                1px solid #292e3a;
+
+            border-radius: 11px;
+        }
+
+        .linked-discord-profile.active {
+            display: flex;
+        }
+
+        .linked-discord-profile img {
+            width: 40px;
+            height: 40px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+        }
+
+        .linked-discord-profile strong {
+            display: block;
+
+            font-size: 13px;
+        }
+
+        .linked-discord-profile span {
+            display: block;
+
+            margin-top: 2px;
+
+            font-size: 11px;
+
+            color: #6cff9b;
+        }
+
+        .logout {
+            margin-left: 10px;
+
+            padding: 9px 15px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background: #ef4444;
+
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            transition: 0.2s ease;
+        }
+
+        .logout:hover {
+            background: #dc2626;
+
+            transform:
+                translateY(-1px);
+        }
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .content {
             min-height:
                 calc(100vh - 70px);
 
@@ -135,101 +447,88 @@
             justify-content: center;
 
             padding:
-                50px 24px 70px;
+                56px 30px 70px;
         }
 
-        .shell {
+        .dashboard {
             width: 100%;
 
-            max-width: 1100px;
-        }
-
-        .owner-dashboard {
-            display:
-                none;
-        }
-
-        .owner-dashboard.active {
-            display:
-                block;
-        }
-
-        .heading {
-            text-align:
-                center;
-
-            margin-bottom:
-                30px;
+            max-width: 1250px;
         }
 
         .eyebrow {
-            color:
-                #ff8a42;
+            text-align: center;
 
-            font-size:
-                12px;
+            color: #9298a5;
 
-            text-transform:
-                uppercase;
+            font-size: 12px;
 
-            letter-spacing:
-                2px;
+            font-weight: 800;
 
-            font-weight:
-                900;
+            text-transform: uppercase;
 
-            margin-bottom:
-                8px;
+            letter-spacing: 2px;
+
+            margin-bottom: 10px;
         }
 
-        .heading h1 {
-            margin:
-                0;
+        .dashboard-title {
+            margin: 0;
 
-            font-size:
-                36px;
+            text-align: center;
 
-            font-weight:
-                900;
+            font-size: 36px;
+
+            font-weight: 900;
+
+            letter-spacing: -1px;
         }
 
-        .heading p {
-            max-width:
-                680px;
+        .dashboard-subtitle {
+            max-width: 720px;
 
             margin:
-                12px auto 0;
+                12px auto 32px;
 
-            color:
-                #9ca3af;
+            text-align: center;
 
-            line-height:
-                1.6;
+            color: #9ca3af;
 
-            font-size:
-                14px;
+            line-height: 1.6;
+
+            font-size: 14px;
         }
 
-        .owner-grid {
-            display:
-                grid;
+        /* =====================================================
+           FIVE CARD LAYOUT
+        ===================================================== */
+
+        .cards {
+            width: 100%;
+
+            display: grid;
 
             grid-template-columns:
-                repeat(
-                    3,
-                    1fr
-                );
+                repeat(5, 1fr);
 
-            gap:
-                20px;
+            gap: 22px;
         }
 
-        .owner-card {
-            padding:
-                22px;
+        .card {
+            position: relative;
 
-            min-height:
-                180px;
+            width: 100%;
+
+            aspect-ratio:
+                4 / 6;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: flex-end;
+
+            padding: 18px;
 
             background:
                 linear-gradient(
@@ -241,210 +540,457 @@
             border:
                 1px solid #292e3a;
 
-            border-radius:
-                17px;
+            border-radius: 17px;
 
-            position:
-                relative;
+            isolation: isolate;
 
-            overflow:
-                hidden;
+            transition:
+                0.25s ease;
         }
 
-        .owner-card::before {
-            content:
-                "";
+        .card::before {
+            content: "";
 
-            position:
-                absolute;
+            position: absolute;
 
-            width:
-                140px;
+            inset: -4px;
 
-            height:
-                140px;
-
-            right:
-                -50px;
-
-            top:
-                -55px;
+            border-radius: 21px;
 
             background:
-                rgba(
-                    255,
-                    90,
-                    0,
-                    0.08
+                linear-gradient(
+                    90deg,
+                    #ff1600,
+                    #ff4d00,
+                    #ff9d00,
+                    #ff3100,
+                    #ff0800,
+                    #ff7800,
+                    #ff1a00
                 );
 
-            border-radius:
-                50%;
+            padding: 4px;
 
-            pointer-events:
-                none;
+            -webkit-mask:
+                linear-gradient(#000 0 0)
+                content-box,
+                linear-gradient(#000 0 0);
+
+            -webkit-mask-composite: xor;
+
+            mask:
+                linear-gradient(#000 0 0)
+                content-box,
+                linear-gradient(#000 0 0);
+
+            mask-composite: exclude;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            z-index: -1;
+
+            filter:
+                drop-shadow(0 0 4px #ff3b00)
+                drop-shadow(0 0 10px #ff1800)
+                drop-shadow(0 0 18px #ff5a00);
+
+            transition:
+                opacity 0.25s ease;
         }
 
-        .owner-icon {
-            width:
-                46px;
+        .card::after {
+            content: "";
 
-            height:
-                46px;
+            position: absolute;
 
-            display:
-                grid;
+            inset: -6px;
 
-            place-items:
-                center;
-
-            border-radius:
-                12px;
+            border-radius: 23px;
 
             background:
-                #101218;
+                linear-gradient(
+                    100deg,
+                    transparent 0%,
+                    transparent 15%,
+                    #ff2100 25%,
+                    #ff6500 32%,
+                    #ffb300 38%,
+                    #ff3b00 45%,
+                    transparent 55%,
+                    transparent 72%,
+                    #ff1800 82%,
+                    #ff7a00 91%,
+                    transparent 100%
+                );
+
+            background-size:
+                300% 100%;
+
+            padding: 6px;
+
+            -webkit-mask:
+                linear-gradient(#000 0 0)
+                content-box,
+                linear-gradient(#000 0 0);
+
+            -webkit-mask-composite: xor;
+
+            mask:
+                linear-gradient(#000 0 0)
+                content-box,
+                linear-gradient(#000 0 0);
+
+            mask-composite: exclude;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            z-index: -2;
+
+            filter:
+                blur(7px);
+        }
+
+        .card:hover {
+            transform:
+                translateY(-8px);
+
+            box-shadow:
+                0 20px 45px
+                rgba(0, 0, 0, 0.42);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover::after {
+            opacity: 0.8;
+
+            animation:
+                lavaFlow 2.2s
+                ease-in-out infinite;
+        }
+
+        @keyframes lavaFlow {
+
+            0% {
+                background-position:
+                    100% 50%;
+            }
+
+            50% {
+                background-position:
+                    0% 50%;
+            }
+
+            100% {
+                background-position:
+                    100% 50%;
+            }
+        }
+
+        .card-content {
+            position: relative;
+
+            z-index: 2;
+        }
+
+        .card-icon {
+            width: 44px;
+
+            height: 44px;
+
+            border-radius: 12px;
+
+            display: grid;
+
+            place-items: center;
+
+            background: #101218;
 
             border:
                 1px solid #343946;
 
-            font-size:
-                21px;
+            font-size: 20px;
 
-            margin-bottom:
-                13px;
+            margin-bottom: 12px;
         }
 
-        .owner-card h2 {
-            margin:
-                0 0 8px;
+        .card-title {
+            font-size: 17px;
 
-            font-size:
-                17px;
+            font-weight: 900;
+
+            margin-bottom: 5px;
         }
 
-        .owner-card p {
-            margin:
-                0;
+        .card-description {
+            color: #9298a5;
 
-            color:
-                #9298a5;
+            font-size: 12px;
 
-            font-size:
-                13px;
+            line-height: 1.5;
 
-            line-height:
-                1.55;
+            min-height: 37px;
+
+            margin-bottom: 14px;
         }
 
-        .locked-note {
-            margin-top:
-                14px;
+        .card-action {
+            display: block;
 
-            display:
-                inline-block;
+            width: 100%;
 
-            padding:
-                7px 9px;
+            padding: 11px 12px;
 
-            border-radius:
-                8px;
+            border-radius: 10px;
+
+            text-align: center;
+
+            text-decoration: none;
 
             border:
                 1px solid #343946;
 
-            color:
-                #a8adba;
+            background: #101218;
 
-            font-size:
-                11px;
+            color: white;
 
-            font-weight:
-                800;
-        }
+            font-weight: 800;
 
-        .panel-actions {
-            display:
-                flex;
+            font-size: 13px;
 
-            justify-content:
-                center;
-
-            margin-top:
-                26px;
-        }
-
-        .logout-button {
-            padding:
-                10px 16px;
-
-            border:
-                none;
-
-            border-radius:
-                10px;
-
-            background:
-                #ef4444;
-
-            color:
-                white;
-
-            font-weight:
-                800;
-
-            cursor:
-                pointer;
+            cursor: pointer;
 
             transition:
                 0.2s ease;
         }
 
-        .logout-button:hover {
-            background:
-                #dc2626;
+        .card-action:hover {
+            background: #222631;
+
+            border-color:
+                #5865f2;
 
             transform:
                 translateY(-1px);
         }
 
-        @media (
-            max-width: 900px
-        ) {
+        .owner-action:hover {
+            border-color:
+                #ff5a00;
 
-            .owner-grid {
+            box-shadow:
+                0 0 18px
+                rgba(255, 80, 0, 0.2);
+        }
+
+        .settings-action:hover {
+            border-color:
+                #5865f2;
+
+            box-shadow:
+                0 0 18px
+                rgba(88, 101, 242, 0.2);
+        }
+
+        /* =====================================================
+           SETTINGS MODAL
+        ===================================================== */
+
+        .settings-overlay {
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                rgba(0, 0, 0, 0.72);
+
+            backdrop-filter:
+                blur(9px);
+
+            z-index: 500;
+        }
+
+        .settings-overlay.active {
+            display: flex;
+        }
+
+        .settings-modal {
+            width: min(
+                520px,
+                100%
+            );
+
+            background:
+                #181b24;
+
+            border:
+                1px solid #292e3a;
+
+            border-radius: 18px;
+
+            padding: 24px;
+
+            box-shadow:
+                0 25px 70px
+                rgba(0, 0, 0, 0.5);
+        }
+
+        .settings-header {
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            margin-bottom: 18px;
+        }
+
+        .settings-header h2 {
+            margin: 0;
+
+            font-size: 21px;
+        }
+
+        .close-settings {
+            width: 35px;
+
+            height: 35px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background: #101218;
+
+            color: #a8adba;
+
+            cursor: pointer;
+        }
+
+        .close-settings:hover {
+            color: white;
+
+            background: #222631;
+        }
+
+        .setting-box {
+            padding: 15px;
+
+            border:
+                1px solid #292e3a;
+
+            border-radius: 12px;
+
+            background:
+                #101218;
+
+            margin-bottom: 10px;
+        }
+
+        .setting-box strong {
+            display: block;
+
+            font-size: 13px;
+        }
+
+        .setting-box span {
+            display: block;
+
+            color: #9298a5;
+
+            font-size: 12px;
+
+            margin-top: 4px;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1100px) {
+
+            .cards {
                 grid-template-columns:
-                    repeat(
-                        2,
-                        1fr
+                    repeat(3, 1fr);
+            }
+
+        }
+
+        @media (max-width: 760px) {
+
+            .navbar {
+                padding: 0 18px;
+            }
+
+            .user-name {
+                display: none;
+            }
+
+            .cards {
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+                gap: 18px;
+            }
+
+            .dashboard-title {
+                font-size: 29px;
+            }
+
+            .user-dropdown {
+                right: -8px;
+
+                width:
+                    min(
+                        330px,
+                        calc(100vw - 28px)
                     );
             }
 
         }
 
-        @media (
-            max-width: 620px
-        ) {
+        @media (max-width: 500px) {
 
-            .navbar {
+            .content {
                 padding:
-                    0 18px;
+                    40px 20px 60px;
             }
 
-            .page {
-                padding:
-                    35px
-                    18px
-                    55px;
-            }
-
-            .owner-grid {
+            .cards {
                 grid-template-columns:
                     1fr;
             }
 
-            .heading h1 {
-                font-size:
-                    29px;
+            .dashboard-title {
+                font-size: 25px;
+            }
+
+            .dashboard-subtitle {
+                font-size: 13px;
+            }
+
+            .user-area {
+                gap: 6px;
+            }
+
+            .logout {
+                padding:
+                    8px 11px;
             }
 
         }
@@ -464,320 +1010,22 @@
     </a>
 
 
-    <div class="nav-actions">
+    <div class="user-area">
 
-        <a
-            class="nav-button"
-            href="/home/"
-        >
-            Back to Home
-        </a>
-
-    </div>
-
-</nav>
-
-
-<main class="page">
-
-    <div class="shell">
-
-        <!-- OWNER DASHBOARD -->
-
-        <section
-            class="owner-dashboard"
-            id="ownerDashboard"
+        <div
+            class="user-profile-box"
+            id="userProfileBtn"
+            aria-label="Open profile"
         >
 
-            <div class="heading">
-
-                <div class="eyebrow">
-                    Restricted Area
-                </div>
-
-
-                <h1>
-                    Owner Control Center
-                </h1>
-
-
-                <p>
-                    You're authenticated. This is the protected
-                    Archer Giveaways owner area; additional owner
-                    tools can be connected here later.
-                </p>
-
-            </div>
-
-
-            <div class="owner-grid">
-
-                <div class="owner-card">
-
-                    <div class="owner-icon">
-                        🛠️
-                    </div>
-
-                    <h2>
-                        Website Management
-                    </h2>
-
-                    <p>
-                        Manage site tools and owner-only
-                        configuration from this protected area.
-                    </p>
-
-                    <span class="locked-note">
-                        Owner only
-                    </span>
-
-                </div>
-
-
-                <div class="owner-card">
-
-                    <div class="owner-icon">
-                        🎁
-                    </div>
-
-                    <h2>
-                        Giveaway Management
-                    </h2>
-
-                    <p>
-                        Your giveaway management controls can be
-                        connected here when those tools are ready.
-                    </p>
-
-                    <span class="locked-note">
-                        Owner only
-                    </span>
-
-                </div>
-
-
-                <div class="owner-card">
-
-                    <div class="owner-icon">
-                        🤖
-                    </div>
-
-                    <h2>
-                        Discord Systems
-                    </h2>
-
-                    <p>
-                        Discord-related management and account
-                        linking tools can be added here.
-                    </p>
-
-                    <span class="locked-note">
-                        Owner only
-                    </span>
-
-                </div>
-
-
-                <div class="owner-card">
-
-                    <div class="owner-icon">
-                        📊
-                    </div>
-
-                    <h2>
-                        Statistics
-                    </h2>
-
-                    <p>
-                        Owner statistics and activity information
-                        can be displayed here.
-                    </p>
-
-                    <span class="locked-note">
-                        Owner only
-                    </span>
-
-                </div>
-
-
-                <div class="owner-card">
-
-                    <div class="owner-icon">
-                        🔐
-                    </div>
-
-                    <h2>
-                        Security
-                    </h2>
-
-                    <p>
-                        Keep owner authentication handled by the
-                        Cloudflare Worker instead of exposing the
-                        password in the site.
-                    </p>
-
-                    <span class="locked-note">
-                        Protected
-                    </span>
-
-                </div>
-
-
-                <div class="owner-card">
-
-                    <div class="owner-icon">
-                        ⚙️
-                    </div>
-
-                    <h2>
-                        Configuration
-                    </h2>
-
-                    <p>
-                        Additional owner configuration options can
-                        be added here without changing the login system.
-                    </p>
-
-                    <span class="locked-note">
-                        Owner only
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <div class="panel-actions">
-
-                <button
-                    class="logout-button"
-                    type="button"
-                    onclick="lockOwnerPanel()"
-                >
-                    Lock Owner Panel
-                </button>
-
-            </div>
-
-        </section>
-
-    </div>
-
-</main>
-
-
-<script>
-
-/* ============================================================
-   OWNER AUTHENTICATION
-============================================================ */
-
-const OWNER_AUTH_KEY =
-    "archer_owner_authenticated";
-
-
-/* ============================================================
-   OWNER ACCESS GUARD
-============================================================ */
-
-function checkOwnerAccess() {
-
-    const authenticated =
-        localStorage.getItem(
-            OWNER_AUTH_KEY
-        );
-
-
-    if (
-        authenticated !== "true"
-    ) {
-
-        window.location.replace(
-            "/login/owner/"
-        );
-
-        return false;
-
-    }
-
-
-    const ownerDashboard =
-        document.getElementById(
-            "ownerDashboard"
-        );
-
-
-    if (
-        ownerDashboard
-    ) {
-
-        ownerDashboard.classList.add(
-            "active"
-        );
-
-    }
-
-
-    return true;
-
-}
-
-
-/* ============================================================
-   LOCK OWNER PANEL
-============================================================ */
-
-function lockOwnerPanel() {
-
-    localStorage.removeItem(
-        OWNER_AUTH_KEY
-    );
-
-
-    window.location.replace(
-        "/login/owner/"
-    );
-
-}
-
-
-/* ============================================================
-   START
-============================================================ */
-
-if (
-    checkOwnerAccess()
-) {
-
-    /*
-       Owner access is valid.
-       Dashboard remains visible.
-    */
-
-} else {
-
-    /*
-       User is sent to /login/owner/.
-       Nothing else is shown.
-    */
-
-}
-
-
-/* ============================================================
-   BACK/FORWARD CACHE PROTECTION
-============================================================ */
-
-window.addEventListener(
-    "pageshow",
-    function() {
-
-        checkOwnerAccess();
-
-    }
-);
-
-</script>
-
-</body>
-</html>
+            <img
+                id="userImage"
+                class="user-image"
+                src=""
+                alt="Profile"
+            >
+
+            <span
+                id="userName"
+                class="user-name"
+```
