@@ -1477,6 +1477,10 @@ let countdownTimer =
     null;
 
 
+let profilePollTimer =
+    null;
+
+
 let currentCode =
     null;
 
@@ -1518,7 +1522,9 @@ function loadCurrentUser() {
             );
 
 
-        if (savedUser) {
+        if (
+            savedUser
+        ) {
 
             currentUser =
                 JSON.parse(
@@ -1538,8 +1544,25 @@ function loadCurrentUser() {
 
 
     if (
-        !currentUser
+        !currentUser ||
+        !currentUser.sub
     ) {
+
+        localStorage.removeItem(
+            "archer_google_logged_in"
+        );
+
+        localStorage.removeItem(
+            "archer_google_user"
+        );
+
+        localStorage.removeItem(
+            "archer_google_credential"
+        );
+
+        window.location.replace(
+            "../login/"
+        );
 
         return false;
 
@@ -1553,15 +1576,25 @@ function loadCurrentUser() {
         "User";
 
 
+    const savedDiscordName =
+        currentUser.discordVerified &&
+        (
+            currentUser.discordUsername ||
+            currentUser.discordName
+        );
+
+
     document.getElementById(
         "userName"
     ).textContent =
+        savedDiscordName ||
         name;
 
 
     document.getElementById(
         "dropdownUserName"
     ).textContent =
+        savedDiscordName ||
         name;
 
 
@@ -1579,6 +1612,22 @@ function loadCurrentUser() {
 
 
     if (
+        currentUser.discordVerified &&
+        currentUser.discordAvatar
+    ) {
+
+        document.getElementById(
+            "userImage"
+        ).src =
+            currentUser.discordAvatar;
+
+
+        document.getElementById(
+            "dropdownUserImage"
+        ).src =
+            currentUser.discordAvatar;
+
+    } else if (
         currentUser.picture
     ) {
 
@@ -1600,6 +1649,70 @@ function loadCurrentUser() {
 
 
     return true;
+
+}
+
+
+/* ============================================================
+   GET DISCORD PROFILE
+============================================================ */
+
+async function getDiscordProfile() {
+
+    if (
+        !currentUser?.sub
+    ) {
+
+        return null;
+
+    }
+
+
+    const response =
+        await fetch(
+            `${WORKER_URL}/discord/profile?t=${Date.now()}`,
+            {
+                method:
+                    "POST",
+
+                cache:
+                    "no-store",
+
+                headers: {
+                    "Content-Type":
+                        "application/json",
+
+                    "Cache-Control":
+                        "no-cache"
+                },
+
+                body:
+                    JSON.stringify({
+                        googleId:
+                            currentUser.sub
+                    })
+            }
+        );
+
+
+    const data =
+        await response.json();
+
+
+    if (
+        !response.ok ||
+        data.success !== true
+    ) {
+
+        throw new Error(
+            data.message ||
+            "Could not check Discord profile."
+        );
+
+    }
+
+
+    return data;
 
 }
 
@@ -1638,41 +1751,19 @@ async function updateDiscordStatus() {
         generateButton.disabled =
             true;
 
-        return;
+        return false;
 
     }
 
 
     try {
 
-        const response =
-            await fetch(
-                `${WORKER_URL}/discord/profile`,
-                {
-                    method:
-                        "POST",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body:
-                        JSON.stringify({
-                            googleId:
-                                currentUser.sub
-                        })
-                }
-            );
-
-
         const data =
-            await response.json();
+            await getDiscordProfile();
 
 
         if (
-            response.ok &&
-            data.success === true &&
+            data &&
             data.linked === true &&
             data.profile
         ) {
@@ -1681,26 +1772,100 @@ async function updateDiscordStatus() {
                 data.profile
             );
 
-
-        } else {
-
-            currentUser.discordVerified =
-                false;
-
-
-            status.textContent =
-                "Not verified yet. Generate a code and run /link CODE in ArcherBot.";
-
-
-            status.className =
-                "discord-status";
-
-
-            settingsDiscord.textContent =
-                "Not verified";
-
+            return true;
 
         }
+
+
+        currentUser.discordVerified =
+            false;
+
+
+        currentUser.discordId =
+            null;
+
+
+        currentUser.discordUsername =
+            null;
+
+
+        currentUser.discordName =
+            null;
+
+
+        currentUser.discordAvatar =
+            null;
+
+
+        localStorage.setItem(
+            "archer_google_user",
+            JSON.stringify(
+                currentUser
+            )
+        );
+
+
+        const googleName =
+            currentUser.name ||
+            currentUser.given_name ||
+            currentUser.email ||
+            "User";
+
+
+        document.getElementById(
+            "userName"
+        ).textContent =
+            googleName;
+
+
+        document.getElementById(
+            "dropdownUserName"
+        ).textContent =
+            googleName;
+
+
+        if (
+            currentUser.picture
+        ) {
+
+            document.getElementById(
+                "userImage"
+            ).src =
+                currentUser.picture;
+
+
+            document.getElementById(
+                "dropdownUserImage"
+            ).src =
+                currentUser.picture;
+
+        }
+
+
+        document.getElementById(
+            "linkedDiscordProfile"
+        ).classList.remove(
+            "active"
+        );
+
+
+        status.textContent =
+            "Not verified yet. Generate a code and run /link CODE in ArcherBot.";
+
+
+        status.className =
+            "discord-status";
+
+
+        settingsDiscord.textContent =
+            "Not verified";
+
+
+        generateButton.disabled =
+            false;
+
+
+        return false;
 
     } catch (error) {
 
@@ -1713,7 +1878,73 @@ async function updateDiscordStatus() {
         status.textContent =
             "Could not check your Discord connection right now.";
 
+
+        status.className =
+            "discord-status";
+
+
+        settingsDiscord.textContent =
+            "Could not check";
+
+
+        return false;
+
     }
+
+}
+
+
+/* ============================================================
+   AUTOMATIC PROFILE POLLING
+============================================================ */
+
+function startProfilePolling() {
+
+    if (
+        profilePollTimer
+    ) {
+
+        clearInterval(
+            profilePollTimer
+        );
+
+    }
+
+
+    profilePollTimer =
+        setInterval(
+            async function() {
+
+                try {
+
+                    const data =
+                        await getDiscordProfile();
+
+
+                    if (
+                        data &&
+                        data.linked === true &&
+                        data.profile
+                    ) {
+
+                        applyDiscordProfile(
+                            data.profile
+                        );
+
+                    }
+
+                } catch (error) {
+
+                    console.error(
+                        "Discord profile polling error:",
+                        error
+                    );
+
+                }
+
+            },
+            3000
+        );
 
 }
 
@@ -1731,19 +1962,23 @@ function applyDiscordProfile(
 
 
     currentUser.discordId =
-        profile.discordId;
+        profile.discordId ||
+        "";
 
 
     currentUser.discordUsername =
-        profile.discordUsername;
+        profile.discordUsername ||
+        "";
 
 
     currentUser.discordName =
-        profile.discordName;
+        profile.discordName ||
+        "";
 
 
     currentUser.discordAvatar =
-        profile.discordAvatar;
+        profile.discordAvatar ||
+        "";
 
 
     localStorage.setItem(
@@ -1840,12 +2075,23 @@ function applyDiscordProfile(
         `Verified as ${discordName}`;
 
 
-    /*
-       Stop any active code rotation
-       once the account is verified.
-    */
-
     stopCodeRotation();
+
+
+    /* Stop unnecessary polling after successful link */
+
+    if (
+        profilePollTimer
+    ) {
+
+        clearInterval(
+            profilePollTimer
+        );
+
+        profilePollTimer =
+            null;
+
+    }
 
 }
 
@@ -1960,7 +2206,8 @@ async function createDiscordLinkCode() {
 
         expiresIn:
             Number(
-                data.expiresIn || 60
+                data.expiresIn ||
+                60
             )
 
     };
@@ -1989,12 +2236,6 @@ async function generateAndShowCode() {
     const codeElement =
         document.getElementById(
             "linkCode"
-        );
-
-
-    const timerElement =
-        document.getElementById(
-            "linkTimer"
         );
 
 
@@ -2055,58 +2296,59 @@ async function generateAndShowCode() {
         );
 
 
-        /*
-           Start automatic code replacement
-           every 60 seconds.
-        */
-
         if (
-            !codeRotationTimer
+            codeRotationTimer
         ) {
 
-            codeRotationTimer =
-                setInterval(
-                    async function() {
+            clearInterval(
+                codeRotationTimer
+            );
 
-                        try {
-
-                            /*
-                               Check whether the
-                               Discord account was
-                               already linked.
-                            */
-
-                            const linked =
-                                await checkVerification(
-                                    true
-                                );
+        }
 
 
-                            if (
-                                linked
-                            ) {
+        codeRotationTimer =
+            setInterval(
+                async function() {
 
-                                return;
+                    try {
 
-                            }
-
-
-                            await generateAndShowCode();
-
-                        } catch (error) {
-
-                            console.error(
-                                "Automatic code refresh failed:",
-                                error
+                        const linked =
+                            await checkVerification(
+                                true
                             );
+
+
+                        if (
+                            linked
+                        ) {
+
+                            return;
 
                         }
 
-                    },
-                    60000
-                );
 
-        }
+                        if (
+                            Date.now() >=
+                            currentCodeExpiresAt
+                        ) {
+
+                            await generateAndShowCode();
+
+                        }
+
+                    } catch (error) {
+
+                        console.error(
+                            "Automatic code refresh failed:",
+                            error
+                        );
+
+                    }
+
+                },
+                1000
+            );
 
     } catch (error) {
 
@@ -2202,7 +2444,7 @@ function updateCountdown() {
     ) {
 
         timerElement.textContent =
-            "Generating a new code...";
+            "Checking verification...";
 
         return;
 
@@ -2329,45 +2571,8 @@ async function checkVerification(
 
     try {
 
-        const response =
-            await fetch(
-                `${WORKER_URL}/discord/profile`,
-                {
-                    method:
-                        "POST",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body:
-                        JSON.stringify({
-
-                            googleId:
-                                currentUser.sub
-
-                        })
-
-                }
-            );
-
-
         const data =
-            await response.json();
-
-
-        if (
-            !response.ok ||
-            data.success !== true
-        ) {
-
-            throw new Error(
-                data.message ||
-                "Verification check failed."
-            );
-
-        }
+            await getDiscordProfile();
 
 
         if (
@@ -2710,6 +2915,20 @@ function logout() {
     stopCodeRotation();
 
 
+    if (
+        profilePollTimer
+    ) {
+
+        clearInterval(
+            profilePollTimer
+        );
+
+        profilePollTimer =
+            null;
+
+    }
+
+
     localStorage.removeItem(
         "archer_google_logged_in"
     );
@@ -2755,12 +2974,28 @@ if (
 
     document.addEventListener(
         "DOMContentLoaded",
-        loadCurrentUser
+        function() {
+
+            if (
+                loadCurrentUser()
+            ) {
+
+                startProfilePolling();
+
+            }
+
+        }
     );
 
 } else {
 
-    loadCurrentUser();
+    if (
+        loadCurrentUser()
+    ) {
+
+        startProfilePolling();
+
+    }
 
 }
 
