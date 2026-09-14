@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,51 +20,36 @@
 
     <script>
 
-        (function () {
+    (function () {
 
-            /*
-             * Check whether the owner has
-             * successfully authenticated.
-             */
-
-            const ownerAuthenticated =
-                localStorage.getItem(
-                    "archer_owner_authenticated"
-                );
-
-
-            /*
-             * Owner is authenticated.
-             * Send them to the owner home page.
-             */
-
-            if (
-                ownerAuthenticated === "true"
-            ) {
-
-                window.location.replace(
-                    "../home/owner/"
-                );
-
-                return;
-            }
-
-
-            /*
-             * Owner is not authenticated.
-             * Send them to the owner login page.
-             */
-
-            window.location.replace(
-                "../login/owner/"
+        const ownerAuthenticated =
+            localStorage.getItem(
+                "archer_owner_authenticated"
             );
 
-        })();
+
+        if (
+            ownerAuthenticated === "true"
+        ) {
+
+            window.location.replace(
+                "../home/owner/"
+            );
+
+            return;
+
+        }
+
+
+        window.location.replace(
+            "../login/owner/"
+        );
+
+    })();
 
     </script>
 
 </head>
-
 
 <body>
 
