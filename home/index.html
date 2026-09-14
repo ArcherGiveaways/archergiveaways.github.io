@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+```
 <title>Home - Archer Giveaways</title>
 <link rel="icon" href="../favicon.ico">
 
@@ -358,11 +359,12 @@
         flex-direction: column;
         justify-content: flex-end;
         padding: 18px;
-        background: linear-gradient(
-            180deg,
-            #1a1e28 0%,
-            #151821 100%
-        );
+        background:
+            linear-gradient(
+                180deg,
+                #1a1e28 0%,
+                #151821 100%
+            );
         border: 1px solid #292e3a;
         border-radius: 17px;
         isolation: isolate;
@@ -377,16 +379,17 @@
         position: absolute;
         inset: -4px;
         border-radius: 21px;
-        background: linear-gradient(
-            90deg,
-            #ff1600,
-            #ff4d00,
-            #ff9d00,
-            #ff3100,
-            #ff0800,
-            #ff7800,
-            #ff1a00
-        );
+        background:
+            linear-gradient(
+                90deg,
+                #ff1600,
+                #ff4d00,
+                #ff9d00,
+                #ff3100,
+                #ff0800,
+                #ff7800,
+                #ff1a00
+            );
         padding: 4px;
         -webkit-mask:
             linear-gradient(#000 0 0) content-box,
@@ -411,20 +414,21 @@
         position: absolute;
         inset: -6px;
         border-radius: 23px;
-        background: linear-gradient(
-            100deg,
-            transparent 0%,
-            transparent 15%,
-            #ff2100 25%,
-            #ff6500 32%,
-            #ffb300 38%,
-            #ff3b00 45%,
-            transparent 55%,
-            transparent 72%,
-            #ff1800 82%,
-            #ff7a00 91%,
-            transparent 100%
-        );
+        background:
+            linear-gradient(
+                100deg,
+                transparent 0%,
+                transparent 15%,
+                #ff2100 25%,
+                #ff6500 32%,
+                #ffb300 38%,
+                #ff3b00 45%,
+                transparent 55%,
+                transparent 72%,
+                #ff1800 82%,
+                #ff7a00 91%,
+                transparent 100%
+            );
         background-size: 300% 100%;
         padding: 6px;
         -webkit-mask:
@@ -544,236 +548,271 @@
 
 <body class="auth-loading">
 
-```
 <nav class="navbar">
-    <a
-        class="brand"
-        href="https://discord.gg/jBFAzkdfWG"
-        target="_blank"
-        rel="noopener noreferrer"
-    >
-        Archer Giveaways
-    </a>
 
-    <div class="user-area">
+```
+<a
+    class="brand"
+    href="https://discord.gg/jBFAzkdfWG"
+    target="_blank"
+    rel="noopener noreferrer"
+>
+    Archer Giveaways
+</a>
+
+<div class="user-area">
+
+    <div
+        class="user-profile-box"
+        id="userProfileBox"
+    >
+
+        <img
+            id="userImage"
+            class="user-image"
+            src="../favicon.ico"
+            alt="User"
+        >
+
+        <span
+            id="userName"
+            class="user-name"
+        >
+            Loading...
+        </span>
 
         <div
-            class="user-profile-box"
-            id="userProfileBox"
+            class="user-dropdown"
+            id="userDropdown"
         >
-            <img
-                id="userImage"
-                class="user-image"
-                src="../favicon.ico"
-                alt="User"
-            >
 
-            <span
-                id="userName"
-                class="user-name"
-            >
-                Loading...
-            </span>
+            <div class="profile-header">
 
-            <div
-                class="user-dropdown"
-                id="userDropdown"
-            >
+                <img
+                    id="dropdownUserImage"
+                    src="../favicon.ico"
+                    alt="User"
+                >
 
-                <div class="profile-header">
-                    <img
-                        id="dropdownUserImage"
-                        src="../favicon.ico"
-                        alt="User"
-                    >
+                <div>
 
-                    <div>
-                        <strong id="dropdownUserName">
-                            Loading...
-                        </strong>
+                    <strong id="dropdownUserName">
+                        Loading...
+                    </strong>
 
-                        <span id="dropdownUserEmail">
-                            Loading...
-                        </span>
-                    </div>
+                    <span id="dropdownUserEmail">
+                        Loading...
+                    </span>
+
                 </div>
 
-                <div class="discord-section">
+            </div>
 
-                    <div class="discord-title">
-                        Discord
+            <div class="discord-section">
+
+                <div class="discord-title">
+                    Discord
+                </div>
+
+                <div
+                    class="discord-status"
+                    id="discordStatus"
+                >
+                    Checking Discord connection...
+                </div>
+
+                <button
+                    class="discord-button"
+                    id="discordLinkButton"
+                    type="button"
+                >
+                    Link Discord
+                </button>
+
+                <div
+                    class="link-code-box"
+                    id="linkCodeBox"
+                >
+
+                    <div>
+                        Enter this code in Discord:
                     </div>
 
                     <div
-                        class="discord-status"
-                        id="discordStatus"
+                        class="link-code"
+                        id="linkCode"
                     >
-                        Checking Discord connection...
+                        ------
+                    </div>
+
+                    <div class="link-instructions">
+                        Use the Archer Giveaways
+                        <strong>/link</strong> command
+                        in Discord.
+                    </div>
+
+                    <div
+                        class="link-timer"
+                        id="linkTimer"
+                    >
+                        Expires in 60 seconds
                     </div>
 
                     <button
-                        class="discord-button"
-                        id="discordLinkButton"
+                        class="discord-button cancel"
+                        id="cancelLinkButton"
                         type="button"
                     >
-                        Link Discord
+                        Cancel
                     </button>
 
-                    <div
-                        class="link-code-box"
-                        id="linkCodeBox"
+                </div>
+
+                <div
+                    class="link-message"
+                    id="linkMessage"
+                ></div>
+
+                <div
+                    class="linked-discord-profile"
+                    id="linkedDiscordProfile"
+                >
+
+                    <img
+                        id="linkedDiscordAvatar"
+                        src="../favicon.ico"
+                        alt="Discord"
                     >
-                        <div>
-                            Enter this code in Discord:
-                        </div>
 
-                        <div
-                            class="link-code"
-                            id="linkCode"
-                        >
-                            ------
-                        </div>
+                    <div>
 
-                        <div class="link-instructions">
-                            Use the Archer Giveaways
-                            <strong>/link</strong> command
-                            in Discord.
-                        </div>
+                        <strong id="linkedDiscordName">
+                            Discord
+                        </strong>
 
-                        <div
-                            class="link-timer"
-                            id="linkTimer"
-                        >
-                            Expires in 60 seconds
-                        </div>
+                        <span>
+                            Linked
+                        </span>
 
-                        <button
-                            class="discord-button cancel"
-                            id="cancelLinkButton"
-                            type="button"
-                        >
-                            Cancel
-                        </button>
-                    </div>
-
-                    <div
-                        class="link-message"
-                        id="linkMessage"
-                    ></div>
-
-                    <div
-                        class="linked-discord-profile"
-                        id="linkedDiscordProfile"
-                    >
-                        <img
-                            id="linkedDiscordAvatar"
-                            src="../favicon.ico"
-                            alt="Discord"
-                        >
-
-                        <div>
-                            <strong id="linkedDiscordName">
-                                Discord
-                            </strong>
-
-                            <span>
-                                Linked
-                            </span>
-                        </div>
                     </div>
 
                 </div>
 
             </div>
+
         </div>
 
-        <button
-            class="logout"
-            type="button"
-            onclick="logout()"
-        >
-            Logout
-        </button>
-
     </div>
-</nav>
 
+    <button
+        class="logout"
+        type="button"
+        onclick="logout()"
+    >
+        Logout
+    </button>
+
+</div>
+```
+
+</nav>
 
 <main class="content">
 
-    <section class="dashboard">
+```
+<section class="dashboard">
 
-        <div class="eyebrow">
-            Welcome back
-        </div>
+    <div class="eyebrow">
+        Welcome back
+    </div>
 
-        <h1 class="dashboard-title">
-            Archer Giveaways
-        </h1>
+    <h1 class="dashboard-title">
+        Archer Giveaways
+    </h1>
 
-        <p class="dashboard-subtitle">
-            Your central place for giveaways, statistics,
-            settings, and website tools.
-        </p>
+    <p class="dashboard-subtitle">
+        Your central place for giveaways, statistics,
+        settings, and website tools.
+    </p>
 
-        <div class="cards">
+    <div class="cards">
 
-            <a class="card" href="#">
-                <div class="card-content">
-                    <div class="card-icon">⚙️</div>
-                    <h2 class="card-title">Settings</h2>
-                    <p class="card-description">
-                        Manage your account and website settings.
-                    </p>
-                </div>
-            </a>
+        <a class="card" href="#">
+            <div class="card-content">
+                <div class="card-icon">⚙️</div>
 
-            <a class="card" href="/owner/">
-                <div class="card-content">
-                    <div class="card-icon">👑</div>
-                    <h2 class="card-title">Owner Panel</h2>
-                    <p class="card-description">
-                        Access owner-only Archer management tools.
-                    </p>
-                </div>
-            </a>
+                <h2 class="card-title">
+                    Settings
+                </h2>
 
-            <a class="card" href="#">
-                <div class="card-content">
-                    <div class="card-icon">🎁</div>
-                    <h2 class="card-title">Giveaways</h2>
-                    <p class="card-description">
-                        View and manage your giveaways.
-                    </p>
-                </div>
-            </a>
+                <p class="card-description">
+                    Manage your account and website settings.
+                </p>
+            </div>
+        </a>
 
-            <a class="card" href="#">
-                <div class="card-content">
-                    <div class="card-icon">📊</div>
-                    <h2 class="card-title">Statistics</h2>
-                    <p class="card-description">
-                        View giveaway and account statistics.
-                    </p>
-                </div>
-            </a>
+        <a class="card" href="/owner/">
+            <div class="card-content">
+                <div class="card-icon">👑</div>
 
-            <a class="card" href="#">
-                <div class="card-content">
-                    <div class="card-icon">🌐</div>
-                    <h2 class="card-title">Website</h2>
-                    <p class="card-description">
-                        Manage your Archer website tools.
-                    </p>
-                </div>
-            </a>
+                <h2 class="card-title">
+                    Owner Panel
+                </h2>
 
-        </div>
+                <p class="card-description">
+                    Access owner-only Archer management tools.
+                </p>
+            </div>
+        </a>
 
-    </section>
+        <a class="card" href="#">
+            <div class="card-content">
+                <div class="card-icon">🎁</div>
+
+                <h2 class="card-title">
+                    Giveaways
+                </h2>
+
+                <p class="card-description">
+                    View and manage your giveaways.
+                </p>
+            </div>
+        </a>
+
+        <a class="card" href="#">
+            <div class="card-content">
+                <div class="card-icon">📊</div>
+
+                <h2 class="card-title">
+                    Statistics
+                </h2>
+
+                <p class="card-description">
+                    View giveaway and account statistics.
+                </p>
+            </div>
+        </a>
+
+        <a class="card" href="#">
+            <div class="card-content">
+                <div class="card-icon">🌐</div>
+
+                <h2 class="card-title">
+                    Website
+                </h2>
+
+                <p class="card-description">
+                    Manage your Archer website tools.
+                </p>
+            </div>
+        </a>
+
+    </div>
+
+</section>
+```
 
 </main>
-
 
 <script>
     const WORKER_URL =
@@ -782,19 +821,26 @@
     const CODE_CHARACTERS =
         "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
-    let currentLinkCode = null;
     let linkTimerInterval = null;
     let profilePollInterval = null;
 
 
     function getGoogleUser() {
+
         try {
+
             return JSON.parse(
-                localStorage.getItem("archer_google_user") || "null"
+                localStorage.getItem(
+                    "archer_google_user"
+                ) || "null"
             );
+
         } catch {
+
             return null;
+
         }
+
     }
 
 
@@ -813,7 +859,11 @@
             !googleUser ||
             !googleUser.sub
         ) {
-            window.location.replace("/login/");
+
+            window.location.replace(
+                "/login/"
+            );
+
             return false;
         }
 
@@ -845,23 +895,28 @@
 
         document.getElementById(
             "userName"
-        ).textContent = name;
+        ).textContent =
+            name;
 
         document.getElementById(
             "dropdownUserName"
-        ).textContent = name;
+        ).textContent =
+            name;
 
         document.getElementById(
             "dropdownUserEmail"
-        ).textContent = email;
+        ).textContent =
+            email;
 
         document.getElementById(
             "userImage"
-        ).src = image;
+        ).src =
+            image;
 
         document.getElementById(
             "dropdownUserImage"
-        ).src = image;
+        ).src =
+            image;
     }
 
 
@@ -886,6 +941,14 @@
                 dropdown.classList.toggle(
                     "active"
                 );
+
+            }
+        );
+
+        dropdown.addEventListener(
+            "click",
+            function (event) {
+                event.stopPropagation();
             }
         );
 
@@ -896,15 +959,10 @@
                 dropdown.classList.remove(
                     "active"
                 );
+
             }
         );
 
-        dropdown.addEventListener(
-            "click",
-            function (event) {
-                event.stopPropagation();
-            }
-        );
     }
 
 
@@ -917,6 +975,7 @@
             i < 6;
             i++
         ) {
+
             result +=
                 CODE_CHARACTERS[
                     Math.floor(
@@ -924,6 +983,7 @@
                         CODE_CHARACTERS.length
                     )
                 ];
+
         }
 
         return result;
@@ -967,11 +1027,6 @@
                 "linkMessage"
             );
 
-        const timer =
-            document.getElementById(
-                "linkTimer"
-            );
-
         const code =
             randomCode();
 
@@ -980,7 +1035,11 @@
         status.textContent =
             "Creating Discord link code...";
 
-        message.textContent = "";
+        message.textContent =
+            "";
+
+        message.className =
+            "link-message";
 
         try {
 
@@ -1014,14 +1073,14 @@
                 !response.ok ||
                 !data.success
             ) {
+
                 throw new Error(
                     data.error ||
+                    data.message ||
                     "Failed to create code."
                 );
-            }
 
-            currentLinkCode =
-                code;
+            }
 
             codeElement.textContent =
                 code;
@@ -1055,7 +1114,8 @@
             message.className =
                 "link-message error";
 
-            button.disabled = false;
+            button.disabled =
+                false;
         }
     }
 
@@ -1066,7 +1126,8 @@
             linkTimerInterval
         );
 
-        let seconds = 60;
+        let seconds =
+            60;
 
         const timer =
             document.getElementById(
@@ -1085,7 +1146,9 @@
                     if (
                         seconds <= 0
                     ) {
+
                         clearLinkCode();
+
                         return;
                     }
 
@@ -1106,7 +1169,7 @@
             linkTimerInterval
         );
 
-        currentLinkCode =
+        linkTimerInterval =
             null;
 
         document.getElementById(
@@ -1164,13 +1227,14 @@
                                 googleId:
                                     user.sub
                             })
-                        }
-                    );
+                    }
+                );
 
             const data =
                 await response.json();
 
             if (
+                !response.ok ||
                 !data ||
                 !data.success
             ) {
@@ -1194,7 +1258,9 @@
                 "Discord profile error:",
                 error
             );
+
         }
+
     }
 
 
@@ -1213,11 +1279,13 @@
 
         document.getElementById(
             "linkedDiscordAvatar"
-        ).src = avatar;
+        ).src =
+            avatar;
 
         document.getElementById(
             "linkedDiscordName"
-        ).textContent = name;
+        ).textContent =
+            name;
 
         document.getElementById(
             "linkedDiscordProfile"
@@ -1235,20 +1303,14 @@
         ).className =
             "discord-status success";
 
-        const headerImage =
-            document.getElementById(
-                "userImage"
-            );
-
-        const dropdownImage =
-            document.getElementById(
-                "dropdownUserImage"
-            );
-
-        headerImage.src =
+        document.getElementById(
+            "userImage"
+        ).src =
             avatar;
 
-        dropdownImage.src =
+        document.getElementById(
+            "dropdownUserImage"
+        ).src =
             avatar;
 
         document.getElementById(
@@ -1287,6 +1349,11 @@
             "Discord linking cancelled.";
 
         document.getElementById(
+            "discordStatus"
+        ).className =
+            "discord-status";
+
+        document.getElementById(
             "linkMessage"
         ).textContent =
             "";
@@ -1303,6 +1370,15 @@
             profilePollInterval
         );
 
+        linkTimerInterval =
+            null;
+
+        profilePollInterval =
+            null;
+
+        /*
+         * Clear the normal Google session.
+         */
         localStorage.removeItem(
             "archer_google_logged_in"
         );
@@ -1315,12 +1391,10 @@
             "archer_google_user"
         );
 
-        /* IMPORTANT:
-           Normal logout must also remove
-           owner authentication so that the
-           normal login can NEVER reopen owner
-           login by accident.
-        */
+        /*
+         * A normal logout must also clear
+         * any owner session from the browser.
+         */
         localStorage.removeItem(
             "archer_owner_authenticated"
         );
@@ -1332,16 +1406,25 @@
                 window.google.accounts &&
                 window.google.accounts.id
             ) {
+
                 window.google.accounts.id.disableAutoSelect();
+
             }
 
         } catch (error) {
+
             console.warn(
                 "Google auto-select cleanup failed:",
                 error
             );
+
         }
 
+        /*
+         * IMPORTANT:
+         * Normal users always return to
+         * the normal login page.
+         */
         window.location.replace(
             "/login/"
         );
