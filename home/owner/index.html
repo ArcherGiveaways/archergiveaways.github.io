@@ -1,442 +1,1271 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>Owner Panel - Archer Giveaways</title>
+
     <link rel="icon" href="../../favicon.ico">
 
     <style>
+
         * {
             box-sizing: border-box;
         }
 
+
         body {
+
             margin: 0;
+
             min-height: 100vh;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #0f1117;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 15% 10%,
+                    rgba(255, 90, 0, 0.11),
+                    transparent 25%
+                ),
+                radial-gradient(
+                    circle at 85% 80%,
+                    rgba(88, 101, 242, 0.12),
+                    transparent 25%
+                ),
+                #0f1117;
+
             color: white;
+
         }
+
 
         .navbar {
+
             height: 70px;
+
             display: flex;
+
             align-items: center;
+
             justify-content: space-between;
+
             padding: 0 30px;
-            background: #181b24;
-            border-bottom: 1px solid #292e3a;
+
+            background:
+                rgba(24, 27, 36, 0.94);
+
+            border-bottom:
+                1px solid #292e3a;
+
+            backdrop-filter:
+                blur(14px);
+
+            position:
+                sticky;
+
+            top: 0;
+
+            z-index: 50;
+
         }
+
 
         .brand {
+
             font-size: 20px;
-            font-weight: bold;
-            color: white;
-            text-decoration: none;
-            cursor: pointer;
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
 
-        .brand:hover {
-            opacity: 0.85;
-            transform: translateY(-1px);
-        }
-
-        .user-area {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .user-profile-box {
-            position: relative;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 6px 14px;
-            background: #101218;
-            border: 1px solid #292e3a;
-            border-radius: 10px;
-            cursor: pointer;
-            user-select: none;
-            transition: background 0.2s ease, border-color 0.2s ease;
-        }
-
-        .user-profile-box:hover {
-            background: #1f2330;
-            border-color: #3b82f6;
-        }
-
-        .user-image {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #3b82f6;
-        }
-
-        .user-name {
-            font-size: 14px;
-        }
-
-        .user-dropdown {
-            display: none;
-            position: absolute;
-            top: calc(100% + 10px);
-            right: 0;
-            width: 220px;
-            min-height: 120px;
-            background: #181b24;
-            border: 1px solid #292e3a;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            z-index: 100;
-            padding: 15px;
-        }
-
-        .user-dropdown.active {
-            display: block;
-        }
-
-        .logout {
-            margin-left: 10px;
-            padding: 9px 15px;
-            border: none;
-            border-radius: 8px;
-            background: #ef4444;
-            color: white;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background 0.2s ease, transform 0.2s ease;
-        }
-
-        .logout:hover {
-            background: #dc2626;
-            transform: translateY(-1px);
-        }
-
-        .content {
-            min-height: calc(100vh - 70px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 50px 30px;
-        }
-
-        .dashboard {
-            width: 100%;
-            max-width: 1250px;
-        }
-
-        .dashboard-title {
-            margin: 0 0 28px;
-            text-align: center;
-            font-size: 32px;
             font-weight: 900;
-            letter-spacing: -0.5px;
-            color: #ffffff;
-        }
 
-        .cards {
-            width: 100%;
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 22px;
-        }
-
-        .card {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 4 / 6;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 18px;
-            background: #181b24;
-            border: 1px solid #292e3a;
-            border-radius: 16px;
-            isolation: isolate;
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-            overflow: visible;
-        }
-
-        .card::before {
-            content: "";
-            position: absolute;
-            inset: -4px;
-            border-radius: 20px;
-            background: linear-gradient(
-                90deg,
-                #ff1600 0%,
-                #ff4d00 18%,
-                #ff9d00 35%,
-                #ff3100 52%,
-                #ff0800 70%,
-                #ff7800 86%,
-                #ff1a00 100%
-            );
-            padding: 4px;
-            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            -webkit-mask-composite: xor;
-            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            mask-composite: exclude;
-            opacity: 0;
-            pointer-events: none;
-            z-index: -1;
-            filter: drop-shadow(0 0 4px #ff3b00) drop-shadow(0 0 10px #ff1800) drop-shadow(0 0 18px #ff5a00);
-            transition: opacity 0.25s ease;
-        }
-
-        .card::after {
-            content: "";
-            position: absolute;
-            inset: -6px;
-            border-radius: 22px;
-            background: linear-gradient(
-                100deg,
-                transparent 0%,
-                transparent 15%,
-                #ff2100 25%,
-                #ff6500 32%,
-                #ffb300 38%,
-                #ff3b00 45%,
-                transparent 55%,
-                transparent 72%,
-                #ff1800 82%,
-                #ff7a00 91%,
-                transparent 100%
-            );
-            background-size: 300% 100%;
-            padding: 6px;
-            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            -webkit-mask-composite: xor;
-            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            mask-composite: exclude;
-            opacity: 0;
-            pointer-events: none;
-            z-index: -2;
-            filter: blur(7px);
-            transition: opacity 0.25s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
-        }
-
-        .card:hover::before {
-            opacity: 1;
-        }
-
-        .card:hover::after {
-            opacity: 0.8;
-            animation: lavaFlow 2.2s ease-in-out infinite;
-        }
-
-        @keyframes lavaFlow {
-            0% {
-                background-position: 100% 50%;
-            }
-            50% {
-                background-position: 0% 50%;
-            }
-            100% {
-                background-position: 100% 50%;
-            }
-        }
-
-        .owner-panel {
-            position: relative;
-            z-index: 5;
-            width: 100%;
-            padding: 13px 12px;
-            border-radius: 11px;
-            border: 1px solid #343946;
-            background: #101218;
             color: white;
-            text-align: center;
+
             text-decoration: none;
-            font-size: 14px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+
         }
 
-        .owner-panel:hover {
-            background: #222631;
-            border-color: #ff5a00;
-            box-shadow: 0 0 18px rgba(255, 80, 0, 0.25);
-            transform: translateY(-2px);
+
+        .nav-actions {
+
+            display: flex;
+
+            gap: 10px;
+
         }
 
-        .owner-panel:active {
-            transform: translateY(0);
+
+        .nav-button {
+
+            padding:
+                9px 14px;
+
+            border:
+                1px solid #343946;
+
+            border-radius:
+                9px;
+
+            background:
+                #101218;
+
+            color:
+                white;
+
+            text-decoration:
+                none;
+
+            font-size:
+                13px;
+
+            font-weight:
+                800;
+
+            transition:
+                0.2s ease;
+
         }
 
-        @media (max-width: 1100px) {
-            .cards {
-                grid-template-columns: repeat(3, 1fr);
+
+        .nav-button:hover {
+
+            border-color:
+                #5865f2;
+
+            background:
+                #1f2330;
+
+        }
+
+
+        .page {
+
+            min-height:
+                calc(100vh - 70px);
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                50px 24px 70px;
+
+        }
+
+
+        .shell {
+
+            width:
+                100%;
+
+            max-width:
+                1100px;
+
+        }
+
+
+        .auth-card {
+
+            width:
+                min(460px, 100%);
+
+            margin:
+                0 auto;
+
+            padding:
+                30px;
+
+            background:
+                rgba(24, 27, 36, 0.96);
+
+            border:
+                1px solid #292e3a;
+
+            border-radius:
+                18px;
+
+            box-shadow:
+                0 24px 70px
+                rgba(0, 0, 0, 0.45);
+
+        }
+
+
+        .auth-badge {
+
+            width:
+                50px;
+
+            height:
+                50px;
+
+            border-radius:
+                14px;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+            background:
+                #101218;
+
+            border:
+                1px solid #3a3f4c;
+
+            font-size:
+                23px;
+
+            margin-bottom:
+                15px;
+
+        }
+
+
+        .auth-card h1 {
+
+            margin:
+                0 0 8px;
+
+            font-size:
+                28px;
+
+        }
+
+
+        .auth-card p {
+
+            margin:
+                0 0 22px;
+
+            color:
+                #9ca3af;
+
+            line-height:
+                1.6;
+
+            font-size:
+                14px;
+
+        }
+
+
+        .password-input {
+
+            width:
+                100%;
+
+            padding:
+                13px 14px;
+
+            border-radius:
+                11px;
+
+            border:
+                1px solid #343946;
+
+            background:
+                #101218;
+
+            color:
+                white;
+
+            font-size:
+                15px;
+
+            outline:
+                none;
+
+            margin-bottom:
+                12px;
+
+        }
+
+
+        .password-input:focus {
+
+            border-color:
+                #5865f2;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(88, 101, 242, 0.12);
+
+        }
+
+
+        .primary-button {
+
+            width:
+                100%;
+
+            padding:
+                13px 14px;
+
+            border:
+                none;
+
+            border-radius:
+                11px;
+
+            background:
+                #5865f2;
+
+            color:
+                white;
+
+            font-weight:
+                900;
+
+            cursor:
+                pointer;
+
+            transition:
+                0.2s ease;
+
+        }
+
+
+        .primary-button:hover {
+
+            background:
+                #4752c4;
+
+            transform:
+                translateY(-1px);
+
+        }
+
+
+        .primary-button:disabled {
+
+            opacity:
+                0.65;
+
+            cursor:
+                wait;
+
+            transform:
+                none;
+
+        }
+
+
+        .auth-message {
+
+            min-height:
+                20px;
+
+            margin-top:
+                12px;
+
+            text-align:
+                center;
+
+            font-size:
+                13px;
+
+        }
+
+
+        .error {
+
+            color:
+                #ff6b6b;
+
+        }
+
+
+        .success {
+
+            color:
+                #6cff9b;
+
+        }
+
+
+        .owner-dashboard {
+
+            display:
+                none;
+
+        }
+
+
+        .owner-dashboard.active {
+
+            display:
+                block;
+
+        }
+
+
+        .heading {
+
+            text-align:
+                center;
+
+            margin-bottom:
+                30px;
+
+        }
+
+
+        .eyebrow {
+
+            color:
+                #ff8a42;
+
+            font-size:
+                12px;
+
+            text-transform:
+                uppercase;
+
+            letter-spacing:
+                2px;
+
+            font-weight:
+                900;
+
+            margin-bottom:
+                8px;
+
+        }
+
+
+        .heading h1 {
+
+            margin:
+                0;
+
+            font-size:
+                36px;
+
+            font-weight:
+                900;
+
+        }
+
+
+        .heading p {
+
+            max-width:
+                680px;
+
+            margin:
+                12px auto 0;
+
+            color:
+                #9ca3af;
+
+            line-height:
+                1.6;
+
+            font-size:
+                14px;
+
+        }
+
+
+        .owner-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap:
+                20px;
+
+        }
+
+
+        .owner-card {
+
+            padding:
+                22px;
+
+            min-height:
+                180px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #1a1e28 0%,
+                    #151821 100%
+                );
+
+            border:
+                1px solid #292e3a;
+
+            border-radius:
+                17px;
+
+            position:
+                relative;
+
+            overflow:
+                hidden;
+
+        }
+
+
+        .owner-card::before {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            width:
+                140px;
+
+            height:
+                140px;
+
+            right:
+                -50px;
+
+            top:
+                -55px;
+
+            background:
+                rgba(255, 90, 0, 0.08);
+
+            border-radius:
+                50%;
+
+            pointer-events:
+                none;
+
+        }
+
+
+        .owner-icon {
+
+            width:
+                46px;
+
+            height:
+                46px;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+            border-radius:
+                12px;
+
+            background:
+                #101218;
+
+            border:
+                1px solid #343946;
+
+            font-size:
+                21px;
+
+            margin-bottom:
+                13px;
+
+        }
+
+
+        .owner-card h2 {
+
+            margin:
+                0 0 8px;
+
+            font-size:
+                17px;
+
+        }
+
+
+        .owner-card p {
+
+            margin:
+                0;
+
+            color:
+                #9298a5;
+
+            font-size:
+                13px;
+
+            line-height:
+                1.55;
+
+        }
+
+
+        .locked-note {
+
+            margin-top:
+                14px;
+
+            display:
+                inline-block;
+
+            padding:
+                7px 9px;
+
+            border-radius:
+                8px;
+
+            border:
+                1px solid #343946;
+
+            color:
+                #a8adba;
+
+            font-size:
+                11px;
+
+            font-weight:
+                800;
+
+        }
+
+
+        .panel-actions {
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            margin-top:
+                26px;
+
+        }
+
+
+        .logout-button {
+
+            padding:
+                10px 16px;
+
+            border:
+                none;
+
+            border-radius:
+                10px;
+
+            background:
+                #ef4444;
+
+            color:
+                white;
+
+            font-weight:
+                800;
+
+            cursor:
+                pointer;
+
+            transition:
+                0.2s ease;
+
+        }
+
+
+        .logout-button:hover {
+
+            background:
+                #dc2626;
+
+            transform:
+                translateY(-1px);
+
+        }
+
+
+        @media (max-width: 900px) {
+
+            .owner-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
             }
+
         }
 
-        @media (max-width: 700px) {
+
+        @media (max-width: 620px) {
+
             .navbar {
-                padding: 0 18px;
+
+                padding:
+                    0 18px;
+
             }
 
-            .user-name {
-                display: none;
+
+            .page {
+
+                padding:
+                    35px 18px 55px;
+
             }
 
-            .logout {
-                margin-left: 0;
+
+            .owner-grid {
+
+                grid-template-columns:
+                    1fr;
+
             }
 
-            .cards {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 18px;
+
+            .heading h1 {
+
+                font-size:
+                    29px;
+
             }
 
-            .dashboard-title {
-                font-size: 26px;
+
+            .auth-card {
+
+                padding:
+                    24px;
+
             }
+
         }
 
-        @media (max-width: 450px) {
-            .content {
-                padding: 30px 20px;
-            }
-
-            .cards {
-                grid-template-columns: 1fr;
-            }
-
-            .dashboard-title {
-                font-size: 23px;
-            }
-
-            .card {
-                aspect-ratio: 4 / 6;
-            }
-        }
     </style>
+
 </head>
+
 <body>
 
-    <nav class="navbar">
-        <a class="brand" href="https://discord.gg/jBFAzkdfWG" target="_blank" rel="noopener noreferrer">
-            Archer Giveaways
+
+<nav class="navbar">
+
+    <a
+        class="brand"
+        href="/home/"
+    >
+        Archer Giveaways
+    </a>
+
+
+    <div class="nav-actions">
+
+        <a
+            class="nav-button"
+            href="/home/"
+        >
+            Back to Home
         </a>
 
-        <div class="user-area">
-            <div class="user-profile-box" id="userProfileBtn">
-                <img id="userImage" class="user-image" src="" alt="Profile">
-                <span id="userName" class="user-name">Loading...</span>
-                <div class="user-dropdown" id="userDropdown"></div>
+    </div>
+
+</nav>
+
+
+<main class="page">
+
+    <div class="shell">
+
+
+        <!-- OWNER LOGIN -->
+
+        <section
+            class="auth-card"
+            id="ownerLogin"
+        >
+
+            <div class="auth-badge">
+                👑
             </div>
 
-            <button class="logout" onclick="logout()">
-                Logout
-            </button>
-        </div>
-    </nav>
 
-    <main class="content">
-        <div class="dashboard">
-            <h1 class="dashboard-title">
-                Pick what you want to access/do
+            <h1>
+                Owner Panel
             </h1>
 
-            <div class="cards">
-                <div class="card">
-                    <a class="owner-panel" href="/home/owner/">
-                        Owner Panel
-                    </a>
+
+            <p>
+                Enter the owner password to access the protected
+                Archer Giveaways owner area.
+            </p>
+
+
+            <form
+                id="ownerForm"
+            >
+
+                <input
+                    id="ownerPassword"
+                    class="password-input"
+                    type="password"
+                    placeholder="Owner password"
+                    autocomplete="current-password"
+                    required
+                >
+
+
+                <button
+                    id="ownerLoginButton"
+                    class="primary-button"
+                    type="submit"
+                >
+                    Enter Owner Panel
+                </button>
+
+            </form>
+
+
+            <div
+                id="ownerMessage"
+                class="auth-message"
+            ></div>
+
+        </section>
+
+
+        <!-- OWNER DASHBOARD -->
+
+        <section
+            class="owner-dashboard"
+            id="ownerDashboard"
+        >
+
+            <div class="heading">
+
+                <div class="eyebrow">
+                    Restricted Area
                 </div>
 
-                <div class="card">
-                    <a class="owner-panel" href="/home/owner/">
-                        Owner Panel
-                    </a>
-                </div>
 
-                <div class="card">
-                    <a class="owner-panel" href="/home/owner/">
-                        Owner Panel
-                    </a>
-                </div>
+                <h1>
+                    Owner Control Center
+                </h1>
 
-                <div class="card">
-                    <a class="owner-panel" href="/home/owner/">
-                        Owner Panel
-                    </a>
-                </div>
 
-                <div class="card">
-                    <a class="owner-panel" href="/home/owner/">
-                        Owner Panel
-                    </a>
-                </div>
+                <p>
+                    You're authenticated. This is the protected
+                    Archer Giveaways owner area.
+                </p>
+
             </div>
-        </div>
-    </main>
+
+
+            <div class="owner-grid">
+
+
+                <div class="owner-card">
+
+                    <div class="owner-icon">
+                        🛠️
+                    </div>
+
+                    <h2>
+                        Website Management
+                    </h2>
+
+                    <p>
+                        Manage site tools and owner-only
+                        configuration from this protected area.
+                    </p>
+
+                    <span class="locked-note">
+                        Owner only
+                    </span>
+
+                </div>
+
+
+                <div class="owner-card">
+
+                    <div class="owner-icon">
+                        🎁
+                    </div>
+
+                    <h2>
+                        Giveaway Management
+                    </h2>
+
+                    <p>
+                        Giveaway management controls can be
+                        connected here.
+                    </p>
+
+                    <span class="locked-note">
+                        Owner only
+                    </span>
+
+                </div>
+
+
+                <div class="owner-card">
+
+                    <div class="owner-icon">
+                        🤖
+                    </div>
+
+                    <h2>
+                        Discord Systems
+                    </h2>
+
+                    <p>
+                        Discord management and account linking
+                        tools can be added here.
+                    </p>
+
+                    <span class="locked-note">
+                        Owner only
+                    </span>
+
+                </div>
+
+
+                <div class="owner-card">
+
+                    <div class="owner-icon">
+                        📊
+                    </div>
+
+                    <h2>
+                        Statistics
+                    </h2>
+
+                    <p>
+                        Owner statistics and activity information
+                        can be displayed here.
+                    </p>
+
+                    <span class="locked-note">
+                        Owner only
+                    </span>
+
+                </div>
+
+
+                <div class="owner-card">
+
+                    <div class="owner-icon">
+                        🔐
+                    </div>
+
+                    <h2>
+                        Security
+                    </h2>
+
+                    <p>
+                        Owner authentication remains handled by
+                        the Cloudflare Worker.
+                    </p>
+
+                    <span class="locked-note">
+                        Protected
+                    </span>
+
+                </div>
+
+
+                <div class="owner-card">
+
+                    <div class="owner-icon">
+                        ⚙️
+                    </div>
+
+                    <h2>
+                        Configuration
+                    </h2>
+
+                    <p>
+                        Additional owner configuration options
+                        can be added here later.
+                    </p>
+
+                    <span class="locked-note">
+                        Owner only
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel-actions">
+
+                <button
+                    class="logout-button"
+                    type="button"
+                    onclick="lockOwnerPanel()"
+                >
+                    Lock Owner Panel
+                </button>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
 
 <script>
-    const loggedIn = localStorage.getItem("archer_google_logged_in");
 
-    if (loggedIn !== "true") {
-        window.location.replace("../../login/");
-    }
+const WORKER_URL =
+    "https://archer.arcdepths.workers.dev";
 
-    let user = null;
 
-    try {
-        const savedUser = localStorage.getItem("archer_google_user");
-        if (savedUser) {
-            user = JSON.parse(savedUser);
+const ownerForm =
+    document.getElementById(
+        "ownerForm"
+    );
+
+
+const ownerPassword =
+    document.getElementById(
+        "ownerPassword"
+    );
+
+
+const ownerLoginButton =
+    document.getElementById(
+        "ownerLoginButton"
+    );
+
+
+const ownerMessage =
+    document.getElementById(
+        "ownerMessage"
+    );
+
+
+const ownerLogin =
+    document.getElementById(
+        "ownerLogin"
+    );
+
+
+const ownerDashboard =
+    document.getElementById(
+        "ownerDashboard"
+    );
+
+
+/* ============================================================
+   MESSAGE
+============================================================ */
+
+function setOwnerMessage(
+    message,
+    type = ""
+) {
+
+    ownerMessage.textContent =
+        message;
+
+
+    ownerMessage.className =
+        `auth-message ${type}`;
+
+}
+
+
+/* ============================================================
+   UNLOCK PANEL
+============================================================ */
+
+function unlockOwnerPanel() {
+
+    ownerLogin.style.display =
+        "none";
+
+
+    ownerDashboard.classList.add(
+        "active"
+    );
+
+}
+
+
+/* ============================================================
+   LOCK PANEL
+============================================================ */
+
+function lockOwnerPanel() {
+
+    ownerDashboard.classList.remove(
+        "active"
+    );
+
+
+    ownerLogin.style.display =
+        "block";
+
+
+    ownerPassword.value =
+        "";
+
+
+    setOwnerMessage(
+        ""
+    );
+
+
+    ownerPassword.focus();
+
+}
+
+
+/* ============================================================
+   OWNER LOGIN
+============================================================ */
+
+ownerForm.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        const password =
+            ownerPassword.value;
+
+
+        if (!password) {
+
+            setOwnerMessage(
+                "Enter the owner password.",
+                "error"
+            );
+
+            return;
         }
-    } catch (error) {
-        console.error("Could not load Google user:", error);
-    }
 
-    if (user) {
-        const name = user.name || user.given_name || "User";
-        document.getElementById("userName").textContent = name;
 
-        if (user.picture) {
-            document.getElementById("userImage").src = user.picture;
-        } else {
-            document.getElementById("userImage").style.display = "none";
+        ownerLoginButton.disabled =
+            true;
+
+
+        ownerLoginButton.textContent =
+            "Checking...";
+
+
+        setOwnerMessage(
+            ""
+        );
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${WORKER_URL}/owner`,
+                    {
+
+                        method:
+                            "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+                                password
+                            })
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                response.ok &&
+                data.success === true
+            ) {
+
+                setOwnerMessage(
+                    "✅ Owner authentication successful.",
+                    "success"
+                );
+
+
+                setTimeout(
+                    function() {
+
+                        unlockOwnerPanel();
+
+                    },
+                    250
+                );
+
+
+                return;
+            }
+
+
+            setOwnerMessage(
+                data.message ||
+                "Incorrect owner password.",
+                "error"
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Owner authentication error:",
+                error
+            );
+
+
+            setOwnerMessage(
+                "Could not connect to the Archer server.",
+                "error"
+            );
+
+
+        } finally {
+
+            ownerLoginButton.disabled =
+                false;
+
+
+            ownerLoginButton.textContent =
+                "Enter Owner Panel";
+
         }
+
     }
+);
 
-    const userProfileBtn = document.getElementById("userProfileBtn");
-    const userDropdown = document.getElementById("userDropdown");
-
-    userProfileBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        userDropdown.classList.toggle("active");
-    });
-
-    document.addEventListener("click", (e) => {
-        if (!userProfileBtn.contains(e.target)) {
-            userDropdown.classList.remove("active");
-        }
-    });
-
-    function logout() {
-        localStorage.removeItem("archer_google_logged_in");
-        localStorage.removeItem("archer_google_credential");
-        localStorage.removeItem("archer_google_user");
-
-        if (window.google && google.accounts && google.accounts.id) {
-            google.accounts.id.disableAutoSelect();
-        }
-
-        window.location.replace("../../login/");
-    }
 </script>
+
 
 </body>
 </html>
