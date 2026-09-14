@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -364,7 +365,7 @@
          */
 
         const WORKER_URL =
-            "https://archer.arcdepths.workers.dev/";
+            "https://archer.arcdepths.workers.dev";
 
 
         /*
@@ -624,9 +625,14 @@
 
                 try {
 
+                    /*
+                     * SEND OWNER PASSWORD
+                     * TO THE CORRECT WORKER ROUTE
+                     */
+
                     const response =
                         await fetch(
-                            WORKER_URL,
+                            `${WORKER_URL}/owner`,
                             {
 
                                 method:
@@ -641,9 +647,6 @@
 
                                 body:
                                     JSON.stringify({
-
-                                        googleCredential:
-                                            googleCredential,
 
                                         password:
                                             password
@@ -689,7 +692,8 @@
 
 
                         /*
-                         * REDIRECT
+                         * REDIRECT TO
+                         * OWNER HOME
                          */
 
                         setTimeout(
@@ -781,3 +785,4 @@
 
 </body>
 </html>
+```
